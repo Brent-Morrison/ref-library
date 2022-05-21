@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Brent Morrison" />
+
+
+<title>Top n by group - base R</title>
+
+<script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Reference library</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Multi-level models
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="./mixed_effect_stock_valuation.html">First</a>
+    </li>
+    <li>
+      <a href="./numpyro_models.html">Second</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data wrangling
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">R - base</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="./dw_rb1.html">1.Top n by group</a>
+        </li>
+        <li>
+          <a href="./dw_rb2.html">2.xxx</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">R - dplyr</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="./dw_rd1.html">1.Top n by group</a>
+        </li>
+        <li>
+          <a href="./dw_rd2.html">2.xxx</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">R - data.table</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="./dw_rd1.html">1.Top n by group</a>
+        </li>
+        <li>
+          <a href="./dw_rd2.html">2.xxx</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Python - pandas</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="./dw_py1.html">1.Top n by group</a>
+        </li>
+        <li>
+          <a href="./dw_py2.html">2.xxx</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Top n by group - base R</h1>
+<h4 class="author">Brent Morrison</h4>
+<h4 class="date">2022-05-21 22:02:34</h4>
+
+</div>
+
+
+<div id="data" class="section level2">
+<h2>Data</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df_raw <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;https://raw.githubusercontent.com/Brent-Morrison/Misc_scripts/master/stock_data.csv&#39;</span>)</span></code></pre></div>
+</div>
+<div id="top-n-by-group---base-r" class="section level2">
+<h2>Top n by group - base R</h2>
+<div id="select-columns-and-date-required" class="section level3">
+<h3>Select columns and date required</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df_raw[df_raw[<span class="st">&#39;date_stamp&#39;</span>] <span class="sc">==</span> <span class="st">&#39;30/06/2021&#39;</span>, <span class="fu">c</span>(<span class="st">&#39;symbol&#39;</span>,<span class="st">&#39;date_stamp&#39;</span>,<span class="st">&#39;sector&#39;</span>,<span class="st">&#39;asset_growth&#39;</span>,<span class="st">&#39;roa&#39;</span>,<span class="st">&#39;roe&#39;</span>,<span class="st">&#39;leverage&#39;</span>,<span class="st">&#39;ttm_earnings&#39;</span>)]</span></code></pre></div>
+</div>
+<div id="order" class="section level3">
+<h3>Order</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[<span class="fu">order</span>(df<span class="sc">$</span>ttm_earnings, <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ]</span></code></pre></div>
+</div>
+<div id="filter-for-top-5" class="section level3">
+<h3>Filter for top 5</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">Reduce</span>(<span class="at">f =</span> rbind, <span class="at">x =</span> <span class="fu">by</span>(df, df[<span class="st">&#39;sector&#39;</span>], head, <span class="at">n =</span> <span class="dv">5</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>##       symbol date_stamp sector asset_growth         roa         roe  leverage
+## 17219     GE 30/06/2021      1 -0.003393429 0.043112287 -0.32049402 0.8537238
+## 24639    LMT 30/06/2021      1 -0.001240817 0.137838797 -1.00000000 0.8809308
+## 41171    UNP 30/06/2021      1 -0.020654801 0.085295769 -0.31565716 0.7282285
+## 19744    HON 30/06/2021      1  0.017759498 0.079041430 -0.26719025 0.7245533
+## 12253     DE 30/06/2021      1  0.005180381 0.045877522 -0.27137926 0.8133810
+## 300     AAPL 30/06/2021      2  0.093137134 0.192989934 -0.85973411 0.8129551
+## 27518   MSFT 30/06/2021      2  0.010418570 0.173968530 -0.43006192 0.5717851
+## 15581     FB 30/06/2021      2  0.087949084 0.203195523 -0.25892549 0.1947450
+## 21442   INTC 30/06/2021      2  0.053902975 0.142145894 -0.26693660 0.4706547
+## 11054   CSCO 30/06/2021      2  0.006294538 0.108383250 -0.27164381 0.5907888
+## 31703     PG 30/06/2021      3  0.001776495 0.117919979 -0.29549319 0.5958772
+## 23481     KO 30/06/2021      3 -0.101745143 0.084515072 -0.38182873 0.7561859
+## 31514    PEP 30/06/2021      3  0.009528362 0.081889005 -0.52632737 0.8541510
+## 27028     MO 30/06/2021      3  0.016355491 0.090735881 -0.89012434 0.9374657
+## 39214    TGT 30/06/2021      3  0.011586822 0.091960218 -0.34481125 0.7182329
+## 3404    AMZN 30/06/2021      4  0.138266845 0.081529674 -0.28272527 0.7091985
+## 18916     HD 30/06/2021      4  0.054722874 0.206967332 -1.00000000 0.9532594
+## 17673     GM 30/06/2021      4 -0.018679774 0.027071060 -0.13884088 0.7887829
+## 13610   EBAY 30/06/2021      4  0.048260138 0.298741144 -1.00000000 0.8155878
+## 28878    NKE 30/06/2021      4  0.047447231 0.092803005 -0.30508475 0.6945688
+## 22677    JPM 30/06/2021      5  0.043127456 0.009293921 -0.10889890 0.9174991
+## 5356     BAC 30/06/2021      5  0.029642659 0.006699966 -0.06691152 0.9032056
+## 27373     MS 30/06/2021      5  0.167292926 0.011429561 -0.12396291 0.9075612
+## 7342       C 30/06/2021      5  0.011470786 0.005086624 -0.05691332 0.9114195
+## 18348     GS 30/06/2021      5  0.027356348 0.008568969 -0.10253547 0.9175153
+## 37498    SRE 30/06/2021      6 -0.008910773 0.061052149 -0.17233996 0.6257449
+## 37007     SO 30/06/2021      6 -0.001810682 0.025846238 -0.09636954 0.7354293
+## 28464    NEE 30/06/2021      6  0.010302100 0.023756623 -0.03880607 0.6481235
+## 15164    EXC 30/06/2021      6  0.012131458 0.015504280 -0.05639800 0.7303680
+## 31464    PEG 30/06/2021      6  0.009561078 0.038956896 -0.06422792 0.3910090
+## 41051    UNH 30/06/2021      7  0.033094377 0.083549063 -0.23704726 0.6424585
+## 22554    JNJ 30/06/2021      7  0.024611437 0.090080714 -0.23618433 0.6381923
+## 31538    PFE 30/06/2021      7 -0.138303638 0.057114386 -0.14972791 0.5884496
+## 8916      CI 30/06/2021      7 -0.028698358 0.054028218 -0.17955573 0.6758721
+## 3092    AMGN 30/06/2021      7 -0.026130544 0.115679105 -0.72372223 0.8505274
+## 14276    ENB 30/06/2021      8 -0.013613313 0.020804379 -0.04958817 0.5984240
+## 33027   PSXP 30/06/2021      8 -0.004935563 0.113124072 -0.26582445 0.5741251
+## 30369    OKE 30/06/2021      8  0.013075792 0.027203636 -0.10140554 0.7381835
+## 24747    LNG 30/06/2021      8 -0.006512482 0.014016887 -0.19352596 0.9325153
+## 43432    WMB 30/06/2021      8 -0.003497292 0.004699395 -0.01384805 0.6698064
+## 42516     VZ 30/06/2021      9  0.065614120 0.061448357 -0.28279640 0.7811180
+## 9417   CMCSA 30/06/2021      9  0.018327508 0.040090003 -0.12421156 0.6650296
+## 8883    CHTR 30/06/2021      9  0.000090200 0.025237719 -0.10447515 0.7900157
+## 39558   TMUS 30/06/2021      9  0.040110578 0.020319623 -0.06113499 0.6735444
+## 12616   DISH 30/06/2021      9  0.059265488 0.053620053 -0.14509576 0.6304573
+## 32218    PLD 30/06/2021     10  0.005477210 0.030841646 -0.04688391 0.3520989
+## 32916    PSA 30/06/2021     10  0.037891295 0.115846910 -0.15416274 0.2741619
+## 42980   WELL 30/06/2021     10 -0.001780951 0.031577648 -0.06021766 0.4697312
+## 7261     BXP 30/06/2021     10 -0.004400194 0.045504586 -0.12170846 0.6348570
+## 23073    KIM 30/06/2021     10  0.007836211 0.087969103 -0.18769932 0.5104362
+## 28524    NEM 30/06/2021     11  0.020172129 0.070206176 -0.12229071 0.4227803
+## 24375    LIN 30/06/2021     11  0.011696041 0.030374183 -0.05359424 0.4380306
+## 36048    SHW 30/06/2021     11 -0.019611047 0.098781481 -0.53150719 0.8230139
+## 8310      CE 30/06/2021     11  0.116695670 0.202418453 -0.64751008 0.6429554
+## 3941     APD 30/06/2021     11  0.036537736 0.083725796 -0.15761073 0.4989325
+##       ttm_earnings
+## 17219    11143.000
+## 24639     6833.000
+## 41171     5349.000
+## 19744     4865.000
+## 12253     3459.000
+## 300      63930.000
+## 27518    51310.000
+## 15581    29146.000
+## 21442    20899.000
+## 11054    10129.000
+## 31703    13938.000
+## 23481     7768.000
+## 31514     7175.000
+## 27028     4467.000
+## 39214     4368.000
+## 3404     21331.000
+## 18916    12866.000
+## 17673     6427.000
+## 13610     5667.000
+## 28878     2826.000
+## 22677    29131.000
+## 5356     17894.000
+## 27373    11179.000
+## 7342     11087.000
+## 18348     9459.000
+## 37498     4105.000
+## 37007     3119.000
+## 28464     2919.000
+## 15164     1963.000
+## 31464     1905.000
+## 41051    15769.000
+## 22554    14714.000
+## 31538     9652.000
+## 8916      8489.000
+## 3092      7264.000
+## 14276     3416.000
+## 33027      808.000
+## 30369      612.809
+## 24747      501.000
+## 43432      211.000
+## 42516    18348.000
+## 9417     10701.000
+## 8883      3676.000
+## 39558     3064.000
+## 12616     1873.936
+## 32218     1616.630
+## 32916     1361.227
+## 42980     1038.852
+## 7261      1018.691
+## 23073     1002.877
+## 28524     2829.000
+## 24375     2626.000
+## 36048     2030.400
+## 8310      1992.000
+## 3941      1928.900</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

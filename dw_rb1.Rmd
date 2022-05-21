@@ -1,0 +1,37 @@
+---
+title: "Top n by group - base R"
+author: "Brent Morrison"
+date: "`r file.mtime(knitr::current_input())`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data
+
+```{r }
+df_raw <- read.csv('https://raw.githubusercontent.com/Brent-Morrison/Misc_scripts/master/stock_data.csv')
+```
+
+## Top n by group - base R
+
+### Select columns and date required  
+
+```{r }
+df <- df_raw[df_raw['date_stamp'] == '30/06/2021', c('symbol','date_stamp','sector','asset_growth','roa','roe','leverage','ttm_earnings')]
+```
+
+### Order  
+
+```{r }
+df <- df[order(df$ttm_earnings, decreasing = TRUE), ]
+```
+
+### Filter for top 5 
+
+```{r }
+df <- Reduce(f = rbind, x = by(df, df['sector'], head, n = 5))
+df
+```

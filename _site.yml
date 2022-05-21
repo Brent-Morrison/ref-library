@@ -2,12 +2,15 @@ name: "Reference library"
 output_dir: 'docs'
 output:
   html_document:
-    theme: cerulean
-    highlight: zenburn
-    toc: true
-    toc_depth: 2
+    fig_caption: yes
+    theme: spacelab 
+    highlight: pygments
+    toc: TRUE
+    toc_depth: 3
+    number_sections: FALSE
+    code_folding: hide
     toc_float:
-      collapsed: false
+      smooth_scroll: FALSE
 navbar:
   title: "Reference library"
   logo:
@@ -19,5 +22,29 @@ navbar:
           href: ./mixed_effect_stock_valuation.html
         - text: "Second"
           href: ./numpyro_models.html
-        - text: "Third"
-          href: ./numpyro_models_md.md
+    - text: "Data wrangling"
+      menu:
+        - text: "R - base"
+          menu:
+            - text: "1.Top n by group"
+              href: ./dw_rb1.html
+            - text: "2.xxx"
+              href: ./dw_rb2.html
+        - text: "R - dplyr"
+          menu:
+            - text: "1.Top n by group"
+              href: ./dw_rd1.html
+            - text: "2.xxx"
+              href: ./dw_rd2.html
+        - text: "R - data.table"
+          menu:
+            - text: "1.Top n by group"
+              href: ./dw_rd1.html
+            - text: "2.xxx"
+              href: ./dw_rd2.html 
+        - text: "Python - pandas"
+          menu:
+            - text: "1.Top n by group"
+              href: ./dw_py1.html
+            - text: "2.xxx"
+              href: ./dw_py2.html 

@@ -1,0 +1,53 @@
+---
+title: "Top n by group - pandas"
+author: "Brent Morrison"
+date: "`r file.mtime(knitr::current_input())`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library('reticulate')
+use_condaenv(condaenv = 'STOCK_MASTER', required = TRUE)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Libraries
+
+```{python }
+import pandas as pd
+import numpy as np
+```
+
+## Data
+
+```{python }
+df_raw = pd.read_csv('https://raw.githubusercontent.com/Brent-Morrison/Misc_scripts/master/stock_data.csv')
+df_raw['date_stamp'] = pd.to_datetime(df_raw['date_stamp'], format="%d/%m/%Y")
+```
+
+## Top n by group - pandas
+
+### Select columns and date required  
+
+```{python }
+df = df_raw[df_raw['date_stamp'] == '2021-06-30'][['symbol','date_stamp','sector','asset_growth','roa','roe','leverage','ttm_earnings']]
+```
+
+### Order  
+
+```{python }
+df.sort_values(by=['sector','ttm_earnings'], ascending=[True,False], inplace=True)
+```
+
+### Filter for top 5 
+
+```{python }
+df = df.groupby('sector').head(5).reset_index(drop=True).copy()
+```
+
+```{r }
+py$df
+```
+
+Also ```df.groupby('sector')['ttm_earnings'].nlargest(5)```.
+

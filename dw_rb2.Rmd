@@ -1,0 +1,12 @@
+---
+title: "Placeholder - base R"
+author: "Brent Morrison"
+date: "`r file.mtime(knitr::current_input())`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Placeholder
