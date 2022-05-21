@@ -33,5 +33,5 @@ df <- df[order(df$ttm_earnings, decreasing = TRUE), ]
 
 ```{r }
 df <- Reduce(f = rbind, x = by(df, df['sector'], head, n = 5))
-df
+rmarkdown::paged_table(df)
 ```

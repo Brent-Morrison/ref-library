@@ -46,7 +46,7 @@ df = df.groupby('sector').head(5).reset_index(drop=True).copy()
 ```
 
 ```{r }
-py$df
+rmarkdown::paged_table(py$df)
 ```
 
 Also ```df.groupby('sector')['ttm_earnings'].nlargest(5)```.

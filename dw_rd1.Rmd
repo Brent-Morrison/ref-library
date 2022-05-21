@@ -44,5 +44,5 @@ df <- df[order(df$ttm_earnings, decreasing = TRUE), ]
 ```{r }
 df <- data.table(df, key = 'sector')
 df <- df[ , head(.SD, 5), by = sector]
-df
+rmarkdown::paged_table(df)
 ```
