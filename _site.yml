@@ -8,7 +8,7 @@ output:
     toc: TRUE
     toc_depth: 3
     number_sections: FALSE
-    code_folding: hide
+    code_folding: show
     toc_float:
       smooth_scroll: FALSE
 navbar:
@@ -24,27 +24,25 @@ navbar:
           href: ./numpyro_models.html
     - text: "Data wrangling"
       menu:
-        - text: "R - base"
+        - text: "1.Top n by group"
           menu:
-            - text: "1.Top n by group"
+            - text: "R - base"
               href: ./dw_rb1.html
-            - text: "2.xxx"
-              href: ./dw_rb2.html
-        - text: "R - dplyr"
-          menu:
-            - text: "1.Top n by group"
-              href: ./dw_rd1.html
-            - text: "2.xxx"
+            - text: "R - dplyr"
               href: ./dw_rd2.html
-        - text: "R - data.table"
-          menu:
-            - text: "1.Top n by group"
+            - text: "R - data.table"
               href: ./dw_rd1.html
-            - text: "2.xxx"
-              href: ./dw_rd2.html 
-        - text: "Python - pandas"
-          menu:
-            - text: "1.Top n by group"
+            - text: "Python - pandas"
               href: ./dw_py1.html
-            - text: "2.xxx"
-              href: ./dw_py2.html 
+        - text: "2.Placeholder"
+          menu:
+            - text: "R - placeholder"
+              href: ./dw_rd2.html
+            - text: "Python - placeholder"
+              href: ./dw_rd2.html
+    - text: "Other"
+      menu:
+        - text: "Numpyro shapes"
+          href: ./sample_shapes.html
+        - text: "Numpyro model"
+          href: ./numpyro_models.html

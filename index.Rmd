@@ -11,3 +11,12 @@ This website is a collection of Python and R notebooks that forms a reference fo
 Topics are arranged via the menu at the top of the page.  There will typically be a number of implementations of each topic across languages / frameworks.
 
 The site is an addendum to my [blog](https://brentmorrison.netlify.app/).  
+
+
+## Jupyter notebooks
+
+Some content is constructed using Jupyter noteboooks.  This requires conversion to html using the ````nbconvert``` utility shown below.
+
+````jupyter nbconvert --to markdown numpyromodels.ipynb```  
+
+````jupyter nbconvert --to html numpyro_models.ipynb```  copied html to repo base folder

@@ -256,48 +256,47 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">R - base</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">1.Top n by group</a>
       <ul class="dropdown-menu" role="menu">
         <li>
-          <a href="./dw_rb1.html">1.Top n by group</a>
+          <a href="./dw_rb1.html">R - base</a>
         </li>
         <li>
-          <a href="./dw_rb2.html">2.xxx</a>
+          <a href="./dw_rd2.html">R - dplyr</a>
+        </li>
+        <li>
+          <a href="./dw_rd1.html">R - data.table</a>
+        </li>
+        <li>
+          <a href="./dw_py1.html">Python - pandas</a>
         </li>
       </ul>
     </li>
     <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">R - dplyr</a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">2.Placeholder</a>
       <ul class="dropdown-menu" role="menu">
         <li>
-          <a href="./dw_rd1.html">1.Top n by group</a>
+          <a href="./dw_rd2.html">R - placeholder</a>
         </li>
         <li>
-          <a href="./dw_rd2.html">2.xxx</a>
+          <a href="./dw_rd2.html">Python - placeholder</a>
         </li>
       </ul>
     </li>
-    <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">R - data.table</a>
-      <ul class="dropdown-menu" role="menu">
-        <li>
-          <a href="./dw_rd1.html">1.Top n by group</a>
-        </li>
-        <li>
-          <a href="./dw_rd2.html">2.xxx</a>
-        </li>
-      </ul>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Other
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="./sample_shapes.html">Numpyro shapes</a>
     </li>
-    <li class="dropdown-submenu">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Python - pandas</a>
-      <ul class="dropdown-menu" role="menu">
-        <li>
-          <a href="./dw_py1.html">1.Top n by group</a>
-        </li>
-        <li>
-          <a href="./dw_py2.html">2.xxx</a>
-        </li>
-      </ul>
+    <li>
+      <a href="./numpyro_models.html">Numpyro model</a>
     </li>
   </ul>
 </li>
@@ -329,6 +328,12 @@ $(document).ready(function () {
 <p>This website is a collection of Python and R notebooks that forms a reference for variance data analysis, modelling and machine learning tasks.</p>
 <p>Topics are arranged via the menu at the top of the page. There will typically be a number of implementations of each topic across languages / frameworks.</p>
 <p>The site is an addendum to my <a href="https://brentmorrison.netlify.app/">blog</a>.</p>
+<div id="jupyter-notebooks" class="section level2">
+<h2>Jupyter notebooks</h2>
+<p>Some content is constructed using Jupyter noteboooks. This requires conversion to html using the `<code>nbconvert</code> utility shown below.</p>
+<p>`<code>jupyter nbconvert --to markdown numpyromodels.ipynb</code></p>
+<p>`<code>jupyter nbconvert --to html numpyro_models.ipynb</code> copied html to repo base folder</p>
+</div>
 
 
 
@@ -365,7 +370,7 @@ $(document).ready(function () {
 <!-- code folding -->
 <script>
 $(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
+  window.initializeCodeFolding("show" === "show");
 });
 </script>
 
