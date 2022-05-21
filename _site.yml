@@ -17,3 +17,7 @@ navbar:
       menu:
         - text: "First"
           href: ./mixed_effect_stock_valuation.html
+        - text: "Second"
+          href: ./numpyro_models.html
+        - text: "Third"
+          href: ./numpyro_models_md.md
