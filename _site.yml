@@ -1,0 +1,19 @@
+name: "Reference library"
+output_dir: 'docs'
+output:
+  html_document:
+    theme: cerulean
+    highlight: zenburn
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+navbar:
+  title: "Reference library"
+  logo:
+    href: https://github.com/Brent-Morrison/ref-library
+  left:
+    - text: "Multi-level models"
+      menu:
+        - text: "First"
+          href: ./mixed_effect_stock_valuation.html
