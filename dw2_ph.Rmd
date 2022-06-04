@@ -1,6 +1,8 @@
 ---
 title: "Placeholder"
-output: html_document
+output: 
+  html_document:
+    toc: FALSE
 ---
 
 ```{r setup, include=FALSE}
@@ -11,7 +13,5 @@ knitr::opts_chunk$set(echo = TRUE)
 
 |Topic 1 |Topic 2 |Question|Answer|Reference
 |:-------|:-------|:-------|:-----|:--------|
-|Preprocessing | NA | What is polynomial contrast? | The process of transforming ordered categorical variables / predictors to numeric quantities. |
- https://stats.stackexchange.com/questions/105115/polynomial-contrasts-for-regression | 
- |Models | NA | What transformation can be used to resolve skewness? | 1. Box Cox 2. Log 3. Square root 4. Inverse | NA | 
-
+|Preprocessing | NA | What is polynomial contrast? | The process of transforming ordered categorical variables / predictors to numeric quantities. | https://stats.stackexchange.com/questions/105115/polynomial-contrasts-for-regression | 
+ |Models | NA | What transformation can be used to resolve skewness? | Box Cox / Log / Square root / Inverse | NA | 
