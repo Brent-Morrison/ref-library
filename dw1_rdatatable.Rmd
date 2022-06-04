@@ -1,48 +1,50 @@
 ---
 title: "Top n by group - data.table"
-author: "Brent Morrison"
-date: "`r file.mtime(knitr::current_input())`"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+<br>
 
-## Libraries
+### Libraries
 
 ```{r }
 library('data.table')
 ```
+<br>
 
-## Data
+### Data
 
 ```{r }
 df_raw <- fread('https://raw.githubusercontent.com/Brent-Morrison/Misc_scripts/master/stock_data.csv')
 df_raw$date_stamp <- as.Date(df_raw$date_stamp, "%d/%m/%Y")
 ```
+<br>
 
-## Top n by group - base R
-
-### Select columns and date required  
+### Return top n by group 
 
 ```{r }
+# Select columns and date required
 df <- df_raw[date_stamp == as.Date('2021-06-30'), c('symbol','date_stamp','sector','asset_growth','roa','roe','leverage','ttm_earnings')]
-```
 
-### Order  
-
-Not required since ```data.table``` performed as sort when the key is set, refer below.  
-
-```{r }
+# Order
 df <- df[order(df$ttm_earnings, decreasing = TRUE), ]
-```
 
-
-### Filter for top 5 
-
-```{r }
+# Filter for top 5 
 df <- data.table(df, key = 'sector')
 df <- df[ , head(.SD, 5), by = sector]
+```
+
+<br>
+
+### Print  
+
+```{r }
+# Print table
 rmarkdown::paged_table(df)
 ```
+
+
+

@@ -1,0 +1,44 @@
+---
+title: "Top n by group - dplyr"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<br>
+
+### Libraries
+
+```{r }
+library('dplyr')
+```
+<br>
+
+### Data
+
+```{r }
+df_raw <- read.csv('https://raw.githubusercontent.com/Brent-Morrison/Misc_scripts/master/stock_data.csv')
+```
+<br>
+
+### Return top n by group 
+
+```{r }
+# Select columns and date required
+df <- df_raw %>% 
+  filter(date_stamp == '30/06/2021') %>% 
+  select(symbol, date_stamp, sector, asset_growth, roa, roe, leverage, ttm_earnings)
+
+# Filter for top 5 
+df <- df %>% group_by(sector) %>% slice_max(order_by = ttm_earnings, n = 5)
+
+```
+<br>
+
+### Print  
+
+```{r }
+# Print table
+rmarkdown::paged_table(df)
+```

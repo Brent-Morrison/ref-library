@@ -8,15 +8,20 @@ output:
 
 This website is a collection of Python and R notebooks that forms a reference for variance data analysis, modelling and machine learning tasks.  
 
-Topics are arranged via the menu at the top of the page.  There will typically be a number of implementations of each topic across languages / frameworks.
-
 The site is an addendum to my [blog](https://brentmorrison.netlify.app/).  
 
+Topics are arranged via the menu at the top of the page.  The aim is to have a number of implementations of each topic across language / framework.
+
+<br>
 
 ## Jupyter notebooks
 
-Some content is constructed using Jupyter noteboooks.  This requires conversion to html using the ````nbconvert``` utility shown below.
+Some content is constructed using Jupyter noteboooks.  This requires conversion to html using the ```nbconvert``` utility shown below.
 
-````jupyter nbconvert --to markdown numpyromodels.ipynb```  
+Example conversion, ipynb to html:  
 
-````jupyter nbconvert --to html numpyro_models.ipynb```  copied html to repo base folder
+<br>
+```jupyter nbconvert --to html numpyro_models.ipynb```  
+<br>
+
+This command will produce a html file called ```numpyro_models.html```.  This file is then copied to the base folder of the site repository before rendering.

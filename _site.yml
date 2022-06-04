@@ -18,31 +18,33 @@ navbar:
   left:
     - text: "Multi-level models"
       menu:
-        - text: "First"
+        - text: "Stock valuation with R - WIP"
           href: ./mixed_effect_stock_valuation.html
-        - text: "Second"
+        - text: "Numpyro - WIP"
           href: ./numpyro_models.html
     - text: "Data wrangling"
       menu:
         - text: "1.Top n by group"
           menu:
             - text: "R - base"
-              href: ./dw_rb1.html
+              href: ./dw1_rbase.html
             - text: "R - dplyr"
-              href: ./dw_rd2.html
+              href: ./dw1_rdplyr.html
             - text: "R - data.table"
-              href: ./dw_rd1.html
+              href: ./dw1_rdatatable.html
             - text: "Python - pandas"
-              href: ./dw_py1.html
+              href: ./dw1_pypandas.html
         - text: "2.Placeholder"
           menu:
             - text: "R - placeholder"
-              href: ./dw_rd2.html
+              href: ./dw2_ph.html
             - text: "Python - placeholder"
-              href: ./dw_rd2.html
+              href: ./dw2_ph.html
     - text: "Other"
       menu:
         - text: "Numpyro shapes"
           href: ./sample_shapes.html
         - text: "Numpyro model"
           href: ./numpyro_models.html
+        - text: "WIP - multi-level models"
+          href: ./mixed_effect_stock_valuation.html

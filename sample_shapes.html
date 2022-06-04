@@ -13971,13 +13971,16 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Sample-shapes">Sample shapes<a class="anchor-link" href="#Sample-shapes">&#182;</a></h2><p>A library contaning numpyro models for future reference.  The model naming convention corresponds to models replicated in R using <code>brms</code> and <code>rethinking</code> and also in Python using <code>PyMC</code>.</p>
-<h3 id="Imports">Imports<a class="anchor-link" href="#Imports">&#182;</a></h3>
+<p><a href="https://brent-morrison.github.io/ref-library/index.html">return to Reference Library</a></p>
+<h2 id="Numpyro-distributions---sample-/-batch-/-event-shapes">Numpyro distributions - sample / batch / event shapes<a class="anchor-link" href="#Numpyro-distributions---sample-/-batch-/-event-shapes">&#182;</a></h2><p>The examples below demonstrate the difference between <em>sample shape</em> (that specified with the <code>sample_shape</code> parameter of the <code>sample</code> method), <em>batch shape</em> (that specified with the <code>batch_shape</code> parameter of the <code>expand</code> method) and <em>event shape</em> (that specified with the distribution sampled from).</p>
+<p>Note that batch shape signifies the number instances of a distribution (they must be the same distribution) that is sampled.</p>
+<p>Reference for this is <a href="https://ericmjl.github.io/blog/2019/5/29/reasoning-about-shapes-and-probability-distributions/">here</a>.</p>
+
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">random</span>
@@ -13990,28 +13993,40 @@ a.anchor-link {
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>/home/brent/anaconda3/envs/pytorch_pyro/lib/python3.9/site-packages/tqdm/auto.py:22: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
+</pre>
 </div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Random-notes-looking-at-sample-shape">Random notes looking at sample shape<a class="anchor-link" href="#Random-notes-looking-at-sample-shape">&#182;</a></h3><p>The examples below demonstrate the difference between <em>sample shape</em> (that specified with the <code>sample_shape</code> parameter of the <code>sample</code> method) and <em>batch shape</em> (that specified with the <code>batch_shape</code> parameter of the <code>expand</code> method).</p>
-<p>Note that batch shape signifies the dimension of XXXXX.</p>
-<p><a href="https://ericmjl.github.io/blog/2019/5/29/reasoning-about-shapes-and-probability-distributions/">Reference</a></p>
+</div>
 
 </div>
+
+</div>
+
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> \
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> \
     <span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">event_shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape:&#39;</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">event_shape</span><span class="p">,</span> <span class="s1">&#39;  Batch shape:&#39;</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">batch_shape</span><span class="p">,</span> <span class="s1">&#39;  Sample shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14031,13 +14046,11 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[0.85365486 0.10553633 0.06130229]
+<pre>Sample: 
+ [ 0.18693547 -1.2806505  -1.5593132 ]
 
 
-(3,)
-
-
-()
+Event shape: ()   Batch shape: ()   Sample shape: (3,)
 </pre>
 </div>
 </div>
@@ -14049,18 +14062,16 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> \
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> \
     <span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span> \
     <span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample shape: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">event_shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape:&#39;</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">event_shape</span><span class="p">,</span> <span class="s1">&#39;  Batch shape:&#39;</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">batch_shape</span><span class="p">,</span> <span class="s1">&#39;  Sample shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14081,17 +14092,12 @@ a.anchor-link {
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>Sample: 
- [[0.85365486]
- [0.10553633]
- [0.06130229]]
+ [[ 0.18693547]
+ [-1.2806505 ]
+ [-1.5593132 ]]
 
 
-Sample shape: 
- (3, 1)
-
-
-Event shape: 
- ()
+Event shape: ()   Batch shape: ()   Sample shape: (3, 1)
 </pre>
 </div>
 </div>
@@ -14103,20 +14109,17 @@ Event shape:
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">s</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,))</span> \
     <span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
 
-
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample shape: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">event_shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">event_shape</span><span class="p">,</span> <span class="s1">&#39;  Batch shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">batch_shape</span><span class="p">,</span> <span class="s1">&#39;  Sample shape:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14137,17 +14140,12 @@ Event shape:
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>Sample: 
- [[1.3086625  2.0340383 ]
- [2.0580726  0.23342834]
- [0.206562   0.7990092 ]]
+ [[ 0.6122652   1.1225883 ]
+ [ 1.1373317  -0.8127325 ]
+ [-0.890405    0.12623145]]
 
 
-Sample shape: 
- (3, 2)
-
-
-Event shape: 
- ()
+Event shape: ()   Batch shape: ()   Sample shape: (3, 2)
 </pre>
 </div>
 </div>
@@ -14159,20 +14157,17 @@ Event shape:
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">s</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_shape</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> \
     <span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
 
-
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample shape: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">event_shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">event_shape</span><span class="p">,</span> <span class="s1">&#39;  Batch shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">batch_shape</span><span class="p">,</span> <span class="s1">&#39;  Sample shape:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14193,17 +14188,12 @@ Event shape:
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>Sample: 
- [[1.3086625  2.0340383 ]
- [2.0580726  0.23342834]
- [0.206562   0.7990092 ]]
+ [[ 0.6122652   1.1225883 ]
+ [ 1.1373317  -0.8127325 ]
+ [-0.890405    0.12623145]]
 
 
-Sample shape: 
- (3, 2)
-
-
-Event shape: 
- ()
+Event shape: ()   Batch shape: ()   Sample shape: (3, 2)
 </pre>
 </div>
 </div>
@@ -14215,7 +14205,7 @@ Event shape:
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[21]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">LKJ</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -14223,9 +14213,7 @@ Event shape:
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample shape: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">event_shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">event_shape</span><span class="p">,</span> <span class="s1">&#39;  Batch shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">batch_shape</span><span class="p">,</span> <span class="s1">&#39;  Sample shape:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14250,12 +14238,7 @@ Event shape:
   [0.44555074 1.        ]]]
 
 
-Sample shape: 
- (1, 2, 2)
-
-
-Event shape: 
- (2, 2)
+Event shape: (2, 2)   Batch shape: ()   Sample shape: (1, 2, 2)
 </pre>
 </div>
 </div>
@@ -14267,7 +14250,7 @@ Event shape:
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">LKJ</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -14276,9 +14259,7 @@ Event shape:
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample shape: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">event_shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">event_shape</span><span class="p">,</span> <span class="s1">&#39;  Batch shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">batch_shape</span><span class="p">,</span> <span class="s1">&#39;  Sample shape:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14306,12 +14287,7 @@ Event shape:
    [-0.11944741  1.        ]]]]
 
 
-Sample shape: 
- (1, 2, 2, 2)
-
-
-Event shape: 
- (2, 2)
+Event shape: (2, 2)   Batch shape: ()   Sample shape: (1, 2, 2, 2)
 </pre>
 </div>
 </div>
@@ -14323,24 +14299,22 @@ Event shape:
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[23]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">lkj</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">LKJ</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">lkj_sample</span> <span class="o">=</span> <span class="n">lkj</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_shape</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> \
-    <span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,))</span>
+    <span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
 
 <span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">MultivariateNormal</span><span class="p">(</span>
         <span class="n">loc</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]),</span>
         <span class="n">covariance_matrix</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])),</span> <span class="n">lkj_sample</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])))</span>
         <span class="p">)</span>
-<span class="n">s</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample shape: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">event_shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">event_shape</span><span class="p">,</span> <span class="s1">&#39;  Batch shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">batch_shape</span><span class="p">,</span> <span class="s1">&#39;  Sample shape:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14361,19 +14335,19 @@ Event shape:
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>Sample: 
- [[[[  2.468875    2.7756164]
-   [ -0.8821709  -1.6952798]]
-
-  [[  3.147201   -1.0912826]
-   [ -4.238549  -10.6817   ]]]]
+ [[[[ 2.1126237  -1.5519805 ]
+   [-0.5430193   9.980261  ]]]
 
 
-Sample shape: 
- (1, 2, 2, 2)
+ [[[-2.8950949  -2.4949522 ]
+   [ 2.6727245   2.1419883 ]]]
 
 
-Event shape: 
- (2,)
+ [[[-1.4942696  -0.814054  ]
+   [-0.64660287 -0.11682558]]]]
+
+
+Event shape: (2,)   Batch shape: (1, 2)   Sample shape: (3, 1, 2, 2)
 </pre>
 </div>
 </div>
@@ -14385,7 +14359,7 @@ Event shape:
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[24]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">lkj_sample</span> <span class="o">=</span> <span class="n">lkj</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
@@ -14394,12 +14368,12 @@ Event shape:
         <span class="n">loc</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]),</span>
         <span class="n">covariance_matrix</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])),</span> <span class="n">lkj_sample</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])))</span>
         <span class="p">)</span> \
-        <span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,))</span> \
-        <span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+        <span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,))</span> 
+<span class="n">s</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">event_shape</span><span class="p">,</span> <span class="s1">&#39;  Batch shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">batch_shape</span><span class="p">,</span> <span class="s1">&#39;  Sample shape:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14419,7 +14393,8 @@ Event shape:
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[[[ 2.1126237  -1.5476623 ]
+<pre>Sample: 
+ [[[ 2.1126237  -1.5476623 ]
   [-0.5430193   8.057651  ]
   [-2.8950949  -2.4994526 ]
   [ 2.6727245   3.3619635 ]
@@ -14427,7 +14402,7 @@ Event shape:
   [-0.64660287 -1.1234295 ]]]
 
 
-(1, 6, 2)
+Event shape: (2,)   Batch shape: (6,)   Sample shape: (1, 6, 2)
 </pre>
 </div>
 </div>
@@ -14439,7 +14414,7 @@ Event shape:
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[25]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">lkj_sample</span> <span class="o">=</span> <span class="n">lkj</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
@@ -14448,12 +14423,12 @@ Event shape:
         <span class="n">loc</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]),</span>
         <span class="n">covariance_matrix</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])),</span> <span class="n">lkj_sample</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])))</span>
         <span class="p">)</span> \
-        <span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span> \
-        <span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,))</span>
+        <span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Event shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">event_shape</span><span class="p">,</span> <span class="s1">&#39;  Batch shape:&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">batch_shape</span><span class="p">,</span> <span class="s1">&#39;  Sample shape:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14473,7 +14448,8 @@ Event shape:
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[[[ 2.1126237  -1.5476623 ]]
+<pre>Sample: 
+ [[[ 2.1126237  -1.5476623 ]]
 
  [[-0.5430193   8.057651  ]]
 
@@ -14486,7 +14462,7 @@ Event shape:
  [[-0.64660287 -1.1234295 ]]]
 
 
-(6, 1, 2)
+Event shape: (2,)   Batch shape: (1,)   Sample shape: (6, 1, 2)
 </pre>
 </div>
 </div>
@@ -14498,14 +14474,14 @@ Event shape:
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[26]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">cov_mat</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])),</span> <span class="n">lkj_sample</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">cov_mat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sample: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">cov_mat</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">cov_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Shape:&#39;</span><span class="p">,</span> <span class="n">cov_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14525,11 +14501,12 @@ Event shape:
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[[[ 9.        5.346609]
+<pre>Sample: 
+ [[[ 9.        5.346609]
   [ 5.346609 16.      ]]]
 
 
-(1, 2, 2)
+Shape: (1, 2, 2)
 </pre>
 </div>
 </div>
@@ -14538,6 +14515,12 @@ Event shape:
 
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><a href="https://brent-morrison.github.io/ref-library/index.html">return to Reference Library</a></p>
+
+</div>
 </div>
 </body>
 

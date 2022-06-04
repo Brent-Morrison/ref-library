@@ -241,10 +241,10 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="./mixed_effect_stock_valuation.html">First</a>
+      <a href="./mixed_effect_stock_valuation.html">Stock valuation with R - WIP</a>
     </li>
     <li>
-      <a href="./numpyro_models.html">Second</a>
+      <a href="./numpyro_models.html">Numpyro - WIP</a>
     </li>
   </ul>
 </li>
@@ -259,16 +259,16 @@ $(document).ready(function () {
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">1.Top n by group</a>
       <ul class="dropdown-menu" role="menu">
         <li>
-          <a href="./dw_rb1.html">R - base</a>
+          <a href="./dw1_rbase.html">R - base</a>
         </li>
         <li>
-          <a href="./dw_rd2.html">R - dplyr</a>
+          <a href="./dw1_rdplyr.html">R - dplyr</a>
         </li>
         <li>
-          <a href="./dw_rd1.html">R - data.table</a>
+          <a href="./dw1_rdatatable.html">R - data.table</a>
         </li>
         <li>
-          <a href="./dw_py1.html">Python - pandas</a>
+          <a href="./dw1_pypandas.html">Python - pandas</a>
         </li>
       </ul>
     </li>
@@ -276,10 +276,10 @@ $(document).ready(function () {
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">2.Placeholder</a>
       <ul class="dropdown-menu" role="menu">
         <li>
-          <a href="./dw_rd2.html">R - placeholder</a>
+          <a href="./dw2_ph.html">R - placeholder</a>
         </li>
         <li>
-          <a href="./dw_rd2.html">Python - placeholder</a>
+          <a href="./dw2_ph.html">Python - placeholder</a>
         </li>
       </ul>
     </li>
@@ -297,6 +297,9 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="./numpyro_models.html">Numpyro model</a>
+    </li>
+    <li>
+      <a href="./mixed_effect_stock_valuation.html">WIP - multi-level models</a>
     </li>
   </ul>
 </li>
@@ -326,13 +329,16 @@ $(document).ready(function () {
 
 
 <p>This website is a collection of Python and R notebooks that forms a reference for variance data analysis, modelling and machine learning tasks.</p>
-<p>Topics are arranged via the menu at the top of the page. There will typically be a number of implementations of each topic across languages / frameworks.</p>
 <p>The site is an addendum to my <a href="https://brentmorrison.netlify.app/">blog</a>.</p>
+<p>Topics are arranged via the menu at the top of the page. The aim is to have a number of implementations of each topic across language / framework.</p>
+<p><br></p>
 <div id="jupyter-notebooks" class="section level2">
 <h2>Jupyter notebooks</h2>
-<p>Some content is constructed using Jupyter noteboooks. This requires conversion to html using the `<code>nbconvert</code> utility shown below.</p>
-<p>`<code>jupyter nbconvert --to markdown numpyromodels.ipynb</code></p>
-<p>`<code>jupyter nbconvert --to html numpyro_models.ipynb</code> copied html to repo base folder</p>
+<p>Some content is constructed using Jupyter noteboooks. This requires conversion to html using the <code>nbconvert</code> utility shown below.</p>
+<p>Example conversion, ipynb to html:</p>
+<p><br> <code>jupyter nbconvert --to html numpyro_models.ipynb</code><br />
+<br></p>
+<p>This command will produce a html file called <code>numpyro_models.html</code>. This file is then copied to the base folder of the site repository before rendering.</p>
 </div>
 
 
