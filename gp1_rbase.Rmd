@@ -1,0 +1,100 @@
+---
+title: "Gaussian Process regression - base R"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<br>
+
+A replication of the Gaussian Process regression implementation lifted from chapter 5 of [Surrogates](https://bookdown.org/rbg/surrogates/chap5.html).
+
+### Data
+
+```{r }
+# Training data
+n <- 8
+X <- matrix(seq(0, 2*pi, length=n), ncol=1)
+y <- sin(X)
+
+# Predictive grid
+XX <- matrix(seq(-0.5, 2*pi + 0.5, length=100), ncol=1)
+```
+
+<br>
+
+### Covariance function / kernel  
+
+Using inverse exponentiated squared distance.
+
+Note that the first three lines below can be replicated with ```D <- plgp::distance(X)```.
+
+
+```{r }
+D <- dist(X, diag = T, upper = T)
+D <- D**2
+D <- as.matrix(D)                            # euclidean distance
+eps <- sqrt(.Machine$double.eps)             # nugget / jitter
+Sigma <- exp(-D) + diag(eps, ncol(D))        # exponentiated squared euclidean distance
+```
+
+<br>
+
+### Multi-variate normal conditioning  
+
+Covariance of testing grid data points
+
+```{r }
+DXX <- as.matrix(dist(XX, diag = T, upper = T)**2)
+SXX <- exp(-DXX) + diag(eps, ncol(DXX))
+```
+
+<br>
+
+Covariance between testing grid and training data
+
+```{r }
+library('plgp')
+DX <- distance(XX, X)
+SX <- exp(-DX)
+```
+
+<br>
+
+Kriging equations, mean ```mup``` and variance ```Sigmap```.
+
+```{r }
+Si <- solve(Sigma)
+mup <- SX %*% Si %*% y
+Sigmap <- SXX - SX %*% Si %*% t(SX)
+```
+
+<br>
+
+Generate Y values from the posterior/predictive distribution
+
+```{r }
+YY <- rmvnorm(100, mup, Sigmap)
+
+# Error bars
+q1 <- mup + qnorm(0.05, 0, sqrt(diag(Sigmap)))
+q2 <- mup + qnorm(0.95, 0, sqrt(diag(Sigmap)))
+```
+
+<br>
+
+Plot
+```{r }
+matplot(XX, t(YY), type="l", col="gray", lty=1, xlab="x", ylab="y")
+points(X, y, pch=20, cex=2)
+lines(XX, sin(XX), col="blue")
+lines(XX, mup, lwd=2)
+lines(XX, q1, lwd=2, lty=2, col=2)
+lines(XX, q2, lwd=2, lty=2, col=2)
+```
+
+
+
+
+

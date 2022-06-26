@@ -40,6 +40,10 @@ navbar:
               href: ./dw2_ph.html
             - text: "Python - placeholder"
               href: ./dw2_ph.html
+    - text: "GP"
+      menu:
+        - text: "R - base"
+          href: ./gp1_rbase.html
     - text: "Other"
       menu:
         - text: "Numpyro shapes"
