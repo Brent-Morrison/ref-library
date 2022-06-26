@@ -1,5 +1,5 @@
 ---
-title: "Gaussian Process regression - base R"
+title: "Gaussian Process regression - base R (WIP)"
 output: html_document
 ---
 
@@ -9,6 +9,10 @@ knitr::opts_chunk$set(echo = TRUE)
 <br>
 
 A replication of the Gaussian Process regression implementation lifted from chapter 5 of [Surrogates](https://bookdown.org/rbg/surrogates/chap5.html).
+
+## Chapter example
+
+<br>
 
 ### Data
 
@@ -52,11 +56,11 @@ SXX <- exp(-DXX) + diag(eps, ncol(DXX))
 
 <br>
 
-Covariance between testing grid and training data
+Covariance between testing grid and training data.
 
 ```{r }
 library('plgp')
-DX <- distance(XX, X)
+DX <- plgp::distance(XX, X)
 SX <- exp(-DX)
 ```
 
@@ -72,7 +76,9 @@ Sigmap <- SXX - SX %*% Si %*% t(SX)
 
 <br>
 
-Generate Y values from the posterior/predictive distribution
+### Posterior/predictive distribution
+
+Generate Y values from the posterior/predictive distribution.
 
 ```{r }
 YY <- rmvnorm(100, mup, Sigmap)
@@ -95,6 +101,57 @@ lines(XX, q2, lwd=2, lty=2, col=2)
 ```
 
 
+## Stock data example
 
+The procedures above are now applied to real data, that being stock valuations and fundamentals.
 
+### Data
+
+```{r}
+library(romerb)
+data("stock_data")
+fundamental_raw <- stock_data
+rm(stock_data)
+
+# Medical devices sector only
+df <- fundamental_raw[fundamental_raw$sector == 7, ]   
+df$log_mkt_cap <- log(df$mkt_cap)
+df$log_book <- log(-df$total_equity_cln)
+df <- df[df$date_stamp == as.Date('2021-06-30'), c('log_book','log_mkt_cap','log_pb','roe','leverage')]
+
+# Training data
+X <- matrix(df$roe)
+y <- matrix(df$log_pb)
+
+# Predictive grid
+XX <- matrix(seq(min(X), max(X), length=200), ncol=1)
+```
+
+### Covariance function / MVN conditioning
+
+```{r}
+Sigma <- exp(-plgp::distance(X)) + diag(eps, length(X))
+SXX <- exp(-plgp::distance(XX)) + diag(eps, length(XX))
+SX <- exp(-distance(XX, sort(X)))                         # note the sort, here required to construct symmetric matrix at Sigmap
+
+# Kriging equations, mean mup and variance Sigmap
+Si <- solve(Sigma)
+mup <- SX %*% Si %*% y
+Sigmap <- SXX - SX %*% Si %*% t(SX)
+
+# Generate Y values & error bars from the posterior/predictive distribution
+YY <- rmvnorm(100, mup, Sigmap)
+q1 <- mup + qnorm(0.05, 0, sqrt(diag(Sigmap)))
+q2 <- mup + qnorm(0.95, 0, sqrt(diag(Sigmap)))
+```
+
+Plot
+```{r}
+matplot(XX, t(YY), type="l", col="gray", lty=1, xlab="x", ylab="y")
+points(X, y, pch=20, cex=2)
+lines(XX, sin(XX), col="blue")
+lines(XX, mup, lwd=2)
+lines(XX, q1, lwd=2, lty=2, col=2)
+lines(XX, q2, lwd=2, lty=2, col=2)
+```
 
