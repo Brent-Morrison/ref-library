@@ -44,6 +44,10 @@ navbar:
       menu:
         - text: "R - base"
           href: ./gp1_rbase.html
+    - text: "Command line"
+      menu:
+        - text: "Bash"
+          href: ./cl_bash.html
     - text: "Other"
       menu:
         - text: "Numpyro shapes"

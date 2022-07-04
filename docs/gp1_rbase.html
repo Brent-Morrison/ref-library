@@ -479,6 +479,18 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Command line
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="./cl_bash.html">Bash</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Other
      
     <span class="caret"></span>
@@ -521,16 +533,17 @@ div.tocify {
 
 
 <p><br></p>
-<p>A replication of the Gaussian Process regression implementation lifted from chapter 5 of <a href="https://bookdown.org/rbg/surrogates/chap5.html">Surrogates</a>.</p>
+<p>A replication of the Gaussian Process regression implementation lifted from chapter 5 of <a href="https://bookdown.org/rbg/surrogates/chap5.html">Surrogates</a>. Additionally, applying the same code to real data.</p>
 <div id="chapter-example" class="section level2">
 <h2>Chapter example</h2>
 <p><br></p>
 <div id="data" class="section level3">
 <h3>Data</h3>
+<p>Create some dummy data being an independent and dependent variable, along with a grid of the independent variable values.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Training data</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">8</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span><span class="sc">*</span>pi, <span class="at">length=</span>n), <span class="at">ncol=</span><span class="dv">1</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sin</span>(X)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span><span class="sc">*</span>pi, <span class="at">length=</span>n), <span class="at">ncol=</span><span class="dv">1</span>)         <span class="co"># independent variable</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">sin</span>(X)                                         <span class="co"># dependent variable</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Predictive grid</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>XX <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="dv">2</span><span class="sc">*</span>pi <span class="sc">+</span> <span class="fl">0.5</span>, <span class="at">length=</span><span class="dv">100</span>), <span class="at">ncol=</span><span class="dv">1</span>)</span></code></pre></div>
@@ -549,8 +562,8 @@ div.tocify {
 </div>
 <div id="multi-variate-normal-conditioning" class="section level3">
 <h3>Multi-variate normal conditioning</h3>
-<p>Covariance of testing grid data points</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>DXX <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(XX, <span class="at">diag =</span> T, <span class="at">upper =</span> T)<span class="sc">**</span><span class="dv">2</span>)</span>
+<p>Covariance of testing grid data points.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>DXX <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(XX, <span class="at">diag =</span> T, <span class="at">upper =</span> T)<span class="sc">**</span><span class="dv">2</span>)  <span class="co"># Is this the same as plgp::dist?</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>SXX <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>DXX) <span class="sc">+</span> <span class="fu">diag</span>(eps, <span class="fu">ncol</span>(DXX))</span></code></pre></div>
 <p><br></p>
 <p>Covariance between testing grid and training data.</p>
@@ -606,40 +619,42 @@ div.tocify {
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>log_book <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="sc">-</span>df<span class="sc">$</span>total_equity_cln)</span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[df<span class="sc">$</span>date_stamp <span class="sc">==</span> <span class="fu">as.Date</span>(<span class="st">&#39;2021-06-30&#39;</span>), <span class="fu">c</span>(<span class="st">&#39;log_book&#39;</span>,<span class="st">&#39;log_mkt_cap&#39;</span>,<span class="st">&#39;log_pb&#39;</span>,<span class="st">&#39;roe&#39;</span>,<span class="st">&#39;leverage&#39;</span>)]</span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Training data</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(df<span class="sc">$</span>roe)</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(df<span class="sc">$</span>log_pb)</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Predictive grid</span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>XX <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">seq</span>(<span class="fu">min</span>(X), <span class="fu">max</span>(X), <span class="at">length=</span><span class="dv">200</span>), <span class="at">ncol=</span><span class="dv">1</span>)</span></code></pre></div>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># nugget / jitter</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>eps <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(.Machine<span class="sc">$</span>double.eps)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Training data</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(df<span class="sc">$</span>roe)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(df<span class="sc">$</span>log_pb)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Predictive grid</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>XX <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">seq</span>(<span class="fu">min</span>(X), <span class="fu">max</span>(X), <span class="at">length=</span><span class="dv">200</span>), <span class="at">ncol=</span><span class="dv">1</span>)</span></code></pre></div>
 </div>
 <div id="covariance-function-mvn-conditioning" class="section level3">
 <h3>Covariance function / MVN conditioning</h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>plgp<span class="sc">::</span><span class="fu">distance</span>(X)) <span class="sc">+</span> <span class="fu">diag</span>(eps, <span class="fu">length</span>(X))</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>SXX <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>plgp<span class="sc">::</span><span class="fu">distance</span>(XX)) <span class="sc">+</span> <span class="fu">diag</span>(eps, <span class="fu">length</span>(XX))</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>SX <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">distance</span>(XX, <span class="fu">sort</span>(X)))                         <span class="co"># note the sort, here required to construct symmetric matrix at Sigmap</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Kriging equations, mean mup and variance Sigmap</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>Si <span class="ot">&lt;-</span> <span class="fu">solve</span>(Sigma)</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>mup <span class="ot">&lt;-</span> SX <span class="sc">%*%</span> Si <span class="sc">%*%</span> y</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>Sigmap <span class="ot">&lt;-</span> SXX <span class="sc">-</span> SX <span class="sc">%*%</span> Si <span class="sc">%*%</span> <span class="fu">t</span>(SX)</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate Y values &amp; error bars from the posterior/predictive distribution</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>YY <span class="ot">&lt;-</span> <span class="fu">rmvnorm</span>(<span class="dv">100</span>, mup, Sigmap)</span></code></pre></div>
-<pre><code>## Warning in rmvnorm(100, mup, Sigmap): sigma is numerically not positive
-## semidefinite</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>q1 <span class="ot">&lt;-</span> mup <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="fl">0.05</span>, <span class="dv">0</span>, <span class="fu">sqrt</span>(<span class="fu">diag</span>(Sigmap)))</span></code></pre></div>
-<pre><code>## Warning in sqrt(diag(Sigmap)): NaNs produced</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>q2 <span class="ot">&lt;-</span> mup <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="fl">0.95</span>, <span class="dv">0</span>, <span class="fu">sqrt</span>(<span class="fu">diag</span>(Sigmap)))</span></code></pre></div>
-<pre><code>## Warning in sqrt(diag(Sigmap)): NaNs produced</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> plgp<span class="sc">::</span><span class="fu">distance</span>(X)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>D) <span class="sc">+</span> <span class="fu">diag</span>(eps, <span class="fu">length</span>(X))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>DXX <span class="ot">&lt;-</span> plgp<span class="sc">::</span><span class="fu">distance</span>(XX)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>SXX <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>DXX) <span class="sc">+</span> <span class="fu">diag</span>(eps, <span class="fu">length</span>(XX))</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>SX <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fu">distance</span>(XX, <span class="fu">sort</span>(X)))                         <span class="co"># note the sort, required to construct symmetric matrix at Sigmap</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Kriging equations, mean mup and variance Sigmap</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>Si <span class="ot">&lt;-</span> <span class="fu">solve</span>(Sigma)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>mup <span class="ot">&lt;-</span> SX <span class="sc">%*%</span> Si <span class="sc">%*%</span> y</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>Sigmap <span class="ot">&lt;-</span> SXX <span class="sc">-</span> SX <span class="sc">%*%</span> Si <span class="sc">%*%</span> <span class="fu">t</span>(SX)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>Sigmap <span class="ot">&lt;-</span> sfsmisc<span class="sc">::</span><span class="fu">posdefify</span>(Sigmap, <span class="at">method =</span> <span class="st">&quot;allEVadd&quot;</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate Y values &amp; error bars from the posterior/predictive distribution</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>YY <span class="ot">&lt;-</span> <span class="fu">rmvnorm</span>(<span class="dv">100</span>, mup, Sigmap)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>q1 <span class="ot">&lt;-</span> mup <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="fl">0.05</span>, <span class="dv">0</span>, <span class="fu">sqrt</span>(<span class="fu">diag</span>(Sigmap)))</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>q2 <span class="ot">&lt;-</span> mup <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="fl">0.95</span>, <span class="dv">0</span>, <span class="fu">sqrt</span>(<span class="fu">diag</span>(Sigmap)))</span></code></pre></div>
 <p>Plot</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(XX, <span class="fu">t</span>(YY), <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span><span class="st">&quot;gray&quot;</span>, <span class="at">lty=</span><span class="dv">1</span>, <span class="at">xlab=</span><span class="st">&quot;x&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;y&quot;</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(X, y, <span class="at">pch=</span><span class="dv">20</span>, <span class="at">cex=</span><span class="dv">2</span>)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(XX, <span class="fu">sin</span>(XX), <span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(XX, mup, <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(XX, q1, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="dv">2</span>)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(XX, q2, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="gp1_rbase_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(XX, <span class="fu">t</span>(YY), <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span><span class="st">&quot;gray&quot;</span>, <span class="at">lty=</span><span class="dv">1</span>, <span class="at">xlab=</span><span class="st">&quot;x&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;y&quot;</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#points(X, y, pch=20, cex=2)</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#lines(XX, sin(XX), col=&quot;blue&quot;)</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(XX, mup, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(XX, q1, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="dv">2</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(XX, q2, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="gp1_rbase_files/figure-html/unnamed-chunk-10-1.png" width="672" /> <a href="https://stats.stackexchange.com/questions/267908/clarification-regarding-rmvnorm-in-r" class="uri">https://stats.stackexchange.com/questions/267908/clarification-regarding-rmvnorm-in-r</a> <a href="https://nhigham.com/2013/02/13/the-nearest-correlation-matrix/" class="uri">https://nhigham.com/2013/02/13/the-nearest-correlation-matrix/</a> <a href="https://www.r-bloggers.com/2013/08/correcting-a-pseudo-correlation-matrix-to-be-positive-semidefinite/" class="uri">https://www.r-bloggers.com/2013/08/correcting-a-pseudo-correlation-matrix-to-be-positive-semidefinite/</a> <a href="https://www.r-bloggers.com/2012/10/fixing-non-positive-definite-correlation-matrices-using-r-2/" class="uri">https://www.r-bloggers.com/2012/10/fixing-non-positive-definite-correlation-matrices-using-r-2/</a></p>
 </div>
 </div>
 

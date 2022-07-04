@@ -11,7 +11,7 @@
 
 
 
-<title>Reference Library</title>
+<title>Bash</title>
 
 <script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 
@@ -210,6 +213,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -217,6 +283,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -347,26 +423,127 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Reference Library</h1>
+<h1 class="title toc-ignore">Bash</h1>
 
 </div>
 
 
-<p>This website is a collection of Python and R notebooks that forms a reference for variance data analysis, modelling and machine learning tasks.</p>
-<p>The site is an addendum to my <a href="https://brentmorrison.netlify.app/">blog</a>.</p>
-<p>Topics are arranged via the menu at the top of the page. The aim is to have a number of implementations of each topic across language / framework.</p>
+<p>A personal cheat sheet for Bash commands.</p>
+<div id="file-manipulation" class="section level2">
+<h2>File manipulation</h2>
 <p><br></p>
-<div id="jupyter-notebooks" class="section level2">
-<h2>Jupyter notebooks</h2>
-<p>Some content is constructed using Jupyter noteboooks. This requires conversion to html using the <code>nbconvert</code> utility shown below.</p>
-<p>Example conversion, ipynb to html:</p>
-<p><br> <code>jupyter nbconvert --to html numpyro_models.ipynb</code><br />
-<br></p>
-<p>This command will produce a html file called <code>numpyro_models.html</code>. This file is then copied to the base folder of the site repository before rendering.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Action</th>
+<th align="left">Command</th>
+<th align="center">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Create file</td>
+<td align="left"><code>touch &lt;file_name&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">View file</td>
+<td align="left"><code>cat &lt;file_name&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">Open file</td>
+<td align="left"><code>nano &lt;file_name&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">View permissions</td>
+<td align="left"><code>ls -l &lt;file_name&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">View permissions (octal)</td>
+<td align="left"><code>stat -c "%a %n" &lt;file_name&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">Set permission</td>
+<td align="left"><code>sudo chmod 774 &lt;file_name&gt;</code></td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Find location of file</td>
+<td align="left"><code>sudo find / -name &lt;file_name&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">Delete file</td>
+<td align="left"><code>rm &lt;file_name&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">Processes running</td>
+<td align="left"><code>ps aux \| grep &lt;process&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">Folder &amp; content size</td>
+<td align="left"><code>du -hsc * \| sort -hr</code></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="notes" class="section level2">
+<h2>Notes</h2>
+<p><br></p>
+<div id="this-assigns-rights-as-follows" class="section level4">
+<h4>1: This assigns rights as follows:</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Rights</th>
+<th align="center">Owner</th>
+<th align="center">Group</th>
+<th align="center">Others</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Read (r)</td>
+<td align="center">4</td>
+<td align="center">4</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="left">Write (w)</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Execute (x)</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="left">TOTAL</td>
+<td align="center"><strong>7</strong></td>
+<td align="center"><strong>7</strong></td>
+<td align="center"><strong>4</strong></td>
+</tr>
+</tbody>
+</table>
+<p>which is equivalent to <code>rwxrwxr--</code></p>
+</div>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -404,6 +581,32 @@ $(document).ready(function () {
 });
 </script>
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

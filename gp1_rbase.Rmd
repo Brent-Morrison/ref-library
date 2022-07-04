@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 <br>
 
-A replication of the Gaussian Process regression implementation lifted from chapter 5 of [Surrogates](https://bookdown.org/rbg/surrogates/chap5.html).
+A replication of the Gaussian Process regression implementation lifted from chapter 5 of [Surrogates](https://bookdown.org/rbg/surrogates/chap5.html).  Additionally, applying the same code to real data.
 
 ## Chapter example
 
@@ -16,11 +16,13 @@ A replication of the Gaussian Process regression implementation lifted from chap
 
 ### Data
 
+Create some dummy data being an independent and dependent variable, along with a grid of the independent variable values. 
+
 ```{r }
 # Training data
 n <- 8
-X <- matrix(seq(0, 2*pi, length=n), ncol=1)
-y <- sin(X)
+X <- matrix(seq(0, 2*pi, length=n), ncol=1)         # independent variable
+y <- sin(X)                                         # dependent variable
 
 # Predictive grid
 XX <- matrix(seq(-0.5, 2*pi + 0.5, length=100), ncol=1)
@@ -47,10 +49,10 @@ Sigma <- exp(-D) + diag(eps, ncol(D))        # exponentiated squared euclidean d
 
 ### Multi-variate normal conditioning  
 
-Covariance of testing grid data points
+Covariance of testing grid data points.
 
 ```{r }
-DXX <- as.matrix(dist(XX, diag = T, upper = T)**2)
+DXX <- as.matrix(dist(XX, diag = T, upper = T)**2)  # Is this the same as plgp::dist?
 SXX <- exp(-DXX) + diag(eps, ncol(DXX))
 ```
 
@@ -119,6 +121,9 @@ df$log_mkt_cap <- log(df$mkt_cap)
 df$log_book <- log(-df$total_equity_cln)
 df <- df[df$date_stamp == as.Date('2021-06-30'), c('log_book','log_mkt_cap','log_pb','roe','leverage')]
 
+# nugget / jitter
+eps <- sqrt(.Machine$double.eps)
+
 # Training data
 X <- matrix(df$roe)
 y <- matrix(df$log_pb)
@@ -130,14 +135,17 @@ XX <- matrix(seq(min(X), max(X), length=200), ncol=1)
 ### Covariance function / MVN conditioning
 
 ```{r}
-Sigma <- exp(-plgp::distance(X)) + diag(eps, length(X))
-SXX <- exp(-plgp::distance(XX)) + diag(eps, length(XX))
-SX <- exp(-distance(XX, sort(X)))                         # note the sort, here required to construct symmetric matrix at Sigmap
+D <- plgp::distance(X)
+Sigma <- exp(-D) + diag(eps, length(X))
+DXX <- plgp::distance(XX)
+SXX <- exp(-DXX) + diag(eps, length(XX))
+SX <- exp(-distance(XX, sort(X)))                         # note the sort, required to construct symmetric matrix at Sigmap
 
 # Kriging equations, mean mup and variance Sigmap
 Si <- solve(Sigma)
 mup <- SX %*% Si %*% y
 Sigmap <- SXX - SX %*% Si %*% t(SX)
+Sigmap <- sfsmisc::posdefify(Sigmap, method = "allEVadd")
 
 # Generate Y values & error bars from the posterior/predictive distribution
 YY <- rmvnorm(100, mup, Sigmap)
@@ -148,10 +156,20 @@ q2 <- mup + qnorm(0.95, 0, sqrt(diag(Sigmap)))
 Plot
 ```{r}
 matplot(XX, t(YY), type="l", col="gray", lty=1, xlab="x", ylab="y")
-points(X, y, pch=20, cex=2)
-lines(XX, sin(XX), col="blue")
+#points(X, y, pch=20, cex=2)
+#lines(XX, sin(XX), col="blue")
 lines(XX, mup, lwd=2)
 lines(XX, q1, lwd=2, lty=2, col=2)
 lines(XX, q2, lwd=2, lty=2, col=2)
 ```
+## References
+
+https://stats.stackexchange.com/questions/267908/clarification-regarding-rmvnorm-in-r  
+
+https://nhigham.com/2013/02/13/the-nearest-correlation-matrix/  
+
+https://www.r-bloggers.com/2013/08/correcting-a-pseudo-correlation-matrix-to-be-positive-semidefinite/  
+
+https://www.r-bloggers.com/2012/10/fixing-non-positive-definite-correlation-matrices-using-r-2/
+
 
