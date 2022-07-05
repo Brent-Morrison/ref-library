@@ -8,7 +8,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 <br>
 
-A replication of the Gaussian Process regression implementation lifted from chapter 5 of [Surrogates](https://bookdown.org/rbg/surrogates/chap5.html).  Additionally, applying the same code to real data.
+A replication of the Gaussian Process regression implementation lifted from chapter 5 of [Surrogates](https://bookdown.org/rbg/surrogates/chap5.html), and an application of the same code to real data.
+
+<br>
 
 ## Chapter example
 
@@ -60,7 +62,7 @@ SXX <- exp(-DXX) + diag(eps, ncol(DXX))
 
 Covariance between testing grid and training data.
 
-```{r }
+```{r, results="hide", message=FALSE, warning=FALSE}
 library('plgp')
 DX <- plgp::distance(XX, X)
 SX <- exp(-DX)
@@ -80,7 +82,7 @@ Sigmap <- SXX - SX %*% Si %*% t(SX)
 
 ### Posterior/predictive distribution
 
-Generate Y values from the posterior/predictive distribution.
+Generate Y values from the posterior/predictive distribution and plot.
 
 ```{r }
 YY <- rmvnorm(100, mup, Sigmap)
@@ -88,12 +90,8 @@ YY <- rmvnorm(100, mup, Sigmap)
 # Error bars
 q1 <- mup + qnorm(0.05, 0, sqrt(diag(Sigmap)))
 q2 <- mup + qnorm(0.95, 0, sqrt(diag(Sigmap)))
-```
 
-<br>
-
-Plot
-```{r }
+# Plot
 matplot(XX, t(YY), type="l", col="gray", lty=1, xlab="x", ylab="y")
 points(X, y, pch=20, cex=2)
 lines(XX, sin(XX), col="blue")
@@ -102,14 +100,20 @@ lines(XX, q1, lwd=2, lty=2, col=2)
 lines(XX, q2, lwd=2, lty=2, col=2)
 ```
 
+<br>
+
 
 ## Stock data example
 
+<br>
+
 The procedures above are now applied to real data, that being stock valuations and fundamentals.
+
+<br>
 
 ### Data
 
-```{r}
+```{r, results="hide", message=FALSE, warning=FALSE}
 library(romerb)
 data("stock_data")
 fundamental_raw <- stock_data
@@ -132,6 +136,8 @@ y <- matrix(df$log_pb)
 XX <- matrix(seq(min(X), max(X), length=200), ncol=1)
 ```
 
+<br>
+
 ### Covariance function / MVN conditioning
 
 ```{r}
@@ -153,7 +159,10 @@ q1 <- mup + qnorm(0.05, 0, sqrt(diag(Sigmap)))
 q2 <- mup + qnorm(0.95, 0, sqrt(diag(Sigmap)))
 ```
 
-Plot
+<br>
+
+### Plot
+
 ```{r}
 matplot(XX, t(YY), type="l", col="gray", lty=1, xlab="x", ylab="y")
 #points(X, y, pch=20, cex=2)
@@ -162,7 +171,11 @@ lines(XX, mup, lwd=2)
 lines(XX, q1, lwd=2, lty=2, col=2)
 lines(XX, q2, lwd=2, lty=2, col=2)
 ```
-## References
+
+<br>
+
+## References  
+
 
 https://stats.stackexchange.com/questions/267908/clarification-regarding-rmvnorm-in-r  
 
