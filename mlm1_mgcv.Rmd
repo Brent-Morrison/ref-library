@@ -1,0 +1,99 @@
+---
+title: "Generalised Additive Models - mgcv (WIP)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
+```
+<br>
+
+A replication of the ecological models per [Hierarchical generalized additive models in ecology: an introduction with mgcv](https://peerj.com/articles/6876/) using stock data.
+
+
+<br>
+
+### Packages and data
+
+Load the required packages and the standard data set for analysis
+
+```{r }
+library(romerb)
+library(mgcv)
+library(gratia)
+
+data("stock_data")
+fundamental_raw <- stock_data
+rm(stock_data)
+
+# Data
+df <- fundamental_raw[fundamental_raw$date_stamp == as.Date('2021-06-30'), ]   
+df$log_mkt_cap <- log(df$mkt_cap)
+df$log_book <- log(-df$total_equity_cln)
+df$roe <- df$roe * -1
+df <- df[df$date_stamp == as.Date('2021-06-30'), c('symbol','sector','log_book','log_mkt_cap','log_pb','roe','leverage')]
+```
+
+<br>
+
+### Hierachical GAM (model type GS)  
+
+Using the factor smooth basis.
+
+
+```{r }
+# Model
+gam_mlm1 <- gam(
+  log_pb ~ s(roe, k = 5, m = 2) +s(roe, sector, k = 5, m = 2, bs = "fs"),
+  data = df, 
+  method = "REML"
+  )
+
+# Predict
+gam_mlm1_pred <- predict(gam_mlm1, se.fit = TRUE)
+df$pred <- gam_mlm1_pred$fit
+df$sepred <- gam_mlm1_pred$se.fit
+
+# Visualise
+ggplot(data = df, aes(x = roe, y = log_pb, group = sector)) +
+  facet_wrap(~reorder(sector, as.numeric(sector)), ncol = 4, scales = 'free') +
+  geom_ribbon(aes(ymin = pred - 2 * sepred,
+                  ymax = pred + 2 * sepred), alpha=0.25) +
+  geom_line(aes(y = pred)) +
+  geom_point(alpha = 0.3) +
+  labs(x = 'Return on equity',
+       y = 'Log price / book ratio')
+```
+
+<br>
+
+### Single level interaction model  
+
+Using a tensor product smooth.  Modelling market capitalisation on return on equity and book value of equity.
+
+```{r }
+# Model
+gam_te1 <- gam(
+  log_mkt_cap ~ te(roe, log_book, bs=c("cc", "tp"), k=c(10, 10)),
+  data = df, method = "REML"
+  )
+
+# Visualise
+gratia::draw(gam_te1)
+```
+
+<br>
+
+Modelling price to book ratio on return on equity and leverage.
+
+```{r, results="hide", message=FALSE, warning=FALSE}
+gam_te2 <- gam(
+  log_pb ~ te(roe, leverage, bs=c("cc", "tp"), k=c(10, 10)),
+  data = df, method = "REML"
+)
+
+gratia::draw(gam_te2)
+```
+
+<br>
+
