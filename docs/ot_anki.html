@@ -11,7 +11,7 @@
 
 
 
-<title>Placeholder</title>
+<title>Knowledge snippets</title>
 
 <script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 
@@ -210,6 +213,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -217,6 +283,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -353,25 +429,25 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Placeholder</h1>
+<h1 class="title toc-ignore">Knowledge snippets</h1>
 
 </div>
 
 
-<div id="placeholder" class="section level2">
-<h2>Placeholder</h2>
+<p><br></p>
+<p>Miscellaneous knowledge snippets.</p>
+<p><br></p>
+<div id="models" class="section level2">
+<h2>Models</h2>
+<p><br></p>
 <table>
 <colgroup>
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
-<col width="15%" />
-<col width="23%" />
+<col width="34%" />
+<col width="26%" />
+<col width="39%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">Topic 1</th>
-<th align="left">Topic 2</th>
 <th align="left">Question</th>
 <th align="left">Answer</th>
 <th align="left">Reference</th>
@@ -379,18 +455,91 @@ $(document).ready(function () {
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Preprocessing</td>
-<td align="left">NA</td>
+<td align="left">Naive Bayes assumptions</td>
+<td align="left">Independence among predictors - assumes that the presence of a particular feature in a class is unrelated to the presence of any other feature.</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Which modeling techniques require predictors to have a common scale?</td>
+<td align="left">1. Neural networks<br/>2. K means clustering<br/>3. SVM’s<br/>4. K Nearest Neighbours<br/>5. Any technique using regularisation</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">What is gradient descent?</td>
+<td align="left">Gradient Descent is an optimization algorithm for finding a local minimum of a differentiable function. Gradient descent is simply used to find the values of a function’s parameters (coefficients) that minimize a cost function as far as possible.</td>
+<td align="left"><a href="https://en.wikipedia.org/wiki/Gradient_descent" class="uri">https://en.wikipedia.org/wiki/Gradient_descent</a></td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="preprocessing" class="section level2">
+<h2>Preprocessing</h2>
+<p><br></p>
+<table>
+<colgroup>
+<col width="34%" />
+<col width="26%" />
+<col width="39%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Question</th>
+<th align="left">Answer</th>
+<th align="left">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td align="left">What is polynomial contrast?</td>
 <td align="left">The process of transforming ordered categorical variables / predictors to numeric quantities.</td>
 <td align="left"><a href="https://stats.stackexchange.com/questions/105115/polynomial-contrasts-for-regression" class="uri">https://stats.stackexchange.com/questions/105115/polynomial-contrasts-for-regression</a></td>
 </tr>
 <tr class="even">
-<td align="left">Models</td>
-<td align="left">NA</td>
-<td align="left">What transformation can be used to resolve skewness?</td>
-<td align="left">Box Cox / Log / Square root / Inverse</td>
-<td align="left">NA</td>
+<td align="left">xxxxx</td>
+<td align="left">xxxxx</td>
+<td align="left">xxxxx</td>
+</tr>
+<tr class="odd">
+<td align="left">xxxxx</td>
+<td align="left">xxxxx</td>
+<td align="left">xxxxx</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="feature-selection" class="section level2">
+<h2>Feature selection</h2>
+<p><br></p>
+<table>
+<colgroup>
+<col width="34%" />
+<col width="26%" />
+<col width="39%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Question</th>
+<th align="left">Answer</th>
+<th align="left">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">What type of models feature automatic feature selection?</td>
+<td align="left">1. Tree-based models<br/>2. MARS<br/>3. Elastic net / LASSO<br/>4. Nearest shrunken centroids<br/>5. GAM’s (use parameter “select = TRUE”, effectively the same as LASSO)</td>
+<td align="left"><a href="https://stat.ethz.ch/R-manual/R-devel/library/mgcv/html/gam.selection.html" class="uri">https://stat.ethz.ch/R-manual/R-devel/library/mgcv/html/gam.selection.html</a></td>
+</tr>
+<tr class="even">
+<td align="left">xxxxx</td>
+<td align="left">xxxxx</td>
+<td align="left">xxxxx</td>
+</tr>
+<tr class="odd">
+<td align="left">xxxxx</td>
+<td align="left">xxxxx</td>
+<td align="left">xxxxx</td>
 </tr>
 </tbody>
 </table>
@@ -398,6 +547,8 @@ $(document).ready(function () {
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -435,6 +586,32 @@ $(document).ready(function () {
 });
 </script>
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

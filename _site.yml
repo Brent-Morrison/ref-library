@@ -52,6 +52,8 @@ navbar:
           href: ./cl_bash.html
     - text: "Other"
       menu:
+        - text: "Knowledge snippets"
+          href: ./ot_anki.html
         - text: "Numpyro shapes"
           href: ./sample_shapes.html
         - text: "Numpyro model"

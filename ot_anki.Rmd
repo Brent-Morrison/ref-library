@@ -1,0 +1,46 @@
+---
+title: "Knowledge snippets"
+output: html_document
+---
+
+<br>
+
+Miscellaneous knowledge snippets. 
+
+<br>
+
+## Models
+
+<br>
+
+| Question | Answer | Reference |  
+| :------- | :----- | :-------- |  
+| Naive Bayes assumptions      | Independence among predictors - assumes that the presence of a particular feature in a class is unrelated to the presence of any other feature. |  |  
+| Which modeling techniques require predictors to have a common scale? | 1. Neural networks<br/>2. K means clustering<br/>3. SVM's<br/>4. K Nearest Neighbours<br/>5. Any technique using regularisation |  |  
+| What is gradient descent? | Gradient Descent is an optimization algorithm for finding a local minimum of a differentiable function. Gradient descent is simply used to find the values of a function's parameters (coefficients) that minimize a cost function as far as possible. |https://en.wikipedia.org/wiki/Gradient_descent | 
+
+<br>
+
+## Preprocessing
+
+<br>
+
+| Question | Answer | Reference |  
+| :------- | :----- | :-------- |  
+| What is polynomial contrast? | The process of transforming ordered categorical variables / predictors to numeric quantities. | https://stats.stackexchange.com/questions/105115/polynomial-contrasts-for-regression  |  
+| xxxxx | xxxxx | xxxxx |  
+| xxxxx | xxxxx | xxxxx |  
+
+<br>
+
+## Feature selection
+
+<br>
+
+| Question | Answer | Reference |  
+| :------- | :----- | :-------- |  
+| What type of models feature automatic feature selection? | 1. Tree-based models<br/>2. MARS<br/>3. Elastic net / LASSO<br/>4. Nearest shrunken centroids<br/>5. GAM's (use parameter "select = TRUE", effectively the same as LASSO) | https://stat.ethz.ch/R-manual/R-devel/library/mgcv/html/gam.selection.html |  
+| xxxxx | xxxxx | xxxxx |  
+| xxxxx | xxxxx | xxxxx |  
+
+
