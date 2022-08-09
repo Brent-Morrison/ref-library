@@ -1,0 +1,67 @@
+---
+title: "Top n by group - postgres"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br>
+
+### Postgres set-up
+
+```{r}
+library(DBI)
+library(RPostgres)
+library(jsonlite)
+
+# Database connection
+config <- jsonlite::read_json('C:/Users/brent/Documents/VS_Code/postgres/postgres/config.json')
+
+con <- DBI::dbConnect(
+  RPostgres::Postgres(),
+  host      = 'localhost',
+  port      = '5432',
+  dbname    = 'stock_master_test',
+  user      = 'postgres',
+  password  = config$pg_password
+)
+```
+
+<br>
+
+### Top n by group
+
+```{sql connection=con}
+with data as 
+  (
+    select 
+    ra.symbol
+    ,ra.date_stamp
+    ,ra.symbol
+    ,ra.sector
+    ,fa.asset_growth
+    ,fa.roa
+    ,fa.roe
+    ,fa.leverage
+    ,fa.ttm_earnings
+    from access_layer.return_attributes ra 
+    inner join access_layer.fundamental_attributes fa
+    on ra.symbol = fa.ticker
+    and ra.date_stamp = fa.date_stamp
+    where ra.date_stamp = '2021-06-30'
+  )
+
+select t1.* 
+from 
+  (
+    select 
+    data.*, 
+    rank() over (partition by sector order by ttm_earnings desc) as rnk
+    from data
+  ) t1
+where rnk <= 5;
+
+```
+

@@ -36,7 +36,13 @@ navbar:
               href: ./dw1_rdatatable.html
             - text: "Python - pandas"
               href: ./dw1_pypandas.html
-        - text: "2.Placeholder"
+            - text: "SQL - postgres"
+              href: ./dw1_postgres.html
+        - text: "2.Date sequence"
+          menu:
+            - text: "Date sequence"
+              href: ./dw2_rbase.html
+        - text: "99.Placeholder"
           menu:
             - text: "R - placeholder"
               href: ./dw2_ph.html

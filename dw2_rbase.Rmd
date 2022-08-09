@@ -1,0 +1,108 @@
+---
+title: "Create date sequence"
+output: html_document
+---
+
+<br>
+
+## R
+
+<br>
+
+### First of month
+
+```{r }
+date_seq <- seq(as.Date('2021-01-01'), as.Date('2022-01-01'), by = "month")
+date_seq
+```
+
+<br>
+
+### End of month
+
+```{r }
+date_seq - 1
+```
+
+<br>
+
+## Python  
+
+<br>
+
+### Python set-up
+
+```{r setup}
+library('reticulate')
+use_condaenv(condaenv = 'STOCK_MASTER', required = TRUE)
+```
+
+<br>
+
+```{python }
+import pandas as pd
+```
+
+<br>
+
+### First of month
+
+```{python }
+date_seq = pd.period_range('2021-01-01', '2022-01-01', freq='M')
+date_seq.asfreq(freq='D', how='S')
+```
+
+<br>
+
+### End of month
+
+```{python }
+date_seq = pd.period_range('2021-01-01', '2022-01-01', freq='M')
+date_seq.asfreq(freq='D', how='E')
+```
+
+<br>
+
+## SQL - Postgres
+
+<br>
+ 
+### Postgres set-up
+
+```{r}
+library(DBI)
+library(RPostgres)
+library(jsonlite)
+
+# Database connection
+config <- jsonlite::read_json('C:/Users/brent/Documents/VS_Code/postgres/postgres/config.json')
+
+con <- DBI::dbConnect(
+  RPostgres::Postgres(),
+  host      = 'localhost',
+  port      = '5432',
+  dbname    = 'stock_master_test',
+  user      = 'postgres',
+  password  = config$pg_password
+)
+```
+
+<br>
+
+### First of month
+
+```{sql connection=con}
+select * from generate_series(timestamp '2021-01-01', '2022-01-01', '1 month') as first_of_month;
+```
+
+<br>
+
+### End of month
+
+```{sql connection=con}
+with fom as (
+select * from generate_series(timestamp '2021-01-01', '2022-01-01', '1 month') as first_of_month
+)
+select first_of_month - interval '1 day' as end_of_month from fom;
+```
+
