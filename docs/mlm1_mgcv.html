@@ -576,7 +576,7 @@ div.tocify {
 <p>Using the factor smooth basis.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>gam_mlm1 <span class="ot">&lt;-</span> <span class="fu">gam</span>(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  log_pb <span class="sc">~</span> <span class="fu">s</span>(roe, <span class="at">k =</span> <span class="dv">5</span>, <span class="at">m =</span> <span class="dv">2</span>) <span class="sc">+</span><span class="fu">s</span>(roe, sector, <span class="at">k =</span> <span class="dv">5</span>, <span class="at">m =</span> <span class="dv">2</span>, <span class="at">bs =</span> <span class="st">&quot;fs&quot;</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  log_pb <span class="sc">~</span> <span class="fu">s</span>(roe, <span class="at">k =</span> <span class="dv">5</span>, <span class="at">m =</span> <span class="dv">2</span>) <span class="sc">+</span> <span class="fu">s</span>(roe, sector, <span class="at">k =</span> <span class="dv">5</span>, <span class="at">m =</span> <span class="dv">2</span>, <span class="at">bs =</span> <span class="st">&quot;fs&quot;</span>),</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df, </span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;REML&quot;</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  )</span>
@@ -595,31 +595,101 @@ div.tocify {
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Return on equity&#39;</span>,</span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&#39;Log price / book ratio&#39;</span>)</span></code></pre></div>
-<p><img src="mlm1_mgcv_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="mlm1_mgcv_files/figure-html/unnamed-chunk-2-1.png" width="672" /> <br></p>
+<div id="non-hierachical-3d-visualisation" class="section level4">
+<h4>Non-hierachical &amp; 3d visualisation</h4>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>gam_mlm2 <span class="ot">&lt;-</span> <span class="fu">gam</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  log_pb <span class="sc">~</span> <span class="fu">s</span>(roe, leverage, <span class="at">bs =</span> <span class="st">&quot;tp&quot;</span>, <span class="at">k =</span> <span class="dv">5</span>, <span class="at">m =</span> <span class="dv">2</span>), <span class="co">#+ s(roe, sector, k = 5, m = 2, bs = &quot;fs&quot;),</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">&quot;REML&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>interval <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>roe <span class="ot">&lt;-</span> <span class="fu">with</span>(df, <span class="fu">seq</span>(<span class="fu">min</span>(roe), <span class="fu">max</span>(roe), <span class="at">length =</span> interval))</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>leverage <span class="ot">&lt;-</span> <span class="fu">with</span>(df, <span class="fu">seq</span>(<span class="fu">min</span>(leverage), <span class="fu">max</span>(leverage), <span class="at">length =</span> interval))</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">roe =</span> roe, <span class="at">leverage =</span> leverage)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>gam_mlm2_pred <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">predict</span>(gam_mlm2, new_data), interval, interval) <span class="co">#, type = &quot;response&quot;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualise </span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># https://bikeactuary.com/datasci/gams_scams_pt1</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">persp</span>(</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> leverage, </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> roe, </span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">zlab =</span> <span class="st">&#39;log_pb&#39;</span>,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  gam_mlm2_pred, <span class="at">theta =</span> <span class="dv">225</span>, <span class="at">phi =</span> <span class="dv">20</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">ticktype =</span> <span class="st">&quot;detailed&quot;</span>)</span></code></pre></div>
+<p><img src="mlm1_mgcv_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p><br></p>
+</div>
 </div>
 <div id="single-level-interaction-model" class="section level3">
 <h3>Single level interaction model</h3>
 <p>Using a tensor product smooth. Modelling market capitalisation on return on equity and book value of equity.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>gam_te1 <span class="ot">&lt;-</span> <span class="fu">gam</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  log_mkt_cap <span class="sc">~</span> <span class="fu">te</span>(roe, log_book, <span class="at">bs=</span><span class="fu">c</span>(<span class="st">&quot;cc&quot;</span>, <span class="st">&quot;tp&quot;</span>), <span class="at">k=</span><span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">10</span>)),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df, <span class="at">method =</span> <span class="st">&quot;REML&quot;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualise</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>gratia<span class="sc">::</span><span class="fu">draw</span>(gam_te1)</span></code></pre></div>
-<p><img src="mlm1_mgcv_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p><br></p>
-<p>Modelling price to book ratio on return on equity and leverage.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gam_te2 <span class="ot">&lt;-</span> <span class="fu">gam</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  log_pb <span class="sc">~</span> <span class="fu">te</span>(roe, leverage, <span class="at">bs=</span><span class="fu">c</span>(<span class="st">&quot;cc&quot;</span>, <span class="st">&quot;tp&quot;</span>), <span class="at">k=</span><span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">10</span>)),</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df, <span class="at">method =</span> <span class="st">&quot;REML&quot;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>gratia<span class="sc">::</span><span class="fu">draw</span>(gam_te2)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>gam_te1 <span class="ot">&lt;-</span> <span class="fu">gam</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  log_mkt_cap <span class="sc">~</span> <span class="fu">te</span>(roe, log_book, <span class="at">bs=</span><span class="fu">c</span>(<span class="st">&quot;cc&quot;</span>, <span class="st">&quot;tp&quot;</span>), <span class="at">k=</span><span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">10</span>)),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df, <span class="at">method =</span> <span class="st">&quot;REML&quot;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualise</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>gratia<span class="sc">::</span><span class="fu">draw</span>(gam_te1)</span></code></pre></div>
 <p><img src="mlm1_mgcv_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p><br></p>
+<p>Same model, visualise with a 3d plot.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>interval <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>roe <span class="ot">&lt;-</span> <span class="fu">with</span>(df, <span class="fu">seq</span>(<span class="fu">min</span>(roe), <span class="fu">max</span>(roe), <span class="at">length =</span> interval))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>log_book <span class="ot">&lt;-</span> <span class="fu">with</span>(df, <span class="fu">seq</span>(<span class="fu">min</span>(log_book), <span class="fu">max</span>(log_book), <span class="at">length =</span> interval))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">roe =</span> roe, <span class="at">log_book =</span> log_book)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>gam_te1_pred <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">predict</span>(gam_te1, new_data), interval, interval)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualise</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">persp</span>(</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> log_book, </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> roe, </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">zlab =</span> <span class="st">&#39;log_mkt_cap&#39;</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  gam_te1_pred, <span class="at">theta =</span> <span class="dv">45</span>, <span class="at">phi =</span> <span class="dv">20</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">ticktype =</span> <span class="st">&quot;detailed&quot;</span>)</span></code></pre></div>
+<p><img src="mlm1_mgcv_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><br></p>
+<p>Modelling price to book ratio on return on equity and leverage.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>gam_te2 <span class="ot">&lt;-</span> <span class="fu">gam</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  log_pb <span class="sc">~</span> <span class="fu">te</span>(roe, leverage, <span class="at">bs=</span><span class="fu">c</span>(<span class="st">&quot;cc&quot;</span>, <span class="st">&quot;tp&quot;</span>), <span class="at">k=</span><span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">10</span>)),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df, <span class="at">method =</span> <span class="st">&quot;REML&quot;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>gratia<span class="sc">::</span><span class="fu">draw</span>(gam_te2)</span></code></pre></div>
+<p><img src="mlm1_mgcv_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><br></p>
+<p><br></p>
+<p>Same model, visualise with a 3d plot.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>interval <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>roe <span class="ot">&lt;-</span> <span class="fu">with</span>(df, <span class="fu">seq</span>(<span class="fu">min</span>(roe), <span class="fu">max</span>(roe), <span class="at">length =</span> interval))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>leverage <span class="ot">&lt;-</span> <span class="fu">with</span>(df, <span class="fu">seq</span>(<span class="fu">min</span>(leverage), <span class="fu">max</span>(leverage), <span class="at">length =</span> interval))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">roe =</span> roe, <span class="at">leverage =</span> leverage)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>gam_te2_pred <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">predict</span>(gam_te2, new_data), interval, interval)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualise</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">persp</span>(</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> leverage, </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> roe, </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">zlab =</span> <span class="st">&#39;log_pb&#39;</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  gam_te2_pred, <span class="at">theta =</span> <span class="dv">225</span>, <span class="at">phi =</span> <span class="dv">20</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">ticktype =</span> <span class="st">&quot;detailed&quot;</span>)</span></code></pre></div>
+<p><img src="mlm1_mgcv_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><br></p>
+</div>
+<div id="reference" class="section level3">
+<h3>Reference</h3>
+<p>3d plots with color</p>
+<p><a href="https://stackoverflow.com/questions/22652941/how-to-add-colorbar-with-perspective-plot-in-r" class="uri">https://stackoverflow.com/questions/22652941/how-to-add-colorbar-with-perspective-plot-in-r</a> <a href="https://stackoverflow.com/questions/31374951/add-points-and-colored-surface-to-locfit-perspective-plot" class="uri">https://stackoverflow.com/questions/31374951/add-points-and-colored-surface-to-locfit-perspective-plot</a> <a href="https://stackoverflow.com/questions/24918604/how-to-have-only-every-other-border-in-a-persp" class="uri">https://stackoverflow.com/questions/24918604/how-to-have-only-every-other-border-in-a-persp</a> <a href="https://stackoverflow.com/questions/3786189/r-4d-plot-x-y-z-colours" class="uri">https://stackoverflow.com/questions/3786189/r-4d-plot-x-y-z-colours</a></p>
 </div>
 
 

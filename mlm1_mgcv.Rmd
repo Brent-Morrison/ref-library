@@ -44,7 +44,7 @@ Using the factor smooth basis.
 ```{r }
 # Model
 gam_mlm1 <- gam(
-  log_pb ~ s(roe, k = 5, m = 2) +s(roe, sector, k = 5, m = 2, bs = "fs"),
+  log_pb ~ s(roe, k = 5, m = 2) + s(roe, sector, k = 5, m = 2, bs = "fs"),
   data = df, 
   method = "REML"
   )
@@ -64,6 +64,37 @@ ggplot(data = df, aes(x = roe, y = log_pb, group = sector)) +
   labs(x = 'Return on equity',
        y = 'Log price / book ratio')
 ```
+<br>
+
+#### Non-hierachical & 3d visualisation 
+
+```{r }
+# Model
+gam_mlm2 <- gam(
+  log_pb ~ s(roe, leverage, bs = "tp", k = 5, m = 2), #+ s(roe, sector, k = 5, m = 2, bs = "fs"),
+  data = df, 
+  method = "REML"
+  )
+
+# Predict
+interval <- 30
+roe <- with(df, seq(min(roe), max(roe), length = interval))
+leverage <- with(df, seq(min(leverage), max(leverage), length = interval))
+
+new_data <- expand.grid(roe = roe, leverage = leverage)
+
+gam_mlm2_pred <- matrix(predict(gam_mlm2, new_data), interval, interval) #, type = "response"
+
+
+# Visualise 
+# https://bikeactuary.com/datasci/gams_scams_pt1
+persp(
+  x = leverage, 
+  y = roe, 
+  zlab = 'log_pb',
+  gam_mlm2_pred, theta = 225, phi = 20, col = "blue", ticktype = "detailed")
+```
+
 
 <br>
 
@@ -82,7 +113,32 @@ gam_te1 <- gam(
 gratia::draw(gam_te1)
 ```
 
+
+
 <br>
+
+Same model, visualise with a 3d plot.  
+
+```{r }
+# Predict
+interval <- 30
+roe <- with(df, seq(min(roe), max(roe), length = interval))
+log_book <- with(df, seq(min(log_book), max(log_book), length = interval))
+
+new_data <- expand.grid(roe = roe, log_book = log_book)
+
+gam_te1_pred <- matrix(predict(gam_te1, new_data), interval, interval)
+
+# Visualise
+persp(
+  x = log_book, 
+  y = roe, 
+  zlab = 'log_mkt_cap',
+  gam_te1_pred, theta = 45, phi = 20, col = "blue", ticktype = "detailed")
+```
+
+<br>
+
 
 Modelling price to book ratio on return on equity and leverage.
 
@@ -97,3 +153,36 @@ gratia::draw(gam_te2)
 
 <br>
 
+<br>
+
+Same model, visualise with a 3d plot.  
+
+```{r }
+# Predict
+interval <- 30
+roe <- with(df, seq(min(roe), max(roe), length = interval))
+leverage <- with(df, seq(min(leverage), max(leverage), length = interval))
+
+new_data <- expand.grid(roe = roe, leverage = leverage)
+
+gam_te2_pred <- matrix(predict(gam_te2, new_data), interval, interval)
+
+# Visualise
+persp(
+  x = leverage, 
+  y = roe, 
+  zlab = 'log_pb',
+  gam_te2_pred, theta = 225, phi = 20, col = "blue", ticktype = "detailed")
+```
+
+<br> 
+
+
+### Reference  
+
+3d plots with color  
+
+https://stackoverflow.com/questions/22652941/how-to-add-colorbar-with-perspective-plot-in-r
+https://stackoverflow.com/questions/31374951/add-points-and-colored-surface-to-locfit-perspective-plot
+https://stackoverflow.com/questions/24918604/how-to-have-only-every-other-border-in-a-persp
+https://stackoverflow.com/questions/3786189/r-4d-plot-x-y-z-colours
