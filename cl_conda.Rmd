@@ -1,0 +1,48 @@
+---
+title: "Conda"
+output: html_document
+---
+
+A personal cheat sheet for [Conda](https://docs.conda.io/en/latest/) commands. 
+
+## Cheat sheets  
+
+[Conda](https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf)  
+
+[Opensource.com](https://opensource.com/sites/default/files/gated-content/cheat_sheet_pip.pdf)  
+
+[dcjtech.info](http://dcjtech.info/wp-content/uploads/2015/10/Pip-Cheatsheet.pdf)  
+
+## Other guidance  
+
+[Quansights](https://labs.quansight.org/blog/2021/01/python-packaging-brainstorm/)  
+
+
+<br>
+
+| Action | Command | Note |  
+| :----- |:------- |:---:|  
+| Create environment      | ```conda create --name <conda_env_name> python=3.8``` |  |  
+| Remove environment | ```conda deactivate``` | also ```conda env remove --name <conda_env_name>``` |  
+| Remove packages from environment | ```conda remove --name <conda_env_name> <package_name1> <package_name2>``` |  |  
+| Find available environments | ```conda info --envs``` | |  
+| Activate environment | ```conda activate <conda_env_name>``` |  |  
+| Add packages to env from channel | ```conda install --name <conda_env_name> --channel <channel_name> <package_name1> <package_name2>``` | 1 |  
+| Add packages active to env from channel | ```conda install --name <conda_env_name> --channel <channel_name> <package_name1> <package_name2>``` |  |  
+| Add packages active to env via pip | ```pip install <package_name1> <package_name2>``` |  |  
+| List packages in environment | ```conda list --name <conda_env_name>``` |  |  
+| Update a package | ```conda update <package_name>``` |  |  
+| Roll back environment | ```conda list --revisions``` | 1 |  
+| Roll back environment | ```conda install --revision <n>``` | 2 |  
+| Save env details to text file | ```conda list --explicit > <conda_env_name>.txt``` |  |  
+| Update conda | ```conda update -n base -c defaults conda``` |  |  
+
+---
+
+## Notes  
+
+<br>
+
+1. Lists revisions  
+
+2. Revert to revision number  

@@ -11,7 +11,7 @@
 
 
 
-<title>Reference Library</title>
+<title>Conda</title>
 
 <script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 
@@ -210,6 +213,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -217,6 +283,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -367,26 +443,123 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Reference Library</h1>
+<h1 class="title toc-ignore">Conda</h1>
 
 </div>
 
 
-<p>This website is a collection of Python and R notebooks that forms a reference for variance data analysis, modelling and machine learning tasks.</p>
-<p>The site is an addendum to my <a href="https://brentmorrison.netlify.app/">blog</a>.</p>
-<p>Topics are arranged via the menu at the top of the page. The aim is to have a number of implementations of each topic across language / framework.</p>
+<p>A personal cheat sheet for <a href="https://docs.conda.io/en/latest/">Conda</a> commands.</p>
+<div id="cheat-sheets" class="section level2">
+<h2>Cheat sheets</h2>
+<p><a href="https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf">Conda</a></p>
+<p><a href="https://opensource.com/sites/default/files/gated-content/cheat_sheet_pip.pdf">Opensource.com</a></p>
+<p><a href="http://dcjtech.info/wp-content/uploads/2015/10/Pip-Cheatsheet.pdf">dcjtech.info</a></p>
+</div>
+<div id="other-guidance" class="section level2">
+<h2>Other guidance</h2>
+<p><a href="https://labs.quansight.org/blog/2021/01/python-packaging-brainstorm/">Quansights</a></p>
 <p><br></p>
-<div id="jupyter-notebooks" class="section level2">
-<h2>Jupyter notebooks</h2>
-<p>Some content is constructed using Jupyter noteboooks. This requires conversion to html using the <code>nbconvert</code> utility shown below.</p>
-<p>Example conversion, ipynb to html:</p>
-<p><br> <code>jupyter nbconvert --to html numpyro_models.ipynb</code><br />
-<br></p>
-<p>This command will produce a html file called <code>numpyro_models.html</code>. This file is then copied to the base folder of the site repository before rendering.</p>
+<table>
+<colgroup>
+<col width="31%" />
+<col width="42%" />
+<col width="26%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Action</th>
+<th align="left">Command</th>
+<th align="center">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Create environment</td>
+<td align="left"><code>conda create --name &lt;conda_env_name&gt; python=3.8</code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">Remove environment</td>
+<td align="left"><code>conda deactivate</code></td>
+<td align="center">also <code>conda env remove --name &lt;conda_env_name&gt;</code></td>
+</tr>
+<tr class="odd">
+<td align="left">Remove packages from environment</td>
+<td align="left"><code>conda remove --name &lt;conda_env_name&gt; &lt;package_name1&gt; &lt;package_name2&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">Find available environments</td>
+<td align="left"><code>conda info --envs</code></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">Activate environment</td>
+<td align="left"><code>conda activate &lt;conda_env_name&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">Add packages to env from channel</td>
+<td align="left"><code>conda install --name &lt;conda_env_name&gt; --channel &lt;channel_name&gt; &lt;package_name1&gt; &lt;package_name2&gt;</code></td>
+<td align="center">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Add packages active to env from channel</td>
+<td align="left"><code>conda install --name &lt;conda_env_name&gt; --channel &lt;channel_name&gt; &lt;package_name1&gt; &lt;package_name2&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">Add packages active to env via pip</td>
+<td align="left"><code>pip install &lt;package_name1&gt; &lt;package_name2&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">List packages in environment</td>
+<td align="left"><code>conda list --name &lt;conda_env_name&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">Update a package</td>
+<td align="left"><code>conda update &lt;package_name&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">Roll back environment</td>
+<td align="left"><code>conda list --revisions</code></td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="left">Roll back environment</td>
+<td align="left"><code>conda install --revision &lt;n&gt;</code></td>
+<td align="center">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Save env details to text file</td>
+<td align="left"><code>conda list --explicit &gt; &lt;conda_env_name&gt;.txt</code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">Update conda</td>
+<td align="left"><code>conda update -n base -c defaults conda</code></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+<div id="notes" class="section level2">
+<h2>Notes</h2>
+<p><br></p>
+<ol style="list-style-type: decimal">
+<li><p>Lists revisions</p></li>
+<li><p>Revert to revision number</p></li>
+</ol>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -424,6 +597,32 @@ $(document).ready(function () {
 });
 </script>
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
