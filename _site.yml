@@ -16,14 +16,6 @@ navbar:
   logo:
     href: https://github.com/Brent-Morrison/ref-library
   left:
-    - text: "Multi-level models"
-      menu:
-        - text: "GAM - mgcv"
-          href: ./mlm1_mgcv.html
-        - text: "Stock valuation with R - WIP"
-          href: ./mixed_effect_stock_valuation.html
-        - text: "Numpyro - WIP"
-          href: ./numpyro_models.html
     - text: "Data wrangling"
       menu:
         - text: "1.Top n by group"
@@ -48,7 +40,7 @@ navbar:
               href: ./dw2_ph.html
             - text: "Python - placeholder"
               href: ./dw2_ph.html
-    - text: "GP"
+    - text: "Gaussian Processes"
       menu:
         - text: "R - base"
           href: ./gp1_rbase.html
@@ -58,6 +50,14 @@ navbar:
           href: ./cl_bash.html
         - text: "Conda"
           href: ./cl_conda.html
+    - text: "Multi-level models"
+      menu:
+        - text: "R - blog post"
+          href: ./mixed_effect_stock_valuation.html
+        - text: "R - multi-level GAM"
+          href: ./mlm1_mgcv.html
+        - text: "Numpyro - WIP"
+          href: ./numpyro_models.html
     - text: "Other"
       menu:
         - text: "Knowledge snippets"
@@ -66,5 +66,3 @@ navbar:
           href: ./sample_shapes.html
         - text: "Numpyro model"
           href: ./numpyro_models.html
-        - text: "WIP - multi-level models"
-          href: ./mixed_effect_stock_valuation.html
