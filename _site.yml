@@ -66,3 +66,5 @@ navbar:
           href: ./sample_shapes.html
         - text: "Numpyro model"
           href: ./numpyro_models.html
+        - text: "Loss functions"
+          href: ./ot_lossfun.html
