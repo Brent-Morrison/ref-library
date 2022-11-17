@@ -382,6 +382,9 @@ div.tocify {
     <li>
       <a href="./cl_conda.html">Conda</a>
     </li>
+    <li>
+      <a href="./cl_psql.html">psql</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -449,11 +452,13 @@ div.tocify {
 
 
 <p>A personal cheat sheet for <a href="https://docs.conda.io/en/latest/">Conda</a> commands.</p>
+<p><br></p>
 <div id="cheat-sheets" class="section level2">
 <h2>Cheat sheets</h2>
 <p><a href="https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf">Conda</a></p>
 <p><a href="https://opensource.com/sites/default/files/gated-content/cheat_sheet_pip.pdf">Opensource.com</a></p>
 <p><a href="http://dcjtech.info/wp-content/uploads/2015/10/Pip-Cheatsheet.pdf">dcjtech.info</a></p>
+<p><br></p>
 </div>
 <div id="other-guidance" class="section level2">
 <h2>Other guidance</h2>
@@ -479,66 +484,71 @@ div.tocify {
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td align="left">Remove environment</td>
+<td align="left">Remove environment 1</td>
 <td align="left"><code>conda deactivate</code></td>
-<td align="center">also <code>conda env remove --name &lt;conda_env_name&gt;</code></td>
+<td align="center"></td>
 </tr>
 <tr class="odd">
+<td align="left">Remove environment 2</td>
+<td align="left"><code>conda env remove --name &lt;conda_env_name&gt;</code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
 <td align="left">Remove packages from environment</td>
 <td align="left"><code>conda remove --name &lt;conda_env_name&gt; &lt;package_name1&gt; &lt;package_name2&gt;</code></td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Find available environments</td>
 <td align="left"><code>conda info --envs</code></td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Activate environment</td>
 <td align="left"><code>conda activate &lt;conda_env_name&gt;</code></td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Add packages to env from channel</td>
 <td align="left"><code>conda install --name &lt;conda_env_name&gt; --channel &lt;channel_name&gt; &lt;package_name1&gt; &lt;package_name2&gt;</code></td>
-<td align="center">1</td>
+<td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Add packages active to env from channel</td>
 <td align="left"><code>conda install --name &lt;conda_env_name&gt; --channel &lt;channel_name&gt; &lt;package_name1&gt; &lt;package_name2&gt;</code></td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Add packages active to env via pip</td>
 <td align="left"><code>pip install &lt;package_name1&gt; &lt;package_name2&gt;</code></td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">List packages in environment</td>
 <td align="left"><code>conda list --name &lt;conda_env_name&gt;</code></td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Update a package</td>
 <td align="left"><code>conda update &lt;package_name&gt;</code></td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Roll back environment</td>
 <td align="left"><code>conda list --revisions</code></td>
 <td align="center">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Roll back environment</td>
 <td align="left"><code>conda install --revision &lt;n&gt;</code></td>
 <td align="center">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Save env details to text file</td>
 <td align="left"><code>conda list --explicit &gt; &lt;conda_env_name&gt;.txt</code></td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Update conda</td>
 <td align="left"><code>conda update -n base -c defaults conda</code></td>
 <td align="center"></td>
@@ -550,10 +560,8 @@ div.tocify {
 <div id="notes" class="section level2">
 <h2>Notes</h2>
 <p><br></p>
-<ol style="list-style-type: decimal">
-<li><p>Lists revisions</p></li>
-<li><p>Revert to revision number</p></li>
-</ol>
+<p><strong>1.</strong> Lists revisions <br></p>
+<p><strong>2.</strong> Revert to revision number</p>
 </div>
 
 

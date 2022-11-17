@@ -11,7 +11,7 @@
 
 
 
-<title>Top n by group - postgres</title>
+<title>psql</title>
 
 <script src="site_libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -550,202 +550,61 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Top n by group - postgres</h1>
+<h1 class="title toc-ignore">psql</h1>
 
 </div>
 
 
+<p>A personal cheat sheet for <a href="https://docs.conda.io/en/latest/">psql</a> commands.</p>
 <p><br></p>
-<div id="postgres-set-up" class="section level3">
-<h3>Postgres set-up</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RPostgres)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Database connection</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>config <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(<span class="st">&#39;C:/Users/brent/Documents/VS_Code/postgres/postgres/config.json&#39;</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  RPostgres<span class="sc">::</span><span class="fu">Postgres</span>(),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">host      =</span> <span class="st">&#39;localhost&#39;</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">port      =</span> <span class="st">&#39;5432&#39;</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">dbname    =</span> <span class="st">&#39;stock_master_test&#39;</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">user      =</span> <span class="st">&#39;postgres&#39;</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">password  =</span> config<span class="sc">$</span>pg_password</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><br></p>
-</div>
-<div id="top-n-by-group" class="section level3">
-<h3>Top n by group</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">with</span> <span class="kw">data</span> <span class="kw">as</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  (</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">select</span> </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    ra.symbol</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ,ra.date_stamp</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    ,ra.symbol</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    ,ra.sector</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    ,fa.asset_growth</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    ,fa.roa</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    ,fa.roe</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    ,fa.leverage</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    ,fa.ttm_earnings</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">from</span> access_layer.return_attributes ra </span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">inner</span> <span class="kw">join</span> access_layer.fundamental_attributes fa</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">on</span> ra.symbol <span class="op">=</span> fa.ticker</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">and</span> ra.date_stamp <span class="op">=</span> fa.date_stamp</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">where</span> ra.date_stamp <span class="op">=</span> <span class="st">&#39;2021-06-30&#39;</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> t1.<span class="op">*</span> </span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="kw">from</span> </span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  (</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">select</span> </span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">data</span>.<span class="op">*</span>, </span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rank</span>() <span class="kw">over</span> (<span class="kw">partition</span> <span class="kw">by</span> sector <span class="kw">order</span> <span class="kw">by</span> ttm_earnings <span class="kw">desc</span>) <span class="kw">as</span> rnk</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">from</span> <span class="kw">data</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  ) t1</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="kw">where</span> rnk <span class="op">&lt;=</span> <span class="dv">5</span>;</span></code></pre></div>
-<div class="knitsql-table">
 <table>
-<caption>Displaying records 1 - 10</caption>
+<colgroup>
+<col width="31%" />
+<col width="42%" />
+<col width="26%" />
+</colgroup>
 <thead>
 <tr class="header">
-<th align="left">symbol</th>
-<th align="left">date_stamp</th>
-<th align="left">symbol..3</th>
-<th align="right">sector</th>
-<th align="right">asset_growth</th>
-<th align="right">roa</th>
-<th align="right">roe</th>
-<th align="right">leverage</th>
-<th align="right">ttm_earnings</th>
-<th align="right">rnk</th>
+<th align="left">Action</th>
+<th align="left">Command</th>
+<th align="center">Note</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">GE</td>
-<td align="left">2021-06-30</td>
-<td align="left">GE</td>
-<td align="right">1</td>
-<td align="right">-0.0033934</td>
-<td align="right">0.0431123</td>
-<td align="right">-0.3204940</td>
-<td align="right">0.8537238</td>
-<td align="right">11143</td>
-<td align="right">1</td>
+<td align="left">Connect</td>
+<td align="left"><code>psql -U &lt;username&gt; -d &lt;dbname&gt;</code></td>
+<td align="center"></td>
 </tr>
 <tr class="even">
-<td align="left">LMT</td>
-<td align="left">2021-06-30</td>
-<td align="left">LMT</td>
-<td align="right">1</td>
-<td align="right">-0.0012408</td>
-<td align="right">0.1378388</td>
-<td align="right">-1.0000000</td>
-<td align="right">0.8809308</td>
-<td align="right">6833</td>
-<td align="right">2</td>
+<td align="left">List tables (all schemas)</td>
+<td align="left"><code>\dt *.*</code></td>
+<td align="center">1</td>
 </tr>
 <tr class="odd">
-<td align="left">UNP</td>
-<td align="left">2021-06-30</td>
-<td align="left">UNP</td>
-<td align="right">1</td>
-<td align="right">-0.0206548</td>
-<td align="right">0.0852958</td>
-<td align="right">-0.3156572</td>
-<td align="right">0.7282285</td>
-<td align="right">5349</td>
-<td align="right">3</td>
+<td align="left">Copy from csv</td>
+<td align="left"><code>psql -c "\copy &lt;tblname&gt; FROM '/tmp/the_file.csv' delimiter '|' csv header"</code></td>
+<td align="center"><a href="https://stackoverflow.com/questions/28602647/postgresql-csv-import-from-command-line">SO</a></td>
 </tr>
 <tr class="even">
-<td align="left">HON</td>
-<td align="left">2021-06-30</td>
-<td align="left">HON</td>
-<td align="right">1</td>
-<td align="right">0.0177595</td>
-<td align="right">0.0790414</td>
-<td align="right">-0.2671902</td>
-<td align="right">0.7245533</td>
-<td align="right">4865</td>
-<td align="right">4</td>
-</tr>
-<tr class="odd">
-<td align="left">DE</td>
-<td align="left">2021-06-30</td>
-<td align="left">DE</td>
-<td align="right">1</td>
-<td align="right">0.0051804</td>
-<td align="right">0.0458775</td>
-<td align="right">-0.2713793</td>
-<td align="right">0.8133810</td>
-<td align="right">3459</td>
-<td align="right">5</td>
-</tr>
-<tr class="even">
-<td align="left">AAPL</td>
-<td align="left">2021-06-30</td>
-<td align="left">AAPL</td>
-<td align="right">2</td>
-<td align="right">0.0931371</td>
-<td align="right">0.1929899</td>
-<td align="right">-0.8597341</td>
-<td align="right">0.8129551</td>
-<td align="right">63930</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">MSFT</td>
-<td align="left">2021-06-30</td>
-<td align="left">MSFT</td>
-<td align="right">2</td>
-<td align="right">0.0104186</td>
-<td align="right">0.1739685</td>
-<td align="right">-0.4300619</td>
-<td align="right">0.5717851</td>
-<td align="right">51310</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td align="left">FB</td>
-<td align="left">2021-06-30</td>
-<td align="left">FB</td>
-<td align="right">2</td>
-<td align="right">0.0879491</td>
-<td align="right">0.2031955</td>
-<td align="right">-0.2589255</td>
-<td align="right">0.1947450</td>
-<td align="right">29146</td>
-<td align="right">3</td>
-</tr>
-<tr class="odd">
-<td align="left">INTC</td>
-<td align="left">2021-06-30</td>
-<td align="left">INTC</td>
-<td align="right">2</td>
-<td align="right">0.0539030</td>
-<td align="right">0.1421459</td>
-<td align="right">-0.2669366</td>
-<td align="right">0.4706547</td>
-<td align="right">20899</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td align="left">CSCO</td>
-<td align="left">2021-06-30</td>
-<td align="left">CSCO</td>
-<td align="right">2</td>
-<td align="right">0.0062945</td>
-<td align="right">0.1083833</td>
-<td align="right">-0.2716438</td>
-<td align="right">0.5907888</td>
-<td align="right">10129</td>
-<td align="right">5</td>
+<td align="left">Quit</td>
+<td align="left"><code>\q</code></td>
+<td align="center"></td>
 </tr>
 </tbody>
 </table>
-</div>
+<hr />
+<div id="notes" class="section level2">
+<h2>Notes</h2>
+<p><br></p>
+<p><strong>1.</strong> This can be executed with SQL</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> information_schema.<span class="kw">tables</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">where</span> table_schema <span class="kw">not</span> <span class="kw">in</span> (<span class="st">&#39;information_schema&#39;</span>,<span class="st">&#39;public&#39;</span>,<span class="st">&#39;pg_catalog&#39;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">order</span> <span class="kw">by</span> <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> pg_tables </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">where</span> schemaname <span class="kw">not</span> <span class="kw">in</span> (<span class="st">&#39;information_schema&#39;</span>,<span class="st">&#39;public&#39;</span>,<span class="st">&#39;pg_catalog&#39;</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">order</span> <span class="kw">by</span> <span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">3</span>;</span></code></pre></div>
 </div>
 
 

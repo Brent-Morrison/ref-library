@@ -1,0 +1,35 @@
+---
+title: "psql"
+output: html_document
+---
+
+A personal cheat sheet for [psql](https://docs.conda.io/en/latest/) commands. 
+
+<br>
+
+| Action | Command | Note |  
+| :----- |:------- |:---:|  
+| Connect      | ```psql -U <username> -d <dbname>``` |  |  
+| List tables (all schemas) | ```\dt *.*``` | 1 |  
+| Copy from csv | ```psql -c "\copy <tblname> FROM '/tmp/the_file.csv' delimiter '|' csv header"``` | [SO](https://stackoverflow.com/questions/28602647/postgresql-csv-import-from-command-line) |  
+| Quit | ```\q``` |  |  
+
+---
+
+## Notes  
+
+<br>
+
+**1.**
+This can be executed with SQL
+``` {sql eval = FALSE}
+select * from information_schema.tables 
+where table_schema not in ('information_schema','public','pg_catalog')
+order by 1,2,4,3;
+
+select * from pg_tables 
+where schemaname not in ('information_schema','public','pg_catalog')
+order by 1,2,4,3;
+```
+
+  

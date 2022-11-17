@@ -5,6 +5,8 @@ output: html_document
 
 A personal cheat sheet for [Conda](https://docs.conda.io/en/latest/) commands. 
 
+<br>
+
 ## Cheat sheets  
 
 [Conda](https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf)  
@@ -12,6 +14,8 @@ A personal cheat sheet for [Conda](https://docs.conda.io/en/latest/) commands.
 [Opensource.com](https://opensource.com/sites/default/files/gated-content/cheat_sheet_pip.pdf)  
 
 [dcjtech.info](http://dcjtech.info/wp-content/uploads/2015/10/Pip-Cheatsheet.pdf)  
+
+<br>
 
 ## Other guidance  
 
@@ -23,11 +27,12 @@ A personal cheat sheet for [Conda](https://docs.conda.io/en/latest/) commands.
 | Action | Command | Note |  
 | :----- |:------- |:---:|  
 | Create environment      | ```conda create --name <conda_env_name> python=3.8``` |  |  
-| Remove environment | ```conda deactivate``` | also ```conda env remove --name <conda_env_name>``` |  
+| Remove environment 1 | ```conda deactivate``` |  |  
+| Remove environment 2 | ```conda env remove --name <conda_env_name>``` |  |  
 | Remove packages from environment | ```conda remove --name <conda_env_name> <package_name1> <package_name2>``` |  |  
 | Find available environments | ```conda info --envs``` | |  
 | Activate environment | ```conda activate <conda_env_name>``` |  |  
-| Add packages to env from channel | ```conda install --name <conda_env_name> --channel <channel_name> <package_name1> <package_name2>``` | 1 |  
+| Add packages to env from channel | ```conda install --name <conda_env_name> --channel <channel_name> <package_name1> <package_name2>``` |  |  
 | Add packages active to env from channel | ```conda install --name <conda_env_name> --channel <channel_name> <package_name1> <package_name2>``` |  |  
 | Add packages active to env via pip | ```pip install <package_name1> <package_name2>``` |  |  
 | List packages in environment | ```conda list --name <conda_env_name>``` |  |  
@@ -43,6 +48,8 @@ A personal cheat sheet for [Conda](https://docs.conda.io/en/latest/) commands.
 
 <br>
 
-1. Lists revisions  
+**1.** Lists revisions
+<br>
 
-2. Revert to revision number  
+**2.** Revert to revision number
+

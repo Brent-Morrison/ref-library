@@ -50,6 +50,8 @@ navbar:
           href: ./cl_bash.html
         - text: "Conda"
           href: ./cl_conda.html
+        - text: "psql"
+          href: ./cl_psql.html
     - text: "Multi-level models"
       menu:
         - text: "R - blog post"
