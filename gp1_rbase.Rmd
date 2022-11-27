@@ -134,6 +134,11 @@ y <- matrix(df$log_pb)
 
 # Predictive grid
 XX <- matrix(seq(min(X), max(X), length=200), ncol=1)
+
+# Plot
+plot(X, y, main = "Medical devices sector",
+     xlab = "Return on equity", ylab = "Price book ratio",
+     pch = 19, frame = FALSE)
 ```
 
 <br>

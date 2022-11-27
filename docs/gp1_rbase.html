@@ -471,6 +471,9 @@ div.tocify {
     <li>
       <a href="./gp1_rbase.html">R - base</a>
     </li>
+    <li>
+      <a href="./gp2_rlagp.html">R - laGP</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -647,7 +650,13 @@ div.tocify {
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(df<span class="sc">$</span>log_pb)</span>
 <span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Predictive grid</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>XX <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">seq</span>(<span class="fu">min</span>(X), <span class="fu">max</span>(X), <span class="at">length=</span><span class="dv">200</span>), <span class="at">ncol=</span><span class="dv">1</span>)</span></code></pre></div>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>XX <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">seq</span>(<span class="fu">min</span>(X), <span class="fu">max</span>(X), <span class="at">length=</span><span class="dv">200</span>), <span class="at">ncol=</span><span class="dv">1</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(X, y, <span class="at">main =</span> <span class="st">&quot;Medical devices sector&quot;</span>,</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Return on equity&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Price book ratio&quot;</span>,</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">frame =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="gp1_rbase_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p><br></p>
 </div>
 <div id="covariance-function-mvn-conditioning" class="section level3">

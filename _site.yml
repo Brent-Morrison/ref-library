@@ -44,6 +44,8 @@ navbar:
       menu:
         - text: "R - base"
           href: ./gp1_rbase.html
+        - text: "R - laGP"
+          href: ./gp2_rlagp.html
     - text: "Command line"
       menu:
         - text: "Bash"
