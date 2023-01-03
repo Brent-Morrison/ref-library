@@ -6,6 +6,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 <br>
 
 A replication of the Gaussian Process regression implementation lifted from chapter 5 of [Surrogates](https://bookdown.org/rbg/surrogates/chap5.html), and an application of the same code to real data.
@@ -18,7 +19,7 @@ A replication of the Gaussian Process regression implementation lifted from chap
 
 ### Data
 
-Create some dummy data being an independent and dependent variable, along with a grid of the independent variable values. 
+Create some dummy data being an independent and dependent variable, along with a grid of the independent variable values.
 
 ```{r }
 # Training data
@@ -36,14 +37,13 @@ eps <- sqrt(.Machine$double.eps)
 
 <br>
 
-### Using function ```newGP```  
+### Using function `newGP`
 
 Investigate parameters:
 
-d: a positive scalar lengthscale parameter for an isotropic Gaussian correlation function (newGP); or a vector for a separable version (newGPsep), and  
+d: a positive scalar lengthscale parameter for an isotropic Gaussian correlation function (newGP); or a vector for a separable version (newGPsep), and
 
 g: a positive scalar nugget / jitter parameter
-
 
 ```{r }
 library('laGP')
@@ -83,9 +83,9 @@ for(parm in c('d','g')) {
 
 <br>
 
-### Using function ```newGPsep```  
+### Using function `newGPsep`
 
-Separable GP, the lengthscale parameter is allowed to decay at differing rates dependent on the input data.  It is anisotropic, rather than isotropic.
+Separable GP, the lengthscale parameter is allowed to decay at differing rates dependent on the input data. It is anisotropic, rather than isotropic.
 
 ```{r }
 gpi <- newGPsep(X, y, d=d$start, g=g$start*0.5, dK=TRUE)
@@ -131,6 +131,7 @@ rm(stock_data)
 df <- fundamental_raw[fundamental_raw$sector == 7, ]   
 df$log_mkt_cap <- log(df$mkt_cap)
 df$log_book <- log(-df$total_equity_cln)
+df$roe <- -df$roe
 df <- df[df$date_stamp == as.Date('2021-06-30'), c('log_book','log_mkt_cap','log_pb','roe','leverage')]
 
 # nugget / jitter
@@ -148,7 +149,6 @@ plot(X, y, main = "Medical devices sector",
      xlab = "Return on equity", ylab = "Price book ratio",
      pch = 19, frame = FALSE)
 ```
-
 
 ```{r, results="hide", message=FALSE, warning=FALSE}
 d <- darg(NULL, X)
@@ -175,8 +175,8 @@ rm(mle)
 
 ## References
 
-[Page 3 re dummy data function](https://cran.r-project.org/web/packages/tgp/vignettes/tgp2.pdf)  
+[Page 3 re dummy data function](https://cran.r-project.org/web/packages/tgp/vignettes/tgp2.pdf)
 
-[GPBoost](https://github.com/fabsig/GPBoost)  
+[GPBoost](https://github.com/fabsig/GPBoost)
 
 [Gold price function](https://cran.r-project.org/web/packages/GPfit/GPfit.pdf)
