@@ -1,0 +1,46 @@
+---
+title: "Miscellaneous R snippets"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<br>
+
+Miscellaneous snippets for future reference.
+
+<br>
+
+### Writing to json
+
+Using the `jsonlite` package.
+
+```{r eval=FALSE}
+library(jsonlite)
+
+json_list <- list(lookback_yrs = lookback_yrs, folder = folder)
+json_export <- toJSON(json_list, auto_unbox = TRUE)
+write(json_export, "example.json")
+```
+
+<br>
+
+### Calling R script from batch filewith parameters  
+
+The batch file.
+
+```{bash eval=FALSE}
+set arg1=4
+set arg2=experiment_02
+"C:\Program Files\R\R-4.1.0\bin\Rscript.exe" C:\path\to\R\script\example_r_script.R %arg% %arg2% 
+```
+
+Retrieving arguments in the R script.
+
+```{r0 eval=FALSE}
+args <- commandArgs(trailingOnly = TRUE)
+
+arg1 <- args[1]        
+arg2 <- args[2]
+```
