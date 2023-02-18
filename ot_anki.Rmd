@@ -28,7 +28,7 @@ Miscellaneous knowledge snippets.
 | Question | Answer | Reference |  
 | :------- | :----- | :-------- |  
 | What is polynomial contrast? | The process of transforming ordered categorical variables / predictors to numeric quantities. | [SO 105115](https://stats.stackexchange.com/questions/105115/polynomial-contrasts-for-regression) |  
-| What characteristics of a response variable indicates it should be transformed prior to modelling? | Responses that have a distribution where the frequency of response proportionally decreases with larger values may indicate that the response follows a log-normal distribution. In this case, log-transforming the response would induce a normal (bell-shaped, symmetric) distribution and often will enable a model to have better predictive performance. | FES s.4.2.1 |  
+| What characteristics of a response variable indicates it should be transformed prior to modelling? | Responses that have a distribution where the frequency of response proportionally decreases with larger values may indicate that the response follows a log-normal distribution. In this case, log-transforming the response would induce a normal (bell-shaped, symmetric) distribution and often will enable a model to have better predictive performance. | FES^1^ s.4.2.1 |  
 | xxxxx | xxxxx | xxxxx |  
 
 <br>
@@ -39,11 +39,17 @@ Miscellaneous knowledge snippets.
 
 | Question | Answer | Reference |  
 | :------- | :----- | :-------- |  
-| What type of models feature automatic feature selection? | 1. Tree-based models<br/>2. MARS<br/>3. Elastic net / LASSO<br/>4. Nearest shrunken centroids<br/>5. GAM's (use parameter "select = TRUE", effectively the same as LASSO) | [gam.selection](https://stat.ethz.ch/R-manual/R-devel/library/mgcv/html/gam.selection.html) |  
+| What is the primary purpose of feature selection? | Removal of non-informative or redundant predictors | FES^1^ |  
+| What type of models feature automatic feature selection? | 1. Tree-based models<br/>2. MARS<br/>3. Elastic net / LASSO<br/>4. Nearest shrunken centroids<br/>5. GAM's (use parameter "select = TRUE", effectively the same as LASSO) | [gam.selection](https://stat.ethz.ch/R-manual/R-devel/library/mgcv/html/gam.selection.html) | 
 | xxxxx | xxxxx | xxxxx |  
 | xxxxx | xxxxx | xxxxx |  
 
 
 <br>
 
-[Google sheets](https://docs.google.com/spreadsheets/d/16ZWgXmCtMD_DHhIUkp0JoA3vrlphjRjO_17dbtWRoUI/edit#gid=0)
+
+## Reference  
+
+^1^FES : [Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/index.html)  
+
+Source material : [Google sheets](https://docs.google.com/spreadsheets/d/16ZWgXmCtMD_DHhIUkp0JoA3vrlphjRjO_17dbtWRoUI/edit#gid=0)  
