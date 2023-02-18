@@ -577,14 +577,14 @@ div.tocify {
 <p>Using the <code>jsonlite</code> package.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>json_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">lookback_yrs =</span> lookback_yrs, <span class="at">folder =</span> folder)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>json_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">arg1 =</span> <span class="st">&quot;random_arg_value1&quot;</span>, <span class="at">arg2 =</span> <span class="st">&quot;random_arg_value2&quot;</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>json_export <span class="ot">&lt;-</span> <span class="fu">toJSON</span>(json_list, <span class="at">auto_unbox =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write</span>(json_export, <span class="st">&quot;example.json&quot;</span>)</span></code></pre></div>
 <p><br></p>
 </div>
-<div id="calling-r-script-from-batch-filewith-parameters"
+<div id="calling-r-script-from-batch-file-with-parameters"
 class="section level3">
-<h3>Calling R script from batch filewith parameters</h3>
+<h3>Calling R script from batch file with parameters</h3>
 <p>The batch file.</p>
 <div class="sourceCode" id="cb2"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> arg1=4</span>

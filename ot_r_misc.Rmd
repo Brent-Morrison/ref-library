@@ -19,14 +19,14 @@ Using the `jsonlite` package.
 ```{r eval=FALSE}
 library(jsonlite)
 
-json_list <- list(lookback_yrs = lookback_yrs, folder = folder)
+json_list <- list(arg1 = "random_arg_value1", arg2 = "random_arg_value2")
 json_export <- toJSON(json_list, auto_unbox = TRUE)
 write(json_export, "example.json")
 ```
 
 <br>
 
-### Calling R script from batch filewith parameters  
+### Calling R script from batch file with parameters  
 
 The batch file.
 
