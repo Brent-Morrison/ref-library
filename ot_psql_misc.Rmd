@@ -1,0 +1,129 @@
+---
+title: "Postgres miscellaneous"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br>
+
+### Postgres set-up
+
+```{r chunck0}
+library(DBI)
+library(RPostgres)
+library(jsonlite)
+
+# Database connection
+config <- jsonlite::read_json('C:/Users/brent/Documents/VS_Code/postgres/postgres/config.json')
+
+con <- DBI::dbConnect(
+  RPostgres::Postgres(),
+  host      = 'localhost',
+  port      = '5432',
+  dbname    = 'stock_master_test',
+  user      = 'postgres',
+  password  = config$pg_password
+)
+```
+
+<br>
+
+### Insert and update with `insert on conflict`  
+
+Unfortunately Rmarkdown does not allow multiple SQL statements in a single code chuck. Postgres interprets that as submission of multiple commands and throws an error:
+
+`Error: Failed to prepare query: ERROR:  cannot insert multiple commands into a prepared statement`.  
+
+The commented out code is therefore executed in hidden chucks for ease of visualisation. 
+
+<br>  
+
+```{sql chunck1, connection=con}
+create temporary table ref_data (
+	symbol 			varchar(4) unique
+	,company_name 	varchar(50)
+	,start_date		date
+	,end_date		date
+);
+
+--insert into ref_data values ('AAIC', 'American Airlines Group Inc', '2018-06-30', '9998-12-31');
+--insert into ref_data values ('AAME', 'Atlantic American Corp', '2020-09-30', '9998-12-31');
+
+--select * from ref_data;
+```
+
+```{sql chunck2, connection=con, echo=FALSE}
+insert into ref_data values ('AAIC', 'American Airlines Group Inc', '2018-06-30', '9998-12-31');
+```
+
+```{sql chunck21, connection=con, echo=FALSE}
+insert into ref_data values ('AAME', 'Atlantic American Corp', '2020-09-30', '9998-12-31');
+```
+
+```{sql chunck3, connection=con, echo=FALSE}
+select * from ref_data;
+```
+
+```{sql chunck4, connection=con}
+create table new_data (like ref_data);
+
+--insert into new_data values ('BOLT', 'Bolt Biotherapeutics Inc', '2021-03-31', '9998-12-31');
+--insert into new_data values ('AAME', 'Atlantic American Corporation', '2020-09-30', '2023-03-03');
+
+--select 'ref_data' as src, r.* from ref_data r
+--union all
+--select 'new_data' as src, n.* from ref_data n;
+```
+
+```{sql chunck5, connection=con, echo=FALSE}
+insert into new_data values ('BOLT', 'Bolt Biotherapeutics Inc', '2021-03-31', '9998-12-31');
+```
+
+```{sql chunck51, connection=con, echo=FALSE}
+insert into new_data values ('AAME', 'Atlantic American Corporation', '2020-09-30', '2023-03-03');
+```
+
+```{sql chunck6, connection=con, echo=FALSE}
+-- Show data
+select 'ref_data' as src, r.* from ref_data r
+union all
+select 'new_data' as src, n.* from new_data n;
+```
+
+
+```{sql chunck7, connection=con}
+insert into ref_data (select * from new_data) 
+on conflict (symbol) do update set end_date = excluded.end_date;
+```
+
+```{sql chunck8, connection=con}
+select * from ref_data
+```
+
+As of Postgres 15, the same operation can be executed with `MERGE`
+
+```{sql chunck9, connection=con, eval=FALSE, echo=TRUE}
+merge into ref_data r 
+using new_data n 
+on r.symbol = n.symbol 
+when matched then 
+	update set end_date = n.end_date
+when not matched then 
+	insert (symbol, company_name, , start_date, end_date)
+	values (n.symbol, n.company_name, n.start_date, n.end_date);
+```
+
+```{sql chunck10, connection=con, echo=FALSE}
+drop table ref_data
+```
+
+```{sql chunck11, connection=con, echo=FALSE}
+drop table new_data
+```
+
+```{r chunck12, echo=FALSE}
+dbDisconnect(con)
+```
