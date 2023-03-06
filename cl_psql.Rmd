@@ -3,16 +3,32 @@ title: "psql"
 output: html_document
 ---
 
-A personal cheat sheet for [psql](https://docs.conda.io/en/latest/) commands. 
+A personal cheat sheet for [psql](https://www.postgresql.org/docs/current/app-psql.html) commands and PostgreSQL client applications. 
 
 <br>
 
+## psql 
+
 | Action | Command | Note |  
 | :----- |:------- |:---:|  
-| Connect      | ```psql -U <username> -d <dbname>``` |  |  
+| Connect (option 1)     | ```psql -U <username> -d <dbname>``` |  |  
+| Connect (option 2)      | ```psql "dbname=stock_master host=localhost user=<username> password=<pword> port=5432"``` |  | 
 | List tables (all schemas) | ```\dt *.*``` | 1 |  
+| List tables (specfic schema) | ```\dt <myschema>.*``` | |  
 | Copy from csv | ```psql -c "\copy <tblname> FROM '/tmp/the_file.csv' delimiter '|' csv header"``` | [SO](https://stackoverflow.com/questions/28602647/postgresql-csv-import-from-command-line) |  
 | Quit | ```\q``` |  |  
+
+---
+
+## Backup and restore applications 
+
+| Action | Command | Note |  
+| :----- |:------- |:---:|  
+| Backup to file | ```pg_dump -Fc -h localhost -U postgres -p 5432 stock_master > E:/postgres_backup/stock_master_yyyymmdd.dump``` | |  
+| Drop database | ```dropdb -h localhost -U postgres -p 5432 -i stock_master_test``` | |  
+| New database | ```createdb -h localhost -U postgres -p 5432 -T template0 stock_master_test``` | |  
+| Restore from file | ```pg_restore -h localhost -U postgres -p 5432 -d stock_master_test E:/postgres_backup/stock_master_20230306.dump``` | |  
+
 
 ---
 

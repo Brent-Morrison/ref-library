@@ -573,8 +573,11 @@ div.tocify {
 
 
 <p>A personal cheat sheet for <a
-href="https://docs.conda.io/en/latest/">psql</a> commands.</p>
+href="https://www.postgresql.org/docs/current/app-psql.html">psql</a>
+commands and PostgreSQL client applications.</p>
 <p><br></p>
+<div id="psql" class="section level2">
+<h2>psql</h2>
 <table>
 <colgroup>
 <col width="31%" />
@@ -590,15 +593,26 @@ href="https://docs.conda.io/en/latest/">psql</a> commands.</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Connect</td>
+<td align="left">Connect (option 1)</td>
 <td
 align="left"><code>psql -U &lt;username&gt; -d &lt;dbname&gt;</code></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
+<td align="left">Connect (option 2)</td>
+<td
+align="left"><code>psql "dbname=stock_master host=localhost user=&lt;username&gt; password=&lt;pword&gt; port=5432"</code></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
 <td align="left">List tables (all schemas)</td>
 <td align="left"><code>\dt *.*</code></td>
 <td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="left">List tables (specfic schema)</td>
+<td align="left"><code>\dt &lt;myschema&gt;.*</code></td>
+<td align="center"></td>
 </tr>
 <tr class="odd">
 <td align="left">Copy from csv</td>
@@ -615,6 +629,51 @@ href="https://stackoverflow.com/questions/28602647/postgresql-csv-import-from-co
 </tbody>
 </table>
 <hr />
+</div>
+<div id="backup-and-restore-applications" class="section level2">
+<h2>Backup and restore applications</h2>
+<table>
+<colgroup>
+<col width="31%" />
+<col width="42%" />
+<col width="26%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Action</th>
+<th align="left">Command</th>
+<th align="center">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Backup to file</td>
+<td
+align="left"><code>pg_dump -Fc -h localhost -U postgres -p 5432 stock_master &gt; E:/postgres_backup/stock_master_yyyymmdd.dump</code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">Drop database</td>
+<td
+align="left"><code>dropdb -h localhost -U postgres -p 5432 -i stock_master_test</code></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="left">New database</td>
+<td
+align="left"><code>createdb -h localhost -U postgres -p 5432 -T template0 stock_master_test</code></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left">Restore from file</td>
+<td
+align="left"><code>pg_restore -h localhost -U postgres -p 5432 -d stock_master_test E:/postgres_backup/stock_master_20230306.dump</code></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
 <div id="notes" class="section level2">
 <h2>Notes</h2>
 <p><br></p>
