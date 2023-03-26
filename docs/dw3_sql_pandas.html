@@ -11,7 +11,7 @@
 
 
 
-<title>Postgres miscellaneous</title>
+<title>SQL to pandas</title>
 
 <script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -570,11 +570,14 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Postgres miscellaneous</h1>
+<h1 class="title toc-ignore">SQL to pandas</h1>
 
 </div>
 
 
+<p><br></p>
+<p>With help from the pandas <a
+href="https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_sql.html">documentation</a></p>
 <p><br></p>
 <div id="postgres-set-up" class="section level3">
 <h3>Postgres set-up</h3>
@@ -593,166 +596,288 @@ div.tocify {
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">user      =</span> <span class="st">&#39;postgres&#39;</span>,</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">password  =</span> config<span class="sc">$</span>pg_password</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tips data to r dataframe</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>qry <span class="ot">&lt;-</span> <span class="fu">dbSendQuery</span>(<span class="at">conn =</span> con, <span class="at">statement =</span> <span class="st">&quot;select * from data.tips&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>rtips <span class="ot">&lt;-</span> <span class="fu">dbFetch</span>(qry)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rtips)</span></code></pre></div>
+<pre><code>##   total_bill  tip    sex smoker day   time size
+## 1      16.99 1.01 Female     No Sun Dinner    2
+## 2      10.34 1.66   Male     No Sun Dinner    3
+## 3      21.01 3.50   Male     No Sun Dinner    3
+## 4      23.68 3.31   Male     No Sun Dinner    2
+## 5      24.59 3.61 Female     No Sun Dinner    4
+## 6      25.29 4.71   Male     No Sun Dinner    4</code></pre>
 <p><br></p>
-</div>
-<div id="insert-and-update-with-insert-on-conflict"
-class="section level3">
-<h3>Insert and update with <code>insert on conflict</code></h3>
-<p>Unfortunately Rmarkdown does not allow multiple SQL statements in a
-single code chuck. Postgres interprets that as submission of multiple
-commands and throws an error:</p>
-<p><code>Error: Failed to prepare query: ERROR:  cannot insert multiple commands into a prepared statement</code>.</p>
-<p>The commented out code is therefore executed in hidden chucks for
-ease of visualisation.</p>
-<p><br></p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">create</span> <span class="kw">temporary</span> <span class="kw">table</span> ref_data (</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    symbol          <span class="dt">varchar</span>(<span class="dv">4</span>) <span class="kw">unique</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    ,company_name   <span class="dt">varchar</span>(<span class="dv">50</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    ,start_date     <span class="dt">date</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ,end_date       <span class="dt">date</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>);</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">--insert into ref_data values (&#39;AAIC&#39;, &#39;American Airlines Group Inc&#39;, &#39;2018-06-30&#39;, &#39;9998-12-31&#39;);</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">--insert into ref_data values (&#39;AAME&#39;, &#39;Atlantic American Corp&#39;, &#39;2020-09-30&#39;, &#39;9998-12-31&#39;);</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">--select * from ref_data;</span></span></code></pre></div>
-<div class="knitsql-table">
-<table>
-<caption>2 records</caption>
-<thead>
-<tr class="header">
-<th align="left">symbol</th>
-<th align="left">company_name</th>
-<th align="left">start_date</th>
-<th align="left">end_date</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">AAIC</td>
-<td align="left">American Airlines Group Inc</td>
-<td align="left">2018-06-30</td>
-<td align="left">9998-12-31</td>
-</tr>
-<tr class="even">
-<td align="left">AAME</td>
-<td align="left">Atlantic American Corp</td>
-<td align="left">2020-09-30</td>
-<td align="left">9998-12-31</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">create</span> <span class="kw">temporary</span> <span class="kw">table</span> new_data (<span class="kw">like</span> ref_data);</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">--insert into new_data values (&#39;BOLT&#39;, &#39;Bolt Biotherapeutics Inc&#39;, &#39;2021-03-31&#39;, &#39;9998-12-31&#39;);</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">--insert into new_data values (&#39;AAME&#39;, &#39;Atlantic American Corporation&#39;, &#39;2020-09-30&#39;, &#39;2023-03-03&#39;);</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">--select &#39;ref_data&#39; as src, r.* from ref_data r</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">--union all</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">--select &#39;new_data&#39; as src, n.* from ref_data n;</span></span></code></pre></div>
-<div class="knitsql-table">
-<table>
-<caption>4 records</caption>
-<colgroup>
-<col width="13%" />
-<col width="10%" />
-<col width="44%" />
-<col width="16%" />
-<col width="16%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">src</th>
-<th align="left">symbol</th>
-<th align="left">company_name</th>
-<th align="left">start_date</th>
-<th align="left">end_date</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">ref_data</td>
-<td align="left">AAIC</td>
-<td align="left">American Airlines Group Inc</td>
-<td align="left">2018-06-30</td>
-<td align="left">9998-12-31</td>
-</tr>
-<tr class="even">
-<td align="left">ref_data</td>
-<td align="left">AAME</td>
-<td align="left">Atlantic American Corp</td>
-<td align="left">2020-09-30</td>
-<td align="left">9998-12-31</td>
-</tr>
-<tr class="odd">
-<td align="left">new_data</td>
-<td align="left">BOLT</td>
-<td align="left">Bolt Biotherapeutics Inc</td>
-<td align="left">2021-03-31</td>
-<td align="left">9998-12-31</td>
-</tr>
-<tr class="even">
-<td align="left">new_data</td>
-<td align="left">AAME</td>
-<td align="left">Atlantic American Corporation</td>
-<td align="left">2020-09-30</td>
-<td align="left">2023-03-03</td>
-</tr>
-</tbody>
-</table>
-</div>
 <div class="sourceCode" id="cb4"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">insert</span> <span class="kw">into</span> ref_data (<span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> new_data) </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">on</span> conflict (symbol) do <span class="kw">update</span> <span class="kw">set</span> end_date <span class="op">=</span> excluded.end_date;</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> ref_data</span></code></pre></div>
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">data</span>.tips <span class="kw">limit</span> <span class="dv">10</span>;</span></code></pre></div>
 <div class="knitsql-table">
 <table>
-<caption>3 records</caption>
+<caption>Displaying records 1 - 10</caption>
 <thead>
 <tr class="header">
-<th align="left">symbol</th>
-<th align="left">company_name</th>
-<th align="left">start_date</th>
-<th align="left">end_date</th>
+<th align="right">total_bill</th>
+<th align="right">tip</th>
+<th align="left">sex</th>
+<th align="left">smoker</th>
+<th align="left">day</th>
+<th align="left">time</th>
+<th align="right">size</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">AAIC</td>
-<td align="left">American Airlines Group Inc</td>
-<td align="left">2018-06-30</td>
-<td align="left">9998-12-31</td>
+<td align="right">16.99</td>
+<td align="right">1.01</td>
+<td align="left">Female</td>
+<td align="left">No</td>
+<td align="left">Sun</td>
+<td align="left">Dinner</td>
+<td align="right">2</td>
 </tr>
 <tr class="even">
-<td align="left">BOLT</td>
-<td align="left">Bolt Biotherapeutics Inc</td>
-<td align="left">2021-03-31</td>
-<td align="left">9998-12-31</td>
+<td align="right">10.34</td>
+<td align="right">1.66</td>
+<td align="left">Male</td>
+<td align="left">No</td>
+<td align="left">Sun</td>
+<td align="left">Dinner</td>
+<td align="right">3</td>
 </tr>
 <tr class="odd">
-<td align="left">AAME</td>
-<td align="left">Atlantic American Corp</td>
-<td align="left">2020-09-30</td>
-<td align="left">2023-03-03</td>
+<td align="right">21.01</td>
+<td align="right">3.50</td>
+<td align="left">Male</td>
+<td align="left">No</td>
+<td align="left">Sun</td>
+<td align="left">Dinner</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="right">23.68</td>
+<td align="right">3.31</td>
+<td align="left">Male</td>
+<td align="left">No</td>
+<td align="left">Sun</td>
+<td align="left">Dinner</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="right">24.59</td>
+<td align="right">3.61</td>
+<td align="left">Female</td>
+<td align="left">No</td>
+<td align="left">Sun</td>
+<td align="left">Dinner</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="right">25.29</td>
+<td align="right">4.71</td>
+<td align="left">Male</td>
+<td align="left">No</td>
+<td align="left">Sun</td>
+<td align="left">Dinner</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="right">8.77</td>
+<td align="right">2.00</td>
+<td align="left">Male</td>
+<td align="left">No</td>
+<td align="left">Sun</td>
+<td align="left">Dinner</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="right">26.88</td>
+<td align="right">3.12</td>
+<td align="left">Male</td>
+<td align="left">No</td>
+<td align="left">Sun</td>
+<td align="left">Dinner</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="right">15.04</td>
+<td align="right">1.96</td>
+<td align="left">Male</td>
+<td align="left">No</td>
+<td align="left">Sun</td>
+<td align="left">Dinner</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="right">14.78</td>
+<td align="right">3.23</td>
+<td align="left">Male</td>
+<td align="left">No</td>
+<td align="left">Sun</td>
+<td align="left">Dinner</td>
+<td align="right">2</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>As of Postgres 15, the same operation can be executed with
-<code>MERGE</code></p>
+<p><br></p>
+</div>
+<div id="python-set-up" class="section level3">
+<h3>Python set-up</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;reticulate&#39;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">use_condaenv</span>(<span class="at">condaenv =</span> <span class="st">&#39;STOCK_MASTER&#39;</span>, <span class="at">required =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><br></p>
 <div class="sourceCode" id="cb6"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">merge</span> <span class="kw">into</span> ref_data r </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> new_data n </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">on</span> r.symbol <span class="op">=</span> n.symbol </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">when</span> matched <span class="cf">then</span> </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">update</span> <span class="kw">set</span> end_date <span class="op">=</span> n.end_date</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">when</span> <span class="kw">not</span> matched <span class="cf">then</span> </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">insert</span> (symbol, company_name, , start_date, end_date)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">values</span> (n.symbol, n.company_name, n.start_date, n.end_date);</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ptips <span class="op">=</span> r.rtips</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ptips</span></code></pre></div>
+<pre><code>##      total_bill   tip     sex smoker   day    time  size
+## 0         16.99  1.01  Female     No   Sun  Dinner     2
+## 1         10.34  1.66    Male     No   Sun  Dinner     3
+## 2         21.01  3.50    Male     No   Sun  Dinner     3
+## 3         23.68  3.31    Male     No   Sun  Dinner     2
+## 4         24.59  3.61  Female     No   Sun  Dinner     4
+## ..          ...   ...     ...    ...   ...     ...   ...
+## 239       29.03  5.92    Male     No   Sat  Dinner     3
+## 240       27.18  2.00  Female    Yes   Sat  Dinner     2
+## 241       22.67  2.00    Male    Yes   Sat  Dinner     2
+## 242       17.82  1.75    Male     No   Sat  Dinner     2
+## 243       18.78  3.00  Female     No  Thur  Dinner     2
+## 
+## [244 rows x 7 columns]</code></pre>
+<div id="n-largest-tips-by-sex-where-total-bill-x"
+class="section level4">
+<h4>N largest tips by sex where total bill &gt; X</h4>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> (</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">select</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    t.<span class="op">*</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    ,<span class="fu">row_number</span>() <span class="kw">over</span> (<span class="kw">partition</span> <span class="kw">by</span> sex <span class="kw">order</span> <span class="kw">by</span> tip) <span class="kw">as</span> row_num</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">from</span> <span class="kw">data</span>.tips t</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">where</span> total_bill <span class="op">&gt;</span> <span class="dv">8</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>) t1</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">where</span> row_num <span class="op">&lt;=</span> <span class="dv">4</span></span></code></pre></div>
+<div class="knitsql-table">
+<table>
+<caption>8 records</caption>
+<thead>
+<tr class="header">
+<th align="right">total_bill</th>
+<th align="right">tip</th>
+<th align="left">sex</th>
+<th align="left">smoker</th>
+<th align="left">day</th>
+<th align="left">time</th>
+<th align="right">size</th>
+<th align="right">row_num</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">16.99</td>
+<td align="right">1.01</td>
+<td align="left">Female</td>
+<td align="left">No</td>
+<td align="left">Sun</td>
+<td align="left">Dinner</td>
+<td align="right">2</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">12.90</td>
+<td align="right">1.10</td>
+<td align="left">Female</td>
+<td align="left">Yes</td>
+<td align="left">Sat</td>
+<td align="left">Dinner</td>
+<td align="right">2</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="right">8.51</td>
+<td align="right">1.25</td>
+<td align="left">Female</td>
+<td align="left">No</td>
+<td align="left">Thur</td>
+<td align="left">Lunch</td>
+<td align="right">2</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="right">18.64</td>
+<td align="right">1.36</td>
+<td align="left">Female</td>
+<td align="left">No</td>
+<td align="left">Thur</td>
+<td align="left">Lunch</td>
+<td align="right">3</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="right">12.60</td>
+<td align="right">1.00</td>
+<td align="left">Male</td>
+<td align="left">Yes</td>
+<td align="left">Sat</td>
+<td align="left">Dinner</td>
+<td align="right">2</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="right">32.83</td>
+<td align="right">1.17</td>
+<td align="left">Male</td>
+<td align="left">Yes</td>
+<td align="left">Sat</td>
+<td align="left">Dinner</td>
+<td align="right">2</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="right">10.07</td>
+<td align="right">1.25</td>
+<td align="left">Male</td>
+<td align="left">No</td>
+<td align="left">Sat</td>
+<td align="left">Dinner</td>
+<td align="right">2</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="right">10.51</td>
+<td align="right">1.25</td>
+<td align="left">Male</td>
+<td align="left">No</td>
+<td align="left">Sat</td>
+<td align="left">Dinner</td>
+<td align="right">2</td>
+<td align="right">4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    ptips</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    .assign(row_num <span class="op">=</span> ptips.query(<span class="st">&quot;total_bill &gt; 8&quot;</span>).sort_values([<span class="st">&quot;tip&quot;</span>]).groupby([<span class="st">&quot;sex&quot;</span>]).cumcount() <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    .query(<span class="st">&quot;row_num &lt;= 4&quot;</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    .sort_values([<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;row_num&quot;</span>])</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>##      total_bill   tip     sex smoker   day    time  size  row_num
+## 0         16.99  1.01  Female     No   Sun  Dinner     2      1.0
+## 215       12.90  1.10  Female    Yes   Sat  Dinner     2      2.0
+## 135        8.51  1.25  Female     No  Thur   Lunch     2      3.0
+## 146       18.64  1.36  Female     No  Thur   Lunch     3      4.0
+## 236       12.60  1.00    Male    Yes   Sat  Dinner     2      1.0
+## 237       32.83  1.17    Male    Yes   Sat  Dinner     2      2.0
+## 75        10.51  1.25    Male     No   Sat  Dinner     2      3.0
+## 235       10.07  1.25    Male     No   Sat  Dinner     2      4.0</code></pre>
+<p>df[‘days_lookback’] = df.sort_values([‘date’], ascending=False)<br />
+.groupby([‘ticker’])<br />
+.cumcount() + 1 ——— df[‘example_2’] = df.sort_values([‘date’,
+‘period’],<br />
+ascending=[False, True])<br />
+.groupby([‘ticker’, ‘exchange’])<br />
+.cumcount() + 1</p>
+</div>
 </div>
 
 

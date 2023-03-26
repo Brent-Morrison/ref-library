@@ -18,7 +18,7 @@ navbar:
   left:
     - text: "Data wrangling"
       menu:
-        - text: "1.Top n by group"
+        - text: "Top n by group"
           menu:
             - text: "R - base"
               href: ./dw1_rbase.html
@@ -30,11 +30,13 @@ navbar:
               href: ./dw1_pypandas.html
             - text: "SQL - postgres"
               href: ./dw1_postgres.html
-        - text: "2.Date sequence"
+        - text: "Date sequence"
           menu:
             - text: "Date sequence"
               href: ./dw2_rbase.html
-        - text: "99.Placeholder"
+        - text: "SQL to pandas"
+          href: ./dw3_sql_pandas.html
+        - text: "Placeholder"
           menu:
             - text: "R - placeholder"
               href: ./dw2_ph.html

@@ -23,7 +23,7 @@ con <- DBI::dbConnect(
   RPostgres::Postgres(),
   host      = 'localhost',
   port      = '5432',
-  dbname    = 'stock_master_test',
+  dbname    = 'mlbench_data',
   user      = 'postgres',
   password  = config$pg_password
 )
@@ -68,7 +68,7 @@ select * from ref_data;
 ```
 
 ```{sql chunck4, connection=con}
-create table new_data (like ref_data);
+create temporary table new_data (like ref_data);
 
 --insert into new_data values ('BOLT', 'Bolt Biotherapeutics Inc', '2021-03-31', '9998-12-31');
 --insert into new_data values ('AAME', 'Atlantic American Corporation', '2020-09-30', '2023-03-03');
