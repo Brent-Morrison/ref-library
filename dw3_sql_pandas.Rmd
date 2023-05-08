@@ -58,6 +58,7 @@ import pandas as pd
 ptips = r.rtips
 ptips
 ```
+<br>
 
 #### N largest tips by sex where total bill > X
 
@@ -81,16 +82,3 @@ where row_num <= 4
     .sort_values(["sex", "row_num"])
 )
 ```
-
-
-
-
-
-df['days_lookback'] = df.sort_values(['date'], ascending=False)\
-             .groupby(['ticker'])\
-             .cumcount() + 1
----------
-df['example_2'] = df.sort_values(['date', 'period'], \
-             ascending=[False, True])\
-             .groupby(['ticker', 'exchange'])\
-             .cumcount() + 1

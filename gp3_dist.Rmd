@@ -1,0 +1,165 @@
+---
+title: "Distances"
+output: html_document
+---
+
+<br>
+
+Building distance matrices. 
+
+<br>
+
+### Python set-up
+
+```{r setup}
+Sys.setenv(RETICULATE_PYTHON = "C:/Users/brent/anaconda3/envs/STOCK_MASTER/python.exe")
+reticulate::use_condaenv(condaenv = 'STOCK_MASTER', required = TRUE)
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+library('reticulate')
+```
+
+<br>
+
+### Libraries
+
+```{python py1}
+import numpy as np
+np.set_printoptions(precision=2, linewidth=150)
+from scipy.spatial import distance
+```
+
+<br>
+
+## Data
+
+```{python py2}
+X1 = np.array([[6,1,7],[10,9,4],[13,9,3],[10,8,15],[14,4,1]])
+X2 = np.array([6,1,7])
+print(X1, "\n\n", X2)
+```
+
+<br>
+
+## Euclidean distance
+
+### Scipy
+
+```{python py4}
+def ed_sc(x):
+  x = x[:,None] if x.ndim == 1 else x
+  D_sp = distance.pdist(x, metric='euclidean')
+  Dmat = distance.squareform(D_sp, force='no', checks=True)
+  return Dmat
+
+a = ed_sc(X1)
+b = ed_sc(X2)
+print(a, "\n\n", b)
+```
+
+<br>
+
+### Numpy method 1
+
+SO [reference](https://stackoverflow.com/questions/29132417/compute-numpy-array-pairwise-euclidean-distance-except-with-self/59520806#59520806)
+
+```{python py5}
+def ed_np1(x):
+  x = x[:,None] if x.ndim == 1 else x
+  a = np.sum(x * x, 1)
+  b = np.repeat(a[:, None], x.shape[0], axis=1)
+  D = b + b.T -2 * np.dot(x, x.T)
+  Dmat = np.sqrt(D)
+  return Dmat
+
+a = ed_np1(X1)
+b = ed_np1(X2)
+print(a, "\n\n", b)
+```
+
+<br>
+
+### Numpy method 2
+
+Code adapted from [here](https://www.cs.ubc.ca/~nando/540-2013/lectures/gp.py)
+
+```{python py6}
+def ed_np2(x):
+  x = x[:,None] if x.ndim == 1 else x
+  D = np.sum(x**2, 1).reshape(-1, 1) \
+        + np.sum(x**2, 1)            \
+        - 2 * np.dot(x, x.T)
+  Dmat = np.sqrt(D)
+  return Dmat
+
+a = ed_np2(X1)
+b = ed_np2(X2)
+print(a, "\n\n", b)
+```
+
+<br>
+
+### Numpy method 3
+
+SO [reference](https://stackoverflow.com/questions/28687321/computing-euclidean-distance-for-numpy-in-python)
+
+```{python py7}
+def ed_np3(x):
+  x = x[:,None] if x.ndim == 1 else x
+  Dmat = np.sqrt(((x[:, :, None] - x[:, :, None].T) ** 2).sum(1))
+  return Dmat
+
+a = ed_np3(X1)
+b = ed_np3(X2)
+print(a, "\n\n", b)
+```
+
+<br>
+
+## Mahalanobis distance
+
+### Scipy
+
+```{python py8}
+def md_sp(x):
+  x = x[:,None] if x.ndim == 1 else x
+  D_sp = distance.pdist(x, metric='mahalanobis')
+  Dmat = distance.squareform(D_sp, force='no', checks=True)
+  return Dmat
+
+a = md_sp(X1)
+b = md_sp(X2)
+print(a, "\n\n", b)
+```
+
+### Numpy
+
+```{python py9}
+def md_np(x):
+  dec = np.linalg.cholesky(np.cov(x, rowvar=False))
+  tmp = np.linalg.solve(dec, x.T)
+  tmp1 = tmp.T
+  return ed_np3(tmp1)
+
+print(md_np(X1))
+```
+
+<br> 
+
+### R
+
+```{r md}
+md_r <- function(x) {
+  dec  <- chol( cov(x) )
+  tmp0 <- forwardsolve(t(dec), t(x) )
+  tmp1 <- t(tmp0)
+  lower_tri <- dist(tmp1)
+  m <- matrix(NA, nrow(x), nrow(x))
+  m[lower.tri(m)] <- lower_tri
+  m[upper.tri(m)] <- t(m)[upper.tri(m)]
+  diag(m) <- 0
+  m
+}
+
+d <- matrix(c(6,1,7,10,9,4,13,9,3,10,8,15,14,4,1), ncol = 3, byrow= TRUE)
+md_r(d)
+```

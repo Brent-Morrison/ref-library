@@ -485,6 +485,9 @@ div.tocify {
     <li>
       <a href="./gp2_rlagp.html">R - laGP</a>
     </li>
+    <li>
+      <a href="./gp3_dist.html">Distance functions</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -743,6 +746,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a hr
 ## 243       18.78  3.00  Female     No  Thur  Dinner     2
 ## 
 ## [244 rows x 7 columns]</code></pre>
+<p><br></p>
 <div id="n-largest-tips-by-sex-where-total-bill-x"
 class="section level4">
 <h4>N largest tips by sex where total bill &gt; X</h4>
@@ -870,13 +874,6 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a hr
 ## 237       32.83  1.17    Male    Yes   Sat  Dinner     2      2.0
 ## 75        10.51  1.25    Male     No   Sat  Dinner     2      3.0
 ## 235       10.07  1.25    Male     No   Sat  Dinner     2      4.0</code></pre>
-<p>df[‘days_lookback’] = df.sort_values([‘date’], ascending=False)<br />
-.groupby([‘ticker’])<br />
-.cumcount() + 1 ——— df[‘example_2’] = df.sort_values([‘date’,
-‘period’],<br />
-ascending=[False, True])<br />
-.groupby([‘ticker’, ‘exchange’])<br />
-.cumcount() + 1</p>
 </div>
 </div>
 

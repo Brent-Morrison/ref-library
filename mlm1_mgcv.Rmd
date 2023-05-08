@@ -177,8 +177,17 @@ persp(
 
 <br> 
 
+Once again using ```plotly```.
 
-### Reference  
+```{r }
+library(plotly)
+p1 <- plot_ly(z = gam_te2_pred, type = "surface")
+p1
+```
+
+<br>
+
+### References  
 
 3d plots with color  
 

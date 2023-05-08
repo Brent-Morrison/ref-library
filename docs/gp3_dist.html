@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Distances</title>
+
+<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Reference library</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Data wrangling
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Top n by group</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="./dw1_rbase.html">R - base</a>
+        </li>
+        <li>
+          <a href="./dw1_rdplyr.html">R - dplyr</a>
+        </li>
+        <li>
+          <a href="./dw1_rdatatable.html">R - data.table</a>
+        </li>
+        <li>
+          <a href="./dw1_pypandas.html">Python - pandas</a>
+        </li>
+        <li>
+          <a href="./dw1_postgres.html">SQL - postgres</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Date sequence</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="./dw2_rbase.html">Date sequence</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="./dw3_sql_pandas.html">SQL to pandas</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Placeholder</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="./dw2_ph.html">R - placeholder</a>
+        </li>
+        <li>
+          <a href="./dw2_ph.html">Python - placeholder</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Gaussian Processes
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="./gp1_rbase.html">R - base</a>
+    </li>
+    <li>
+      <a href="./gp2_rlagp.html">R - laGP</a>
+    </li>
+    <li>
+      <a href="./gp3_dist.html">Distance functions</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Command line
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="./cl_bash.html">Bash</a>
+    </li>
+    <li>
+      <a href="./cl_conda.html">Conda</a>
+    </li>
+    <li>
+      <a href="./cl_psql.html">psql</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Multi-level models
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="./mixed_effect_stock_valuation.html">R - blog post</a>
+    </li>
+    <li>
+      <a href="./mlm1_mgcv.html">R - multi-level GAM</a>
+    </li>
+    <li>
+      <a href="./numpyro_models.html">Numpyro - WIP</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Other
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="./ot_anki.html">Knowledge snippets</a>
+    </li>
+    <li>
+      <a href="./sample_shapes.html">Numpyro shapes</a>
+    </li>
+    <li>
+      <a href="./numpyro_models.html">Numpyro model</a>
+    </li>
+    <li>
+      <a href="./ot_lossfun.html">Loss functions</a>
+    </li>
+    <li>
+      <a href="./ot_r_misc.html">R miscellaneous</a>
+    </li>
+    <li>
+      <a href="./ot_psql_misc.html">Postgres miscellaneous</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Distances</h1>
+
+</div>
+
+
+<p><br></p>
+<p>Building distance matrices.</p>
+<p><br></p>
+<div id="python-set-up" class="section level3">
+<h3>Python set-up</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">RETICULATE_PYTHON =</span> <span class="st">&quot;C:/Users/brent/anaconda3/envs/STOCK_MASTER/python.exe&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>reticulate<span class="sc">::</span><span class="fu">use_condaenv</span>(<span class="at">condaenv =</span> <span class="st">&#39;STOCK_MASTER&#39;</span>, <span class="at">required =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>, <span class="at">cache =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;reticulate&#39;</span>)</span></code></pre></div>
+<p><br></p>
+</div>
+<div id="libraries" class="section level3">
+<h3>Libraries</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>np.set_printoptions(precision<span class="op">=</span><span class="dv">2</span>, linewidth<span class="op">=</span><span class="dv">150</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.spatial <span class="im">import</span> distance</span></code></pre></div>
+<p><br></p>
+</div>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X1 <span class="op">=</span> np.array([[<span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">7</span>],[<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">4</span>],[<span class="dv">13</span>,<span class="dv">9</span>,<span class="dv">3</span>],[<span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">15</span>],[<span class="dv">14</span>,<span class="dv">4</span>,<span class="dv">1</span>]])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>X2 <span class="op">=</span> np.array([<span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">7</span>])</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X1, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, X2)</span></code></pre></div>
+<pre><code>## [[ 6  1  7]
+##  [10  9  4]
+##  [13  9  3]
+##  [10  8 15]
+##  [14  4  1]] 
+## 
+##  [6 1 7]</code></pre>
+<p><br></p>
+</div>
+<div id="euclidean-distance" class="section level2">
+<h2>Euclidean distance</h2>
+<div id="scipy" class="section level3">
+<h3>Scipy</h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ed_sc(x):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  D_sp <span class="op">=</span> distance.pdist(x, metric<span class="op">=</span><span class="st">&#39;euclidean&#39;</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  Dmat <span class="op">=</span> distance.squareform(D_sp, force<span class="op">=</span><span class="st">&#39;no&#39;</span>, checks<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> ed_sc(X1)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> ed_sc(X2)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
+<pre><code>## [[ 0.    9.43 11.36 11.36 10.44]
+##  [ 9.43  0.    3.16 11.05  7.07]
+##  [11.36  3.16  0.   12.41  5.48]
+##  [11.36 11.05 12.41  0.   15.1 ]
+##  [10.44  7.07  5.48 15.1   0.  ]] 
+## 
+##  [[0. 5. 1.]
+##  [5. 0. 6.]
+##  [1. 6. 0.]]</code></pre>
+<p><br></p>
+</div>
+<div id="numpy-method-1" class="section level3">
+<h3>Numpy method 1</h3>
+<p>SO <a
+href="https://stackoverflow.com/questions/29132417/compute-numpy-array-pairwise-euclidean-distance-except-with-self/59520806#59520806">reference</a></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ed_np1(x):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  a <span class="op">=</span> np.<span class="bu">sum</span>(x <span class="op">*</span> x, <span class="dv">1</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  b <span class="op">=</span> np.repeat(a[:, <span class="va">None</span>], x.shape[<span class="dv">0</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  D <span class="op">=</span> b <span class="op">+</span> b.T <span class="op">-</span><span class="dv">2</span> <span class="op">*</span> np.dot(x, x.T)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  Dmat <span class="op">=</span> np.sqrt(D)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> ed_np1(X1)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> ed_np1(X2)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
+<pre><code>## [[ 0.    9.43 11.36 11.36 10.44]
+##  [ 9.43  0.    3.16 11.05  7.07]
+##  [11.36  3.16  0.   12.41  5.48]
+##  [11.36 11.05 12.41  0.   15.1 ]
+##  [10.44  7.07  5.48 15.1   0.  ]] 
+## 
+##  [[0. 5. 1.]
+##  [5. 0. 6.]
+##  [1. 6. 0.]]</code></pre>
+<p><br></p>
+</div>
+<div id="numpy-method-2" class="section level3">
+<h3>Numpy method 2</h3>
+<p>Code adapted from <a
+href="https://www.cs.ubc.ca/~nando/540-2013/lectures/gp.py">here</a></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ed_np2(x):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  D <span class="op">=</span> np.<span class="bu">sum</span>(x<span class="op">**</span><span class="dv">2</span>, <span class="dv">1</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">\</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> np.<span class="bu">sum</span>(x<span class="op">**</span><span class="dv">2</span>, <span class="dv">1</span>)            <span class="op">\</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.dot(x, x.T)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  Dmat <span class="op">=</span> np.sqrt(D)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> ed_np2(X1)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> ed_np2(X2)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
+<pre><code>## [[ 0.    9.43 11.36 11.36 10.44]
+##  [ 9.43  0.    3.16 11.05  7.07]
+##  [11.36  3.16  0.   12.41  5.48]
+##  [11.36 11.05 12.41  0.   15.1 ]
+##  [10.44  7.07  5.48 15.1   0.  ]] 
+## 
+##  [[0. 5. 1.]
+##  [5. 0. 6.]
+##  [1. 6. 0.]]</code></pre>
+<p><br></p>
+</div>
+<div id="numpy-method-3" class="section level3">
+<h3>Numpy method 3</h3>
+<p>SO <a
+href="https://stackoverflow.com/questions/28687321/computing-euclidean-distance-for-numpy-in-python">reference</a></p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ed_np3(x):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  Dmat <span class="op">=</span> np.sqrt(((x[:, :, <span class="va">None</span>] <span class="op">-</span> x[:, :, <span class="va">None</span>].T) <span class="op">**</span> <span class="dv">2</span>).<span class="bu">sum</span>(<span class="dv">1</span>))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> ed_np3(X1)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> ed_np3(X2)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
+<pre><code>## [[ 0.    9.43 11.36 11.36 10.44]
+##  [ 9.43  0.    3.16 11.05  7.07]
+##  [11.36  3.16  0.   12.41  5.48]
+##  [11.36 11.05 12.41  0.   15.1 ]
+##  [10.44  7.07  5.48 15.1   0.  ]] 
+## 
+##  [[0. 5. 1.]
+##  [5. 0. 6.]
+##  [1. 6. 0.]]</code></pre>
+<p><br></p>
+</div>
+</div>
+<div id="mahalanobis-distance" class="section level2">
+<h2>Mahalanobis distance</h2>
+<div id="scipy-1" class="section level3">
+<h3>Scipy</h3>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> md_sp(x):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  D_sp <span class="op">=</span> distance.pdist(x, metric<span class="op">=</span><span class="st">&#39;mahalanobis&#39;</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  Dmat <span class="op">=</span> distance.squareform(D_sp, force<span class="op">=</span><span class="st">&#39;no&#39;</span>, checks<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> md_sp(X1)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> md_sp(X2)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
+<pre><code>## [[0.   2.39 2.63 2.76 2.6 ]
+##  [2.39 0.   1.22 2.68 2.8 ]
+##  [2.63 1.22 0.   2.3  1.85]
+##  [2.76 2.68 2.3  0.   2.78]
+##  [2.6  2.8  1.85 2.78 0.  ]] 
+## 
+##  [[0.   1.56 0.31]
+##  [1.56 0.   1.87]
+##  [0.31 1.87 0.  ]]</code></pre>
+</div>
+<div id="numpy" class="section level3">
+<h3>Numpy</h3>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> md_np(x):</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  dec <span class="op">=</span> np.linalg.cholesky(np.cov(x, rowvar<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  tmp <span class="op">=</span> np.linalg.solve(dec, x.T)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  tmp1 <span class="op">=</span> tmp.T</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> ed_np3(tmp1)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(md_np(X1))</span></code></pre></div>
+<pre><code>## [[0.   2.39 2.63 2.76 2.6 ]
+##  [2.39 0.   1.22 2.68 2.8 ]
+##  [2.63 1.22 0.   2.3  1.85]
+##  [2.76 2.68 2.3  0.   2.78]
+##  [2.6  2.8  1.85 2.78 0.  ]]</code></pre>
+<p><br></p>
+</div>
+<div id="r" class="section level3">
+<h3>R</h3>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>md_r <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  dec  <span class="ot">&lt;-</span> <span class="fu">chol</span>( <span class="fu">cov</span>(x) )</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  tmp0 <span class="ot">&lt;-</span> <span class="fu">forwardsolve</span>(<span class="fu">t</span>(dec), <span class="fu">t</span>(x) )</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  tmp1 <span class="ot">&lt;-</span> <span class="fu">t</span>(tmp0)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  lower_tri <span class="ot">&lt;-</span> <span class="fu">dist</span>(tmp1)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="fu">nrow</span>(x), <span class="fu">nrow</span>(x))</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  m[<span class="fu">lower.tri</span>(m)] <span class="ot">&lt;-</span> lower_tri</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  m[<span class="fu">upper.tri</span>(m)] <span class="ot">&lt;-</span> <span class="fu">t</span>(m)[<span class="fu">upper.tri</span>(m)]</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diag</span>(m) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  m</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">4</span>,<span class="dv">13</span>,<span class="dv">9</span>,<span class="dv">3</span>,<span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">15</span>,<span class="dv">14</span>,<span class="dv">4</span>,<span class="dv">1</span>), <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow=</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">md_r</span>(d)</span></code></pre></div>
+<pre><code>##          [,1]     [,2]     [,3]     [,4]     [,5]
+## [1,] 0.000000 2.388123 2.631810 2.762811 2.603338
+## [2,] 2.388123 0.000000 1.220222 2.678094 2.798580
+## [3,] 2.631810 1.220222 0.000000 2.303122 1.847275
+## [4,] 2.762811 2.678094 2.303122 0.000000 2.783878
+## [5,] 2.603338 2.798580 1.847275 2.783878 0.000000</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

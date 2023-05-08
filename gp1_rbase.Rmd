@@ -1,5 +1,5 @@
 ---
-title: "Gaussian Process regression - base R (WIP)"
+title: "Gaussian Process regression - base R"
 output: html_document
 ---
 
@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 <br>
 
-A replication of the Gaussian Process regression implementation lifted from chapter 5 of [Surrogates](https://bookdown.org/rbg/surrogates/chap5.html), and an application of the same code to real data.
+A replication of the Gaussian Process regression implementation from chapter 5 of [Surrogates](https://bookdown.org/rbg/surrogates/chap5.html).  Application of the same code to real data.
 
 <br>
 

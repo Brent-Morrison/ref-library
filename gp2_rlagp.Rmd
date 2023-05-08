@@ -1,5 +1,5 @@
 ---
-title: "Gaussian Process regression - R laGP (WIP)"
+title: "Gaussian Process regression - R ```laGP```"
 output: html_document
 ---
 
@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <br>
 
-A replication of the Gaussian Process regression implementation lifted from chapter 5 of [Surrogates](https://bookdown.org/rbg/surrogates/chap5.html), and an application of the same code to real data.
+A replication of the Gaussian Process regression implementation from chapter 5 of [Surrogates](https://bookdown.org/rbg/surrogates/chap5.html).  Application of the same code to real data.
 
 <br>
 
@@ -39,11 +39,13 @@ eps <- sqrt(.Machine$double.eps)
 
 ### Using function `newGP`
 
-Investigate parameters:
+Note the parameters:
 
 d: a positive scalar lengthscale parameter for an isotropic Gaussian correlation function (newGP); or a vector for a separable version (newGPsep), and
 
 g: a positive scalar nugget / jitter parameter
+
+are seeded with the ````darg``` and ````garg``` functions.
 
 ```{r }
 library('laGP')
@@ -85,7 +87,7 @@ for(parm in c('d','g')) {
 
 ### Using function `newGPsep`
 
-Separable GP, the lengthscale parameter is allowed to decay at differing rates dependent on the input data. It is anisotropic, rather than isotropic.
+A separable GP, the lengthscale parameter is allowed to decay at differing rates dependent on the input data. This is an anisotropic, rather than isotropic model.
 
 ```{r }
 gpi <- newGPsep(X, y, d=d$start, g=g$start*0.5, dK=TRUE)
@@ -115,7 +117,7 @@ rm(mle)
 
 <br>
 
-The procedures above are now applied to real data, that being stock valuations and fundamentals.
+The procedures above are now applied to real data, that being an estimation of stock valuation based on fundamental data.
 
 <br>
 
@@ -173,10 +175,14 @@ deleteGPsep(gpi)
 rm(mle)
 ```
 
-## References
+## References  
 
-[Page 3 re dummy data function](https://cran.r-project.org/web/packages/tgp/vignettes/tgp2.pdf)
+Functions creating dummy data. Useful for model testing.
+
+[tpg vignette](https://cran.r-project.org/web/packages/tgp/vignettes/tgp2.pdf), refer page 3 for dummy data function  
+
+[Gold price function](https://cran.r-project.org/web/packages/GPfit/GPfit.pdf) from the ```GPfit``` doucmentation.  
+
+Other Gaussian Process packages  
 
 [GPBoost](https://github.com/fabsig/GPBoost)
-
-[Gold price function](https://cran.r-project.org/web/packages/GPfit/GPfit.pdf)
