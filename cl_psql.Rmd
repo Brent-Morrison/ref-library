@@ -24,7 +24,7 @@ A personal cheat sheet for [psql](https://www.postgresql.org/docs/current/app-ps
 
 | Action | Command | Note |  
 | :----- |:------- |:---:|  
-| Backup to file | ```pg_dump -Fc -h localhost -U postgres -p 5432 stock_master > E:/postgres_backup/stock_master_yyyymmdd.dump``` | |  
+| Backup to file | ```pg_dump -Fc -h localhost -U postgres -p 5432 stock_master > E:/postgres_backup/stock_master_yyyymmdd.dump``` | 2 |  
 | Drop database | ```dropdb -h localhost -U postgres -p 5432 -i stock_master_test``` | |  
 | New database | ```createdb -h localhost -U postgres -p 5432 -T template0 stock_master_test``` | |  
 | Restore from file | ```pg_restore -h localhost -U postgres -p 5432 -d stock_master_test E:/postgres_backup/stock_master_20230306.dump``` | |  
@@ -48,4 +48,7 @@ where schemaname not in ('information_schema','public','pg_catalog')
 order by 1,2,4,3;
 ```
 
-  
+<br>
+
+**2.**
+These functions do not require a prior psql connection to the database.  ```pg_dump``` is a standalone utility similar to ```psql```.

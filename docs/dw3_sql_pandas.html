@@ -56,7 +56,7 @@
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -584,25 +584,25 @@ href="https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_
 <p><br></p>
 <div id="postgres-set-up" class="section level3">
 <h3>Postgres set-up</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RPostgres)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Database connection</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>config <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(<span class="st">&#39;C:/Users/brent/Documents/VS_Code/postgres/postgres/config.json&#39;</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  RPostgres<span class="sc">::</span><span class="fu">Postgres</span>(),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">host      =</span> <span class="st">&#39;localhost&#39;</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">port      =</span> <span class="st">&#39;5432&#39;</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">dbname    =</span> <span class="st">&#39;mlbench_data&#39;</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">user      =</span> <span class="st">&#39;postgres&#39;</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">password  =</span> config<span class="sc">$</span>pg_password</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Tips data to r dataframe</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>qry <span class="ot">&lt;-</span> <span class="fu">dbSendQuery</span>(<span class="at">conn =</span> con, <span class="at">statement =</span> <span class="st">&quot;select * from data.tips&quot;</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>rtips <span class="ot">&lt;-</span> <span class="fu">dbFetch</span>(qry)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rtips)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(RPostgres)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co"># Database connection</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>config <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(<span class="st">&#39;C:/Users/brent/Documents/VS_Code/postgres/postgres/config.json&#39;</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>con <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  RPostgres<span class="sc">::</span><span class="fu">Postgres</span>(),</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="at">host      =</span> <span class="st">&#39;localhost&#39;</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="at">port      =</span> <span class="st">&#39;5432&#39;</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="at">dbname    =</span> <span class="st">&#39;mlbench_data&#39;</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="at">user      =</span> <span class="st">&#39;postgres&#39;</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  <span class="at">password  =</span> config<span class="sc">$</span>pg_password</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Tips data to r dataframe</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>qry <span class="ot">&lt;-</span> <span class="fu">dbSendQuery</span>(<span class="at">conn =</span> con, <span class="at">statement =</span> <span class="st">&quot;select * from data.tips&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>rtips <span class="ot">&lt;-</span> <span class="fu">dbFetch</span>(qry)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="fu">head</span>(rtips)</span></code></pre></div>
 <pre><code>##   total_bill  tip    sex smoker day   time size
 ## 1      16.99 1.01 Female     No Sun Dinner    2
 ## 2      10.34 1.66   Male     No Sun Dinner    3
@@ -612,7 +612,7 @@ href="https://pandas.pydata.org/docs/getting_started/comparison/comparison_with_
 ## 6      25.29 4.71   Male     No Sun Dinner    4</code></pre>
 <p><br></p>
 <div class="sourceCode" id="cb4"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">data</span>.tips <span class="kw">limit</span> <span class="dv">10</span>;</span></code></pre></div>
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> <span class="kw">data</span>.tips <span class="kw">limit</span> <span class="dv">10</span>;</span></code></pre></div>
 <div class="knitsql-table">
 <table>
 <caption>Displaying records 1 - 10</caption>
@@ -725,13 +725,13 @@ class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#c
 </div>
 <div id="python-set-up" class="section level3">
 <h3>Python set-up</h3>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;reticulate&#39;</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">use_condaenv</span>(<span class="at">condaenv =</span> <span class="st">&#39;STOCK_MASTER&#39;</span>, <span class="at">required =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;reticulate&#39;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">use_condaenv</span>(<span class="at">condaenv =</span> <span class="st">&#39;STOCK_MASTER&#39;</span>, <span class="at">required =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><br></p>
 <div class="sourceCode" id="cb6"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ptips <span class="op">=</span> r.rtips</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ptips</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>ptips <span class="op">=</span> r.rtips</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>ptips</span></code></pre></div>
 <pre><code>##      total_bill   tip     sex smoker   day    time  size
 ## 0         16.99  1.01  Female     No   Sun  Dinner     2
 ## 1         10.34  1.66    Male     No   Sun  Dinner     3
@@ -751,14 +751,14 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a hr
 class="section level4">
 <h4>N largest tips by sex where total bill &gt; X</h4>
 <div class="sourceCode" id="cb8"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> (</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">select</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    t.<span class="op">*</span> </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    ,<span class="fu">row_number</span>() <span class="kw">over</span> (<span class="kw">partition</span> <span class="kw">by</span> sex <span class="kw">order</span> <span class="kw">by</span> tip) <span class="kw">as</span> row_num</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">from</span> <span class="kw">data</span>.tips t</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">where</span> total_bill <span class="op">&gt;</span> <span class="dv">8</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>) t1</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">where</span> row_num <span class="op">&lt;=</span> <span class="dv">4</span></span></code></pre></div>
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> (</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>    <span class="kw">select</span> </span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    t.<span class="op">*</span> </span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    ,<span class="fu">row_number</span>() <span class="kw">over</span> (<span class="kw">partition</span> <span class="kw">by</span> sex <span class="kw">order</span> <span class="kw">by</span> tip) <span class="kw">as</span> row_num</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>    <span class="kw">from</span> <span class="kw">data</span>.tips t</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    <span class="kw">where</span> total_bill <span class="op">&gt;</span> <span class="dv">8</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>) t1</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="kw">where</span> row_num <span class="op">&lt;=</span> <span class="dv">4</span></span></code></pre></div>
 <div class="knitsql-table">
 <table>
 <caption>8 records</caption>
@@ -859,12 +859,12 @@ class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="#c
 </table>
 </div>
 <div class="sourceCode" id="cb9"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    ptips</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    .assign(row_num <span class="op">=</span> ptips.query(<span class="st">&quot;total_bill &gt; 8&quot;</span>).sort_values([<span class="st">&quot;tip&quot;</span>]).groupby([<span class="st">&quot;sex&quot;</span>]).cumcount() <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    .query(<span class="st">&quot;row_num &lt;= 4&quot;</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    .sort_values([<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;row_num&quot;</span>])</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>(</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>    ptips</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    .assign(row_num <span class="op">=</span> ptips.query(<span class="st">&quot;total_bill &gt; 8&quot;</span>).sort_values([<span class="st">&quot;tip&quot;</span>]).groupby([<span class="st">&quot;sex&quot;</span>]).cumcount() <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    .query(<span class="st">&quot;row_num &lt;= 4&quot;</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>    .sort_values([<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;row_num&quot;</span>])</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##      total_bill   tip     sex smoker   day    time  size  row_num
 ## 0         16.99  1.01  Female     No   Sun  Dinner     2      1.0
 ## 215       12.90  1.10  Female    Yes   Sat  Dinner     2      2.0

@@ -56,7 +56,7 @@
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -581,21 +581,21 @@ div.tocify {
 <p><br></p>
 <div id="postgres-set-up" class="section level3">
 <h3>Postgres set-up</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RPostgres)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Database connection</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>config <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(<span class="st">&#39;C:/Users/brent/Documents/VS_Code/postgres/postgres/config.json&#39;</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>con <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  RPostgres<span class="sc">::</span><span class="fu">Postgres</span>(),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">host      =</span> <span class="st">&#39;localhost&#39;</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">port      =</span> <span class="st">&#39;5432&#39;</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">dbname    =</span> <span class="st">&#39;mlbench_data&#39;</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">user      =</span> <span class="st">&#39;postgres&#39;</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">password  =</span> config<span class="sc">$</span>pg_password</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(RPostgres)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co"># Database connection</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>config <span class="ot">&lt;-</span> jsonlite<span class="sc">::</span><span class="fu">read_json</span>(<span class="st">&#39;C:/Users/brent/Documents/VS_Code/postgres/postgres/config.json&#39;</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>con <span class="ot">&lt;-</span> DBI<span class="sc">::</span><span class="fu">dbConnect</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  RPostgres<span class="sc">::</span><span class="fu">Postgres</span>(),</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="at">host      =</span> <span class="st">&#39;localhost&#39;</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="at">port      =</span> <span class="st">&#39;5432&#39;</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="at">dbname    =</span> <span class="st">&#39;mlbench_data&#39;</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>  <span class="at">user      =</span> <span class="st">&#39;postgres&#39;</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>  <span class="at">password  =</span> config<span class="sc">$</span>pg_password</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>)</span></code></pre></div>
 <p><br></p>
 </div>
 <div id="insert-and-update-with-insert-on-conflict"
@@ -609,17 +609,17 @@ commands and throws an error:</p>
 ease of visualisation.</p>
 <p><br></p>
 <div class="sourceCode" id="cb2"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">create</span> <span class="kw">temporary</span> <span class="kw">table</span> ref_data (</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    symbol          <span class="dt">varchar</span>(<span class="dv">4</span>) <span class="kw">unique</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    ,company_name   <span class="dt">varchar</span>(<span class="dv">50</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    ,start_date     <span class="dt">date</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ,end_date       <span class="dt">date</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>);</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">--insert into ref_data values (&#39;AAIC&#39;, &#39;American Airlines Group Inc&#39;, &#39;2018-06-30&#39;, &#39;9998-12-31&#39;);</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">--insert into ref_data values (&#39;AAME&#39;, &#39;Atlantic American Corp&#39;, &#39;2020-09-30&#39;, &#39;9998-12-31&#39;);</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">--select * from ref_data;</span></span></code></pre></div>
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="kw">create</span> <span class="kw">temporary</span> <span class="kw">table</span> ref_data (</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    symbol          <span class="dt">varchar</span>(<span class="dv">4</span>) <span class="kw">unique</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    ,company_name   <span class="dt">varchar</span>(<span class="dv">50</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    ,start_date     <span class="dt">date</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    ,end_date       <span class="dt">date</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>);</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">--insert into ref_data values (&#39;AAIC&#39;, &#39;American Airlines Group Inc&#39;, &#39;2018-06-30&#39;, &#39;9998-12-31&#39;);</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">--insert into ref_data values (&#39;AAME&#39;, &#39;Atlantic American Corp&#39;, &#39;2020-09-30&#39;, &#39;9998-12-31&#39;);</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">--select * from ref_data;</span></span></code></pre></div>
 <div class="knitsql-table">
 <table>
 <caption>2 records</caption>
@@ -648,14 +648,14 @@ class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#c
 </table>
 </div>
 <div class="sourceCode" id="cb3"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">create</span> <span class="kw">temporary</span> <span class="kw">table</span> new_data (<span class="kw">like</span> ref_data);</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">--insert into new_data values (&#39;BOLT&#39;, &#39;Bolt Biotherapeutics Inc&#39;, &#39;2021-03-31&#39;, &#39;9998-12-31&#39;);</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">--insert into new_data values (&#39;AAME&#39;, &#39;Atlantic American Corporation&#39;, &#39;2020-09-30&#39;, &#39;2023-03-03&#39;);</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">--select &#39;ref_data&#39; as src, r.* from ref_data r</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">--union all</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">--select &#39;new_data&#39; as src, n.* from ref_data n;</span></span></code></pre></div>
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="kw">create</span> <span class="kw">temporary</span> <span class="kw">table</span> new_data (<span class="kw">like</span> ref_data);</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">--insert into new_data values (&#39;BOLT&#39;, &#39;Bolt Biotherapeutics Inc&#39;, &#39;2021-03-31&#39;, &#39;9998-12-31&#39;);</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">--insert into new_data values (&#39;AAME&#39;, &#39;Atlantic American Corporation&#39;, &#39;2020-09-30&#39;, &#39;2023-03-03&#39;);</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">--select &#39;ref_data&#39; as src, r.* from ref_data r</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">--union all</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">--select &#39;new_data&#39; as src, n.* from ref_data n;</span></span></code></pre></div>
 <div class="knitsql-table">
 <table>
 <caption>4 records</caption>
@@ -708,10 +708,10 @@ class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#c
 </table>
 </div>
 <div class="sourceCode" id="cb4"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">insert</span> <span class="kw">into</span> ref_data (<span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> new_data) </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">on</span> conflict (symbol) do <span class="kw">update</span> <span class="kw">set</span> end_date <span class="op">=</span> excluded.end_date;</span></code></pre></div>
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="kw">insert</span> <span class="kw">into</span> ref_data (<span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> new_data) </span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="kw">on</span> conflict (symbol) do <span class="kw">update</span> <span class="kw">set</span> end_date <span class="op">=</span> excluded.end_date;</span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> ref_data</span></code></pre></div>
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="kw">select</span> <span class="op">*</span> <span class="kw">from</span> ref_data</span></code></pre></div>
 <div class="knitsql-table">
 <table>
 <caption>3 records</caption>
@@ -748,14 +748,14 @@ class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="#c
 <p>As of Postgres 15, the same operation can be executed with
 <code>MERGE</code></p>
 <div class="sourceCode" id="cb6"><pre
-class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">merge</span> <span class="kw">into</span> ref_data r </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> new_data n </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">on</span> r.symbol <span class="op">=</span> n.symbol </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">when</span> matched <span class="cf">then</span> </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">update</span> <span class="kw">set</span> end_date <span class="op">=</span> n.end_date</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">when</span> <span class="kw">not</span> matched <span class="cf">then</span> </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">insert</span> (symbol, company_name, , start_date, end_date)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">values</span> (n.symbol, n.company_name, n.start_date, n.end_date);</span></code></pre></div>
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="kw">merge</span> <span class="kw">into</span> ref_data r </span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="kw">using</span> new_data n </span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="kw">on</span> r.symbol <span class="op">=</span> n.symbol </span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="cf">when</span> matched <span class="cf">then</span> </span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="kw">update</span> <span class="kw">set</span> end_date <span class="op">=</span> n.end_date</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="cf">when</span> <span class="kw">not</span> matched <span class="cf">then</span> </span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>    <span class="kw">insert</span> (symbol, company_name, , start_date, end_date)</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>    <span class="kw">values</span> (n.symbol, n.company_name, n.start_date, n.end_date);</span></code></pre></div>
 </div>
 
 

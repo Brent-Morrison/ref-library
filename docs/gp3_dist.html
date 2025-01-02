@@ -56,7 +56,7 @@
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -583,26 +583,26 @@ div.tocify {
 <p><br></p>
 <div id="python-set-up" class="section level3">
 <h3>Python set-up</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">RETICULATE_PYTHON =</span> <span class="st">&quot;C:/Users/brent/anaconda3/envs/STOCK_MASTER/python.exe&quot;</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>reticulate<span class="sc">::</span><span class="fu">use_condaenv</span>(<span class="at">condaenv =</span> <span class="st">&#39;STOCK_MASTER&#39;</span>, <span class="at">required =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>, <span class="at">cache =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;reticulate&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">RETICULATE_PYTHON =</span> <span class="st">&quot;C:/Users/brent/anaconda3/envs/STOCK_MASTER/python.exe&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>reticulate<span class="sc">::</span><span class="fu">use_condaenv</span>(<span class="at">condaenv =</span> <span class="st">&#39;STOCK_MASTER&#39;</span>, <span class="at">required =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>, <span class="at">cache =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&#39;reticulate&#39;</span>)</span></code></pre></div>
 <p><br></p>
 </div>
 <div id="libraries" class="section level3">
 <h3>Libraries</h3>
 <div class="sourceCode" id="cb2"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>np.set_printoptions(precision<span class="op">=</span><span class="dv">2</span>, linewidth<span class="op">=</span><span class="dv">150</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.spatial <span class="im">import</span> distance</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>np.set_printoptions(precision<span class="op">=</span><span class="dv">2</span>, linewidth<span class="op">=</span><span class="dv">150</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="im">from</span> scipy.spatial <span class="im">import</span> distance</span></code></pre></div>
 <p><br></p>
 </div>
 <div id="data" class="section level2">
 <h2>Data</h2>
 <div class="sourceCode" id="cb3"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X1 <span class="op">=</span> np.array([[<span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">7</span>],[<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">4</span>],[<span class="dv">13</span>,<span class="dv">9</span>,<span class="dv">3</span>],[<span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">15</span>],[<span class="dv">14</span>,<span class="dv">4</span>,<span class="dv">1</span>]])</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>X2 <span class="op">=</span> np.array([<span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">7</span>])</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X1, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, X2)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>X1 <span class="op">=</span> np.array([[<span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">7</span>],[<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">4</span>],[<span class="dv">13</span>,<span class="dv">9</span>,<span class="dv">3</span>],[<span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">15</span>],[<span class="dv">14</span>,<span class="dv">4</span>,<span class="dv">1</span>]])</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>X2 <span class="op">=</span> np.array([<span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">7</span>])</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="bu">print</span>(X1, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, X2)</span></code></pre></div>
 <pre><code>## [[ 6  1  7]
 ##  [10  9  4]
 ##  [13  9  3]
@@ -617,15 +617,15 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a hr
 <div id="scipy" class="section level3">
 <h3>Scipy</h3>
 <div class="sourceCode" id="cb5"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ed_sc(x):</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  D_sp <span class="op">=</span> distance.pdist(x, metric<span class="op">=</span><span class="st">&#39;euclidean&#39;</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  Dmat <span class="op">=</span> distance.squareform(D_sp, force<span class="op">=</span><span class="st">&#39;no&#39;</span>, checks<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> ed_sc(X1)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> ed_sc(X2)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="kw">def</span> ed_sc(x):</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  D_sp <span class="op">=</span> distance.pdist(x, metric<span class="op">=</span><span class="st">&#39;euclidean&#39;</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  Dmat <span class="op">=</span> distance.squareform(D_sp, force<span class="op">=</span><span class="st">&#39;no&#39;</span>, checks<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>a <span class="op">=</span> ed_sc(X1)</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>b <span class="op">=</span> ed_sc(X2)</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
 <pre><code>## [[ 0.    9.43 11.36 11.36 10.44]
 ##  [ 9.43  0.    3.16 11.05  7.07]
 ##  [11.36  3.16  0.   12.41  5.48]
@@ -642,17 +642,17 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a hr
 <p>SO <a
 href="https://stackoverflow.com/questions/29132417/compute-numpy-array-pairwise-euclidean-distance-except-with-self/59520806#59520806">reference</a></p>
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ed_np1(x):</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  a <span class="op">=</span> np.<span class="bu">sum</span>(x <span class="op">*</span> x, <span class="dv">1</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  b <span class="op">=</span> np.repeat(a[:, <span class="va">None</span>], x.shape[<span class="dv">0</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  D <span class="op">=</span> b <span class="op">+</span> b.T <span class="op">-</span><span class="dv">2</span> <span class="op">*</span> np.dot(x, x.T)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  Dmat <span class="op">=</span> np.sqrt(D)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> ed_np1(X1)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> ed_np1(X2)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="kw">def</span> ed_np1(x):</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  a <span class="op">=</span> np.<span class="bu">sum</span>(x <span class="op">*</span> x, <span class="dv">1</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  b <span class="op">=</span> np.repeat(a[:, <span class="va">None</span>], x.shape[<span class="dv">0</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  D <span class="op">=</span> b <span class="op">+</span> b.T <span class="op">-</span><span class="dv">2</span> <span class="op">*</span> np.dot(x, x.T)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  Dmat <span class="op">=</span> np.sqrt(D)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>a <span class="op">=</span> ed_np1(X1)</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>b <span class="op">=</span> ed_np1(X2)</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
 <pre><code>## [[ 0.    9.43 11.36 11.36 10.44]
 ##  [ 9.43  0.    3.16 11.05  7.07]
 ##  [11.36  3.16  0.   12.41  5.48]
@@ -669,17 +669,17 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a hr
 <p>Code adapted from <a
 href="https://www.cs.ubc.ca/~nando/540-2013/lectures/gp.py">here</a></p>
 <div class="sourceCode" id="cb9"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ed_np2(x):</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  D <span class="op">=</span> np.<span class="bu">sum</span>(x<span class="op">**</span><span class="dv">2</span>, <span class="dv">1</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">\</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> np.<span class="bu">sum</span>(x<span class="op">**</span><span class="dv">2</span>, <span class="dv">1</span>)            <span class="op">\</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.dot(x, x.T)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  Dmat <span class="op">=</span> np.sqrt(D)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> ed_np2(X1)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> ed_np2(X2)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="kw">def</span> ed_np2(x):</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  D <span class="op">=</span> np.<span class="bu">sum</span>(x<span class="op">**</span><span class="dv">2</span>, <span class="dv">1</span>).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">\</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>        <span class="op">+</span> np.<span class="bu">sum</span>(x<span class="op">**</span><span class="dv">2</span>, <span class="dv">1</span>)            <span class="op">\</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>        <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> np.dot(x, x.T)</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  Dmat <span class="op">=</span> np.sqrt(D)</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>a <span class="op">=</span> ed_np2(X1)</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>b <span class="op">=</span> ed_np2(X2)</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
 <pre><code>## [[ 0.    9.43 11.36 11.36 10.44]
 ##  [ 9.43  0.    3.16 11.05  7.07]
 ##  [11.36  3.16  0.   12.41  5.48]
@@ -696,14 +696,14 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a hr
 <p>SO <a
 href="https://stackoverflow.com/questions/28687321/computing-euclidean-distance-for-numpy-in-python">reference</a></p>
 <div class="sourceCode" id="cb11"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ed_np3(x):</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  Dmat <span class="op">=</span> np.sqrt(((x[:, :, <span class="va">None</span>] <span class="op">-</span> x[:, :, <span class="va">None</span>].T) <span class="op">**</span> <span class="dv">2</span>).<span class="bu">sum</span>(<span class="dv">1</span>))</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> ed_np3(X1)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> ed_np3(X2)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="kw">def</span> ed_np3(x):</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  Dmat <span class="op">=</span> np.sqrt(((x[:, :, <span class="va">None</span>] <span class="op">-</span> x[:, :, <span class="va">None</span>].T) <span class="op">**</span> <span class="dv">2</span>).<span class="bu">sum</span>(<span class="dv">1</span>))</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>a <span class="op">=</span> ed_np3(X1)</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>b <span class="op">=</span> ed_np3(X2)</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
 <pre><code>## [[ 0.    9.43 11.36 11.36 10.44]
 ##  [ 9.43  0.    3.16 11.05  7.07]
 ##  [11.36  3.16  0.   12.41  5.48]
@@ -721,15 +721,15 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a h
 <div id="scipy-1" class="section level3">
 <h3>Scipy</h3>
 <div class="sourceCode" id="cb13"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> md_sp(x):</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  D_sp <span class="op">=</span> distance.pdist(x, metric<span class="op">=</span><span class="st">&#39;mahalanobis&#39;</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  Dmat <span class="op">=</span> distance.squareform(D_sp, force<span class="op">=</span><span class="st">&#39;no&#39;</span>, checks<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> md_sp(X1)</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> md_sp(X2)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="kw">def</span> md_sp(x):</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  x <span class="op">=</span> x[:,<span class="va">None</span>] <span class="cf">if</span> x.ndim <span class="op">==</span> <span class="dv">1</span> <span class="cf">else</span> x</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  D_sp <span class="op">=</span> distance.pdist(x, metric<span class="op">=</span><span class="st">&#39;mahalanobis&#39;</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  Dmat <span class="op">=</span> distance.squareform(D_sp, force<span class="op">=</span><span class="st">&#39;no&#39;</span>, checks<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  <span class="cf">return</span> Dmat</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>a <span class="op">=</span> md_sp(X1)</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a>b <span class="op">=</span> md_sp(X2)</span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="bu">print</span>(a, <span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>, b)</span></code></pre></div>
 <pre><code>## [[0.   2.39 2.63 2.76 2.6 ]
 ##  [2.39 0.   1.22 2.68 2.8 ]
 ##  [2.63 1.22 0.   2.3  1.85]
@@ -743,13 +743,13 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a h
 <div id="numpy" class="section level3">
 <h3>Numpy</h3>
 <div class="sourceCode" id="cb15"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> md_np(x):</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  dec <span class="op">=</span> np.linalg.cholesky(np.cov(x, rowvar<span class="op">=</span><span class="va">False</span>))</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  tmp <span class="op">=</span> np.linalg.solve(dec, x.T)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  tmp1 <span class="op">=</span> tmp.T</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> ed_np3(tmp1)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(md_np(X1))</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="kw">def</span> md_np(x):</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  dec <span class="op">=</span> np.linalg.cholesky(np.cov(x, rowvar<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>  tmp <span class="op">=</span> np.linalg.solve(dec, x.T)</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  tmp1 <span class="op">=</span> tmp.T</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>  <span class="cf">return</span> ed_np3(tmp1)</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="bu">print</span>(md_np(X1))</span></code></pre></div>
 <pre><code>## [[0.   2.39 2.63 2.76 2.6 ]
 ##  [2.39 0.   1.22 2.68 2.8 ]
 ##  [2.63 1.22 0.   2.3  1.85]
@@ -759,20 +759,20 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a h
 </div>
 <div id="r" class="section level3">
 <h3>R</h3>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>md_r <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  dec  <span class="ot">&lt;-</span> <span class="fu">chol</span>( <span class="fu">cov</span>(x) )</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  tmp0 <span class="ot">&lt;-</span> <span class="fu">forwardsolve</span>(<span class="fu">t</span>(dec), <span class="fu">t</span>(x) )</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  tmp1 <span class="ot">&lt;-</span> <span class="fu">t</span>(tmp0)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  lower_tri <span class="ot">&lt;-</span> <span class="fu">dist</span>(tmp1)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="fu">nrow</span>(x), <span class="fu">nrow</span>(x))</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  m[<span class="fu">lower.tri</span>(m)] <span class="ot">&lt;-</span> lower_tri</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  m[<span class="fu">upper.tri</span>(m)] <span class="ot">&lt;-</span> <span class="fu">t</span>(m)[<span class="fu">upper.tri</span>(m)]</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diag</span>(m) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  m</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">4</span>,<span class="dv">13</span>,<span class="dv">9</span>,<span class="dv">3</span>,<span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">15</span>,<span class="dv">14</span>,<span class="dv">4</span>,<span class="dv">1</span>), <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow=</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">md_r</span>(d)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>md_r <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  dec  <span class="ot">&lt;-</span> <span class="fu">chol</span>( <span class="fu">cov</span>(x) )</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  tmp0 <span class="ot">&lt;-</span> <span class="fu">forwardsolve</span>(<span class="fu">t</span>(dec), <span class="fu">t</span>(x) )</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>  tmp1 <span class="ot">&lt;-</span> <span class="fu">t</span>(tmp0)</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>  lower_tri <span class="ot">&lt;-</span> <span class="fu">dist</span>(tmp1)</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>  m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="fu">nrow</span>(x), <span class="fu">nrow</span>(x))</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>  m[<span class="fu">lower.tri</span>(m)] <span class="ot">&lt;-</span> lower_tri</span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>  m[<span class="fu">upper.tri</span>(m)] <span class="ot">&lt;-</span> <span class="fu">t</span>(m)[<span class="fu">upper.tri</span>(m)]</span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a>  <span class="fu">diag</span>(m) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a>  m</span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a>}</span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">4</span>,<span class="dv">13</span>,<span class="dv">9</span>,<span class="dv">3</span>,<span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">15</span>,<span class="dv">14</span>,<span class="dv">4</span>,<span class="dv">1</span>), <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow=</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a><span class="fu">md_r</span>(d)</span></code></pre></div>
 <pre><code>##          [,1]     [,2]     [,3]     [,4]     [,5]
 ## [1,] 0.000000 2.388123 2.631810 2.762811 2.603338
 ## [2,] 2.388123 0.000000 1.220222 2.678094 2.798580
