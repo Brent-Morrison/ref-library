@@ -44,3 +44,22 @@ args <- commandArgs(trailingOnly = TRUE)
 arg1 <- args[1]        
 arg2 <- args[2]
 ```
+
+<br>
+
+### Reading an sql file in R  
+
+```{r1 eval=FALSE}
+read_sql <- function(file_path) {
+  
+  sql_text <- paste(readLines(file_path, warn = FALSE))      # Read entire file as one string
+  sql_text <- gsub("--.*$", "", sql_text, perl = TRUE)       # Remove comments --
+  sql_text <- gsub("[\r\n]+", " ", sql_text)                 # Collapse multiple spaces/newlines
+  sql_text <- trimws(sql_text)                               # Trim whitespace
+  sql_text <- paste(sql_text, collapse = " ")                # Collapse
+  sql_text <- gsub("/\\*.*?\\*/", "", sql_text, perl = TRUE) # Remove comments /*...*/
+  #sql_text <- sql_text[nzchar(sql_text)]
+  
+  return(sql_text)
+}
+```
