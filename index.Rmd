@@ -14,9 +14,17 @@ Topics are arranged via the menu at the top of the page.  The aim is to have a n
 
 <br>
 
+## Update procedures  
+
+If the structure of the site has been altered, i.e., either the ```_site.yml``` or ```_navbar.yml``` have been changed, the ```Build Website``` command must be run.  This rebuilds every .Rmd file with no caching.  
+
+If only a single ```.Rmd``` has been changed then that can be knitted in isolation. 
+
+<br>
+
 ## Jupyter notebooks
 
-Some content is constructed using Jupyter noteboooks.  This requires conversion to html using the ```nbconvert``` utility shown below.
+Some content is constructed using Jupyter notebooks.  This requires conversion to html using the ```nbconvert``` utility shown below.
 
 Example conversion, ipynb to html:  
 

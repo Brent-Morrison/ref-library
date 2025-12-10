@@ -13,7 +13,7 @@
 
 <title>Reference Library</title>
 
-<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/spacelab.min.css" rel="stylesheet" />
@@ -400,9 +400,19 @@ href="https://brentmorrison.netlify.app/">blog</a>.</p>
 to have a number of implementations of each topic across language /
 framework.</p>
 <p><br></p>
+<div id="update-procedures" class="section level2">
+<h2>Update procedures</h2>
+<p>If the structure of the site has been altered, i.e., either the
+<code>_site.yml</code> or <code>_navbar.yml</code> have been changed,
+the <code>Build Website</code> command must be run. This rebuilds every
+.Rmd file with no caching.</p>
+<p>If only a single <code>.Rmd</code> has been changed then that can be
+knitted in isolation.</p>
+<p><br></p>
+</div>
 <div id="jupyter-notebooks" class="section level2">
 <h2>Jupyter notebooks</h2>
-<p>Some content is constructed using Jupyter noteboooks. This requires
+<p>Some content is constructed using Jupyter notebooks. This requires
 conversion to html using the <code>nbconvert</code> utility shown
 below.</p>
 <p>Example conversion, ipynb to html:</p>
