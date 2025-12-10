@@ -38,7 +38,7 @@ set arg2=experiment_02
 
 Retrieving arguments in the R script.
 
-```{r0 eval=FALSE}
+```{r eval=FALSE}
 args <- commandArgs(trailingOnly = TRUE)
 
 arg1 <- args[1]        
@@ -49,7 +49,7 @@ arg2 <- args[2]
 
 ### Reading an sql file in R  
 
-```{r1 eval=FALSE}
+```{r eval=FALSE}
 read_sql <- function(file_path) {
   
   sql_text <- paste(readLines(file_path, warn = FALSE))      # Read entire file as one string

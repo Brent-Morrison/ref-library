@@ -600,26 +600,26 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="bu">set</span> arg2=experiment_02</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="st">&quot;C:\Program Files\R\R-4.1.0\bin\Rscript.exe&quot;</span> C:<span class="dt">\p</span>ath<span class="dt">\t</span>o<span class="dt">\R\s</span>cript<span class="dt">\e</span>xample_r_script.R %arg% %arg2% </span></code></pre></div>
 <p>Retrieving arguments in the R script.</p>
-<pre class="r0"><code>args &lt;- commandArgs(trailingOnly = TRUE)
-
-arg1 &lt;- args[1]        
-arg2 &lt;- args[2]</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>args <span class="ot">&lt;-</span> <span class="fu">commandArgs</span>(<span class="at">trailingOnly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>arg1 <span class="ot">&lt;-</span> args[<span class="dv">1</span>]        </span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>arg2 <span class="ot">&lt;-</span> args[<span class="dv">2</span>]</span></code></pre></div>
 <p><br></p>
 </div>
 <div id="reading-an-sql-file-in-r" class="section level3">
 <h3>Reading an sql file in R</h3>
-<pre class="r1"><code>read_sql &lt;- function(file_path) {
-  
-  sql_text &lt;- paste(readLines(file_path, warn = FALSE))      # Read entire file as one string
-  sql_text &lt;- gsub(&quot;--.*$&quot;, &quot;&quot;, sql_text, perl = TRUE)       # Remove comments --
-  sql_text &lt;- gsub(&quot;[\r\n]+&quot;, &quot; &quot;, sql_text)                 # Collapse multiple spaces/newlines
-  sql_text &lt;- trimws(sql_text)                               # Trim whitespace
-  sql_text &lt;- paste(sql_text, collapse = &quot; &quot;)                # Collapse
-  sql_text &lt;- gsub(&quot;/\\*.*?\\*/&quot;, &quot;&quot;, sql_text, perl = TRUE) # Remove comments /*...*/
-  #sql_text &lt;- sql_text[nzchar(sql_text)]
-  
-  return(sql_text)
-}</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>read_sql <span class="ot">&lt;-</span> <span class="cf">function</span>(file_path) {</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  </span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  sql_text <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">readLines</span>(file_path, <span class="at">warn =</span> <span class="cn">FALSE</span>))      <span class="co"># Read entire file as one string</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  sql_text <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;--.*$&quot;</span>, <span class="st">&quot;&quot;</span>, sql_text, <span class="at">perl =</span> <span class="cn">TRUE</span>)       <span class="co"># Remove comments --</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  sql_text <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;[</span><span class="sc">\r\n</span><span class="st">]+&quot;</span>, <span class="st">&quot; &quot;</span>, sql_text)                 <span class="co"># Collapse multiple spaces/newlines</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  sql_text <span class="ot">&lt;-</span> <span class="fu">trimws</span>(sql_text)                               <span class="co"># Trim whitespace</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  sql_text <span class="ot">&lt;-</span> <span class="fu">paste</span>(sql_text, <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>)                <span class="co"># Collapse</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  sql_text <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;/</span><span class="sc">\\</span><span class="st">*.*?</span><span class="sc">\\</span><span class="st">*/&quot;</span>, <span class="st">&quot;&quot;</span>, sql_text, <span class="at">perl =</span> <span class="cn">TRUE</span>) <span class="co"># Remove comments /*...*/</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="co">#sql_text &lt;- sql_text[nzchar(sql_text)]</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  </span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  <span class="fu">return</span>(sql_text)</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 
 
